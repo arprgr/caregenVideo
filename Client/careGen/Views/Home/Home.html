@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Caring Generations</title>
+
+</head>
+
+<body>
+<header>
+    <div>
+    <h1>Caring Generations</h1>
+        <a  href="" ng-click="clickToOpen()">Sign in | </a>
+         <!--    <button ng-click="clickToOpen" class="button button--secondary" title="Sign Up" tabindex="3">Sign Up</button>-->
+            <a href="" ng-click="clickToOpenRegister()">Register</a>
+            </div>
+        </header>
+
+
+        <form class="form" name="form">
+            <div class="form--row">
+                <p>
+               <input id ="email" type="email" data-ng-model="formData.email"  placeholder="Enter email id" class="emailField" required>
+               <button type="submit" ng-disabled="form.$invalid || dataLoading" ng-click="buttonClick()" class="getStartedButton">Get Started</button>
+               </p>
+            </div>
+        </form>
+
+
+            </body>
+            </html>

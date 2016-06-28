@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html ng-app="careGenApp">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="Styles.css">
+    <link rel="stylesheet" href="ngDialog.css">
+    <link rel="stylesheet" href="ngDialog-theme-default.css">
+    <link rel="stylesheet" href= "ngDialog-theme-plain.css">
+
+
+</head>
+<body>
+
+
+<div class="container">
+
+    <div class="col-xs-offset-2 col-xs-8">
+
+        <div ng-view></div>
+    </div>
+</div>
+
+
+<script src="//code.jquery.com/jquery-2.0.3.min.js"></script>
+<script src="Scripts/angular.min.js"></script>
+<script src="Scripts/ngDialog.js"></script>
+<script src="Scripts/angular-route.js"></script>
+<script src="Scripts/angular-cookies.js"></script>
+
+<script src="Controllers/app.js"></script>
+<script src="Scripts/authServices.js"></script>
+
+<script src="Views/Home/HomeController.js"></script>
+<script src="Views/Login/LoginController.js"></script>
+<script src="Views/Registration/RegistrationController.js"></script>
+<script src="Views/Main/MainController.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,59 @@
+header{
+    background-color:white;
+    color:green;
+    text-align:center;
+    padding:15px 32px;
+    font-style:italic;
+    font-size: 25px;
+}
+
+body{
+    background-color:beige;
+    color:greenyellow;
+    text-align:center;
+    padding:5px;
+}
+
+p{
+    background-color:green;
+    color:black;
+    text-align:center;
+    height: 10cm;
+    padding:15px 32px;
+    font-size: 15px;
+}
+
+.signInButton{
+    background-color: #8dbdf1;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+.getStartedButton{
+    background-color:#84CB52;
+    border: none;
+    color: white;
+    padding: 8px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+.emailField{
+    border: none;
+    padding: 8px 32px;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+}
