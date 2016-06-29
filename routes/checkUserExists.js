@@ -6,19 +6,19 @@ var models = require('../server/models/index');
 router.post('/', function(req, res) {
 
 
-    models.users.find({
+    models.Users.find({
         where: {
           emailid: req.body.email
         }
-    }).then(function(users) {
-        if (!users) {
+    }).then(function(Users) {
+        if (!Users) {
           console.log("not found");
           res.status(220).send('failed');
         }
         else {
-            if (users.name != "RIP") {
+            if (Users.name != "RIP") {
                     console.log('this is what I found!!');
-                    console.log(users.name);
+                    console.log(Users.name);
                 res.status(200).send('success');
             } else {
 
