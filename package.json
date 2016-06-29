@@ -6,7 +6,7 @@
     "node" : "5.1.0"
   },
   "scripts": {
-    "start": "supervisor ./bin/www"
+    "start": "node ./bin/www"
   },
   "dependencies": {
     "body-parser": "~1.15.1",
