@@ -2,7 +2,8 @@ var nconf = require('nconf');
 var path = require('path');
 
 
-var connectionString = path.join('./', 'config.jason');
+var connectionString = path.join(__dirname, 'configEmail.json');
+
 
 //    console.log('this is the dir name.');
 console.log(connectionString);
