@@ -4,23 +4,23 @@ var models = require('../server/models/index');
 
 
 router.post('/', function(req, res) {
-    models.users.find({
+    models.Users.find({
         where: {
             emailid: req.body.email
         }
-    }).then(function(users) {
+    }).then(function(Users) {
         console.log('this is what I found!!');
-        console.log(users.emailid);
-        console.log(users.password);
+        console.log(Users.emailid);
+        console.log(Users.password);
 
-        if (users.password != req.body.password) {
+        if (Users.password != req.body.password) {
 
            console.log('passwords do not match!!');
            res.status(500).send({ error: "boo:(" });
         }
         else {
         console.log('passwords match!!');
-        return (res.json(users));
+        return (res.json(Users));
         }
     });
 });
