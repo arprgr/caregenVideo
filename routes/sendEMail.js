@@ -29,12 +29,12 @@ router.get('/:emailid', function(req, res, next) {
 
   // First store the email id in the database as an inprogress user
 
-  models.users.create({
+  models.Users.create({
         name: "RIP",
         emailid: req.params.emailid,
         password: "Blank"
-    }).then(function(users) {
-        //res.json(users);
+    }).then(function(Users) {
+        //res.json(Users);
     });
 
 
