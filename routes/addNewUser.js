@@ -3,7 +3,7 @@ var router = express.Router();
 var models = require('../server/models/index');
 
 /* add new users to the user table */
-router.get('/', function(req, res, next) {
+router.post('/', function(req, res) {
 models.Users.create({
         name: req.body.name,
         emailid: req.body.email,
