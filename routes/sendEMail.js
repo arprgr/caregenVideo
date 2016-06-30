@@ -10,7 +10,7 @@ var nconf = require('nconf');
 
 
 
-var connectionString = path.join('./', 'config.jason');
+var connectionString    = path.join(__dirname, 'configEmail.json');
 
 //    console.log('this is the dir name.');
 console.log(connectionString);
@@ -22,22 +22,12 @@ console.log(nconf.get('emailUser'));
 console.log(nconf.get('emailPass'));
 
 
-router.get('/:emailid', function(req, res, next) {
+router.post('/', function(req, res) {
 
  console.log("this email id received");
- console.log(req.params.emailid);
+ console.log(req.body.email);
 
-  // First store the email id in the database as an inprogress user
-
-  models.Users.create({
-        name: "RIP",
-        emailid: req.params.emailid,
-        password: "Blank"
-    }).then(function(Users) {
-        //res.json(Users);
-    });
-
-
+  
   var transporter = nodemailer.createTransport({
     service: 'hotmail',
         auth: {
@@ -46,14 +36,14 @@ router.get('/:emailid', function(req, res, next) {
         }
        });
 
-    var text = 'Hello world from \n\n' + "http://localhost:3000/Home.html";
+    var text = 'Welcome to CareGen, Please click on this link to register \n\n' + "http://localhost:3000/Index.html#/?origin=email" + "#/?emailid=" + req.body.email;
 
     var mailOptions = {
     from: nconf.get('emailUser'), // sender address
-    to: req.params.emailid, // list of receivers
-    subject: 'Test from nodeJS', // Subject line
+    to: req.body.email, // list of receivers
+    subject: 'Welcome to CareGen', // Subject line
     text : text // plain text body
-    // html: '<b>Hello world ?</b>' // You can choose to send an HTML body instead
+    
     };
 
   transporter.sendMail(mailOptions, function(error, info){
