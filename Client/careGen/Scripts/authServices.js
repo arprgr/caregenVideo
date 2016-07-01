@@ -10,26 +10,46 @@ angular.module('Authentication')
 
              service.Login= function(userdata, callback) {
 
-
                  $http({
                      method: 'POST',
                      url: '/authenticateUser',
                      data: userdata
                  })
                      .then(function successCallback(response) {
-                         console.log(response);
+                           callback(response);
+                     });
+
+             };
+
+             service.sendEmail= function(emailid, callback) {
+                 console.log(emailid);
+                 $http({
+                     method: 'POST',
+                     url: '/sendEMail',
+                     data: emailid
+                 })
+                     .then(function successCallback(response) {
+
                          callback(response);
                      });
 
 
              };
 
-             service.VerifyId= function(emailid, callback){
-                 console.log('in authservices VerifyId');
+             service.addUser= function(formdata, callback){
 
-                 console.log(emailid);
-                 var email = [emailid];
-                 var config = {headers :{'Content-Type':'application/x-www.form-urlencoded;charset=utf-8;'}}
+                 $http({
+                     method: 'POST',
+                     url: '/addNewUser',
+                     data: formdata
+                 })
+                     .then(function successCallback(response) {
+                         callback(response);
+                     });
+
+             };
+
+             service.VerifyId= function(emailid, callback){
 
                   $http({
                      method: 'POST',
@@ -42,12 +62,12 @@ angular.module('Authentication')
 
              };
 
-             service.SetCredentials = function (username, password) {
-                 var authdata = Base64.encode(username + ':' + password);
+             service.SetCredentials = function (emailid, password, username) {
+                 var authdata = Base64.encode(emailid + ':' + password + ':' + username);
 
                  $rootScope.globals = {
                      currentUser: {
-                         username: username,
+                         username: emailid,
                          authdata: authdata
                      }
                  };
