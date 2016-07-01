@@ -7,7 +7,7 @@ angular.module('Home', ['ngDialog','Authentication'])
             function ($scope, ngDialog, $location, $rootScope, AuthenticationService) {
 
                 $scope.formData= {
-                    emailid: $rootScope.registerEmail
+                    email: $rootScope.registerEmail
                 };
 
                 $scope.clickToOpen = function () {
@@ -33,6 +33,7 @@ angular.module('Home', ['ngDialog','Authentication'])
                         if(response.status > 200 ){
 
                         } else {
+                            AuthenticationService.ClearCredentials();
                             AuthenticationService.SetCredentials($scope.formData.email);
                             ngDialog.open({
                                 template: 'Views/Login/signIn.html',
