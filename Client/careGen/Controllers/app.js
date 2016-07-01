@@ -13,7 +13,8 @@ angular.module('careGenApp', [
     'Registration',
     'Home',
     'ngRoute',
-    'ngCookies'
+    'ngCookies',
+    'ngMessages'
 ])
     .config(['$routeProvider', function ($routeProvider) {
 
@@ -26,16 +27,35 @@ angular.module('careGenApp', [
             .when('/main', {
 
                 controller: 'MainController',
-                templateUrl: 'Views/Main/Main.html'
-            })
+                templateUrl: 'Views/Main/Main.html',
+                            })
 
             .when('/verify', {
 
                 controller: 'HomeController',
                 templateUrl: 'Views/Home/EmailVerify.html'
             })
+            .when('/forgetPassword',{
+                controller: 'LoginController',
+                templateUrl: 'Views/Login/ForgetPassword.html'
 
-            .otherwise({ redirectTo: '/home' });
+            })
+            .when('/login',{
+                controller: 'LoginController',
+                templateUrl: 'Views/Login/signIn.html'
+
+            })
+            .when('/register',{
+                controller: 'HomeController',
+                templateUrl: 'Views/Home/EmailVerification.html'
+
+            })
+            .when('/Index.html?origin=email',{
+                controller: 'HomeController',
+                templateUrl: 'Views/Home/EmailVerification.html'
+            })
+
+             .otherwise({ redirectTo: '/home' });
     }])
 
     .run(['$rootScope', '$location', '$cookieStore', '$http',
@@ -49,6 +69,16 @@ angular.module('careGenApp', [
 
            $rootScope.$on('$locationChangeStart', function (event, next, current) {
               // redirect to login page if not logged in
+
+               if($location.search().origin == 'email') {
+                  $rootScope.registerEmail= $location.search().emailid;
+ //                  $scope.userData.emailid = $location.search().originEmail;
+                 delete $location.$$search.origin;
+                 delete $location.$$search.emailid;
+  //                $location.search({});
+                   $location.$$compose();
+                   $location.path('/register');
+               } else
                 if ($location.path() !== '/home' && !$rootScope.globals.currentUser) {
                    $location.path('/home');
                }
