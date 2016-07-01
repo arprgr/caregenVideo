@@ -1,9 +1,9 @@
 
 'use strict';
 
-angular.module('Main',['Authentication'])
+angular.module('Main',['Authentication','Login'])
 
-    .controller('MainController',
+    .controller('MainController', 
         ['$scope', '$location', 'AuthenticationService',
             function ($scope, $location, AuthenticationService) {
 
