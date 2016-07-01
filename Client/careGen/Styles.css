@@ -56,12 +56,12 @@ p{
 
 .container {
     width: 60%;
-    
+
     margin-left: auto;
     margin-right: auto;
     background-color: #003d99;
     color: #004f99;
-    text-align: center;
+    text-align:center;
     padding-bottom: 2%;
     background-image: url("images/background1.png");
     background-position: 100%;
@@ -90,8 +90,9 @@ p{
 }
 
 .homefields{
+
     width: 60%;
-    margin: 25% 25%;
+    margin: 25% 1%;
 }
 
 .RegisterFields{
