@@ -6,7 +6,7 @@ var models = require('../server/models/index');
 router.post('/', function(req, res) {
 models.Users.create({
         name: req.body.name,
-        emailid: req.body.email,
+        emailid: req.body.emailid,
         password: req.body.password
     }).then(function(Users) {
         res.json(Users);
