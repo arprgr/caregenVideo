@@ -36,7 +36,7 @@ router.post('/', function(req, res) {
         }
        });
 
-    var text = 'Welcome to CareGen, Please click on this link to register \n\n' + "http://localhost:3000/Index.html#/?origin=email" + "#/?emailid=" + req.body.email;
+    var text = 'Welcome to CareGen, Please click on this link to register \n\n' + "http://localhost:3000/Index.html#/?origin=email&emailid=" + req.body.email;
 
     var mailOptions = {
     from: nconf.get('emailUser'), // sender address
