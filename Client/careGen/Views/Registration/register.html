@@ -6,10 +6,10 @@
 </head>
 <body>
 <form class="formRegister" name="register">
-<div data-ng-controller="MainController" class="form--row">
+<div data-ng-controller="HomeController" class="form--row">
     <p>
          Email address <br>
-        <input id ="email" type="email" data-ng-model="user.email"  placeholder="name@company.com" class="emailField" required>
+        <input id ="email" type="email" data-ng-model="formData.email"  placeholder="name@company.com" class="emailField" required>
         <button type="submit" ng-click="buttonClick()" class="getStartedButton">Submit</button>
 
     </p>
