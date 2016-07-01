@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Caring Generations - Registration</title>
+    <link rel="stylesheet" href="../../Styles.css">
+</head>
+<body>
+<div class="container" data-ng-controller="HomeController">
+    <header class="header">
+        <h4 class="logo">Caring Generations</h4>
+    </header>
+
+    <div>
+        <h3>Registration</h3>
+    </div>
+
+    <div class="RegisterFields">
+
+ <form name = "registerForm" ng-controller="HomeController">
+        <label for="name">Full Name</label> <br>
+        <input id ="name" name = "name" type="name" class="emailField" placeholder="First & Last Name" ng-minlength="3"
+               ng-maxlength="24" ng-model="formData.name" required><br>
+
+     <div  ng-if="registerForm.name.$touched" ng-messages="registerForm.name.$error" style="color:red" role="alert">
+         <div ng-message="required">Please enter the name</div>
+         <div ng-message="minlength">Name is too short</div>
+         <div ng-message="maxlength">Name is too long</div>
+     </div>
+      <br><br>
+
+        <label for="email">Email ID</label> <br>
+        <input id ="email" type="email" class="emailField"  ng-model="formData.emailid" readonly><br><br>
+
+        <label for="password">Password</label><br>
+        <input type="password" name="password" id="password" class="emailField" ng-minlength="8"
+               ng-maxlength="14" ng-model="formData.password" required /> <br>
+
+     <div ng-if="registerForm.password.$touched" ng-messages="registerForm.password.$error" style="color:red" role="alert">
+         <div ng-message="required">Please enter password</div>
+         <div ng-message="minlength">Password is too short</div>
+         <div ng-message="maxlength">Password is too long</div>
+     </div>
+     <br><br>
+        <button type="submit"  ng-disabled="registerForm.$invalid" ng-click="addUserClick()" class="getStartedButton">Continue</button>
+
+</form>
+    </div>
+</div>
+</body>

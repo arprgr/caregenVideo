@@ -6,6 +6,10 @@ angular.module('Home', ['ngDialog','Authentication'])
         ['$scope', 'ngDialog', '$location', '$rootScope', 'AuthenticationService',
             function ($scope, ngDialog, $location, $rootScope, AuthenticationService) {
 
+                $scope.formData= {
+                    emailid: $rootScope.registerEmail
+                };
+
                 $scope.clickToOpen = function () {
                 
                     ngDialog.open({
@@ -22,6 +26,23 @@ angular.module('Home', ['ngDialog','Authentication'])
                         scope: $scope
                     });
                 }
+
+                $scope.addUserClick = function () {
+                  
+                    AuthenticationService.addUser($scope.formData,function(response){
+                        if(response.status > 200 ){
+
+                        } else {
+                            AuthenticationService.SetCredentials($scope.formData.email);
+                            ngDialog.open({
+                                template: 'Views/Login/signIn.html',
+                                className: 'ngdialog-theme-default',
+                                scope: $scope
+                            });
+
+                        }
+                            });
+                }
                 
                 $scope.buttonClick = function() {
                     $scope.dataLoading = true;
@@ -30,10 +51,10 @@ angular.module('Home', ['ngDialog','Authentication'])
 
                         if(response.status > 200 ) {
                                AuthenticationService.SetCredentials($scope.formData.email);
-                            $location.path('/verify');
+                               AuthenticationService.sendEmail($scope.formData);
+                               ngDialog.close();
+                               $location.path('/verify');
                         } else {
-                            console.log(response.data.name);
-                            console.log(response.data.emailid);
                            ngDialog.open({
                                template: 'Views/Login/signIn.html',
                                className: 'ngdialog-theme-default',

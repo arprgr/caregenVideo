@@ -7,25 +7,20 @@
 </head>
 
 <body>
-<header>
-    <div>
-    <h1>Caring Generations</h1>
-        <a  href="" ng-click="clickToOpen()">Sign in | </a>
-         <!--    <button ng-click="clickToOpen" class="button button--secondary" title="Sign Up" tabindex="3">Sign Up</button>-->
-            <a href="" ng-click="clickToOpenRegister()">Register</a>
-            </div>
-        </header>
+<div class="container">
+    <header>
+        <h1 class="logo">Caring Generations</h1>
+        <a  href="" ng-click="clickToOpen()" class="linkfont">Sign in | </a>
+        <a href="" ng-click="clickToOpenRegister()" class="linkfont">Register</a>
+    </header>
 
+    <form class="form" name="form">
+    <div class="homefields" >
+        <input id ="email" type="email" data-ng-model="formData.email"  placeholder="Enter email id" class="emailField" required>
+        <button type="submit" ng-disabled="form.$invalid || dataLoading" ng-click="buttonClick()" class="getStartedButton">Get Started</button>
+    </div>
+    </form>
+</div>
 
-        <form class="form" name="form">
-            <div class="form--row">
-                <p>
-               <input id ="email" type="email" data-ng-model="formData.email"  placeholder="Enter email id" class="emailField" required>
-               <button type="submit" ng-disabled="form.$invalid || dataLoading" ng-click="buttonClick()" class="getStartedButton">Get Started</button>
-               </p>
-            </div>
-        </form>
-
-
-            </body>
+</body>
             </html>
