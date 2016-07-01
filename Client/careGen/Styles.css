@@ -1,6 +1,5 @@
 header{
-    background-color:white;
-    color:green;
+    background-color:#003d99;
     text-align:center;
     padding:15px 32px;
     font-style:italic;
@@ -9,15 +8,12 @@ header{
 
 body{
     background-color:beige;
-    color:greenyellow;
-    text-align:center;
     padding:5px;
 }
 
 p{
-    background-color:green;
     color:black;
-    text-align:center;
+    text-align:left;
     height: 10cm;
     padding:15px 32px;
     font-size: 15px;
@@ -37,7 +33,7 @@ p{
 }
 
 .getStartedButton{
-    background-color:#84CB52;
+    background-color:#004f99;
     border: none;
     color: white;
     padding: 8px 32px;
@@ -56,4 +52,50 @@ p{
     display: inline-block;
     font-size: 16px;
     margin: 4px 2px;
+}
+
+.container {
+    width: 60%;
+    
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #003d99;
+    color: #004f99;
+    text-align: center;
+    padding-bottom: 2%;
+    background-image: url("images/background1.png");
+    background-position: 100%;
+}
+
+.logo {
+    color:#b3d1ff;
+    font-weight: bold;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    padding-top: 15px;
+    line-height: 2em;
+    font-size: 30px;
+    font-style:italic;
+}
+
+.ContainerFields{
+    text-align: left;
+    width: 60%;
+    margin: 2% 50%;
+}
+
+.linkfont{
+    color:#b3d1ff;
+}
+
+.homefields{
+    width: 60%;
+    margin: 25% 25%;
+}
+
+.RegisterFields{
+    text-align: left;
+    width: 60%;
+    margin: 2% 40%;
 }
