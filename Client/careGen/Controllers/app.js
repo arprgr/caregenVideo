@@ -64,15 +64,16 @@ angular.module('careGenApp', [
             // keep user logged in after page refresh
            $rootScope.globals = $cookieStore.get('globals') || {};
             if ($rootScope.globals.currentUser) {
-               $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata; // jshint ignore:line
-           }
+                $rootScope.userName = $rootScope.globals.currentUser.authdata;
+                $location.path('/main')
+                 }
 
            $rootScope.$on('$locationChangeStart', function (event, next, current) {
               // redirect to login page if not logged in
 
                if($location.search().origin == 'email') {
                   $rootScope.registerEmail= $location.search().emailid;
- //                  $scope.userData.emailid = $location.search().originEmail;
+
                  delete $location.$$search.origin;
                  delete $location.$$search.emailid;
   //                $location.search({});
