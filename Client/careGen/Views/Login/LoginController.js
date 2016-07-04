@@ -17,8 +17,8 @@ angular.module('Login', ['ngDialog','Authentication'])
                             $scope.dataLoading = false;
 
                         } else {
-                            AuthenticationService.SetCredentials($scope.formData.email, $scope.formData.password);
-
+                            AuthenticationService.SetCredentials(response.data.email, response.data.password, response.data.name);
+                            
                             $rootScope.userName = response.data.name;
                             ngDialog.close( {
                                 scope: $scope }
