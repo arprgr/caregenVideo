@@ -63,8 +63,9 @@ angular.module('Authentication')
              };
 
              service.SetCredentials = function (emailid, password, username) {
-                 var authdata = Base64.encode(emailid + ':' + password + ':' + username);
 
+                   var authdata = username;
+                 
                  $rootScope.globals = {
                      currentUser: {
                          username: emailid,
@@ -72,7 +73,7 @@ angular.module('Authentication')
                      }
                  };
 
-                 $http.defaults.headers.common['Authorization'] = 'Basic ' + authdata; // jshint ignore:line
+                 $http.defaults.headers.common['Authorization'] = 'Basic ' + authdata;
                  $cookieStore.put('globals', $rootScope.globals);
              };
 
