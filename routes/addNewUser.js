@@ -16,6 +16,38 @@ router.post('/', function(req, res) {
                 emailid: req.body.email,
                 password: req.body.password
             }).then(function (Users) {
+
+                /// Need to update the RIP table as well
+
+
+                  models.RIPUsers.find({
+                  where: {
+                        emailid: req.body.email
+                    }
+                        }).then(function(RIPUsers) {
+                    if (RIPUsers) {
+
+                        console.log("user added to Users also needs to be updated in RIP");
+
+                        RIPUsers.updateAttributes({
+                            status : 'user registered'
+                        }).then(function (RIPUsers) {
+                            console.log("user updated as registered in RIP");
+                        });
+
+
+                    }
+                    else {
+                        console.log("user already registered");
+                        
+                    }
+                })
+
+
+
+                ///
+
+
                 res.json(Users);
             });
         }
