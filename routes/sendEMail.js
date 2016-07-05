@@ -27,6 +27,8 @@ router.post('/', function(req, res) {
  console.log("this email id received");
  console.log(req.body.email);
 
+ 
+    
   
   var transporter = nodemailer.createTransport({
     service: 'hotmail',
@@ -49,9 +51,62 @@ router.post('/', function(req, res) {
   transporter.sendMail(mailOptions, function(error, info){
     if(error){
         console.log(error);
+
+        // update RIP Table
+        models.RIPUsers.find({
+        where: {
+            emailid: req.body.email
+        }
+    }).then(function(RIPUsers) {
+        if (!RIPUsers) {
+
+            console.log("user not present in RIP needs to be added ");
+
+            models.RIPUsers.create({
+                emailid: req.body.email,
+                status : 'Initial : Error sending email'
+            }).then(function (RIPUsers) {
+                console.log("user added to RIPUsers");
+            });
+
+
+        }
+        else {
+            console.log("user already registered");
+            
+        }
+    })
+
         res.json({caregen: 'error'});
     }else{
         console.log('Message sent: ' + info.response);
+
+        models.RIPUsers.find({
+        where: {
+            emailid: req.body.email
+        }
+    }).then(function(RIPUsers) {
+        if (!RIPUsers) {
+
+            console.log("user not present in RIP needs to be added ");
+
+            models.RIPUsers.create({
+                emailid: req.body.email,
+                status : 'email sent'
+            }).then(function (RIPUsers) {
+                console.log("user added to RIPUsers");
+            });
+
+
+        }
+        else {
+            console.log("user already registered");
+            
+        }
+    })
+
+
+        
         res.json({caregen : info.response});
     };
 });
