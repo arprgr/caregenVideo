@@ -11,6 +11,10 @@ var sendEMail = require('./routes/sendEMail');
 var addNewUser = require('./routes/addNewUser');
 var checkUserExists = require('./routes/checkUserExists');
 var authenticateUser = require('./routes/authenticateUser');
+var RIPUsers = require('./routes/RIPUsers');
+
+
+
 
 
 var app = express();
@@ -39,6 +43,7 @@ app.use('/sendEMail', sendEMail);
 app.use('/addNewUser', addNewUser);
 app.use('/checkUserExists', checkUserExists);
 app.use('/authenticateUser', authenticateUser);
+app.use('/RIPUsers', RIPUsers);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
