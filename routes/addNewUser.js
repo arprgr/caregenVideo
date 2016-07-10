@@ -5,22 +5,22 @@ var models = require('../server/models/index');
 /* add new users to the user table */
 router.post('/', function(req, res) {
 
-    models.Users.find({
+    models.Users.find({ attributes: ['emailid'],
         where: {
             emailid: req.body.email
         }
     }).then(function(Users) {
         if (!Users) {
             models.Users.create({
-                name: req.body.name,
                 emailid: req.body.email,
+                name: req.body.name,
                 password: req.body.password
             }).then(function (Users) {
 
                 /// Need to update the RIP table as well
 
 
-                  models.RIPUsers.find({
+                  models.RIPUsers.find({ attributes: ['emailid', 'status'] ,
                   where: {
                         emailid: req.body.email
                     }

@@ -4,12 +4,15 @@ var models = require('../server/models/index');
 
 
 router.post('/', function(req, res) {
-    models.Users.find({
+    models.Users.find({ attributes: ['emailid','name' , 'password'] ,
         where: {
             emailid: req.body.email
 
         }
     }).then(function(Users) {
+
+        console.log(Users.password) 
+        console.log(req.body.password)
 
         if (Users.password != req.body.password) {
 
@@ -18,7 +21,7 @@ router.post('/', function(req, res) {
             res.json({status: 500});
         }
         else {
-
+        console.log('valid user!!');    
         return (res.json(Users));
         }
     });

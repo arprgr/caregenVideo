@@ -53,7 +53,7 @@ router.post('/', function(req, res) {
         console.log(error);
 
         // update RIP Table
-        models.RIPUsers.find({
+        models.RIPUsers.find({ attributes: ['emailid', 'status'] ,
         where: {
             emailid: req.body.email
         }
@@ -64,6 +64,7 @@ router.post('/', function(req, res) {
 
             models.RIPUsers.create({
                 emailid: req.body.email,
+                origin : 'self registered',
                 status : 'Initial : Error sending email'
             }).then(function (RIPUsers) {
                 console.log("user added to RIPUsers");
@@ -81,7 +82,7 @@ router.post('/', function(req, res) {
     }else{
         console.log('Message sent: ' + info.response);
 
-        models.RIPUsers.find({
+        models.RIPUsers.find({ attributes: ['emailid', 'status'] , 
         where: {
             emailid: req.body.email
         }
@@ -92,6 +93,7 @@ router.post('/', function(req, res) {
 
             models.RIPUsers.create({
                 emailid: req.body.email,
+                origin : 'self registered',
                 status : 'email sent'
             }).then(function (RIPUsers) {
                 console.log("user added to RIPUsers");
