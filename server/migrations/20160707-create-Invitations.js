@@ -1,18 +1,20 @@
 'use strict';
 module.exports = {
   up: function(queryInterface, Sequelize) {
-    return queryInterface.createTable('RIPUsers', {
+    return queryInterface.createTable('Invitations', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      emailid: {
-        allowNull: false,
+      senderEmailid: {
         type: Sequelize.STRING
       },
-      origin: {
+      receiverEmailid: {
+        type: Sequelize.STRING
+      },
+      message : {
         type: Sequelize.STRING
       },
       status: {
@@ -27,7 +29,6 @@ module.exports = {
     });
   },
   down: function(queryInterface, Sequelize) {
-    return queryInterface.dropTable('RIPUsers');
+    return queryInterface.dropTable('Invitations');
   }
 };
-

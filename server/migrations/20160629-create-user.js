@@ -2,14 +2,15 @@
 module.exports = {
   up: function(queryInterface, Sequelize) {
     return queryInterface.createTable('Users', {
-      id: {
+     id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      emailid: {
-        type: Sequelize.STRING
+     emailid: {
+        allowNull: false,
+        type: Sequelize.STRING,
       },
       name: {
         type: Sequelize.STRING
