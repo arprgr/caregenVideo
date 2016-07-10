@@ -25,7 +25,7 @@ router.post('/', function(req, res) {
    console.log(config);
     
   sequelize.query('SELECT "Invitations"."senderEmailid" , "Users"."name" FROM "Invitations" inner join "Users" ON "Invitations"."senderEmailid" = "Users"."emailid" AND "Invitations"."receiverEmailid" = ?', 
-    { replacements: [req.body.emails], type: sequelize.QueryTypes.SELECT }
+    { replacements: [req.body.email], type: sequelize.QueryTypes.SELECT }
 ).then(function(Users) {
   res.json(Users);
 })
