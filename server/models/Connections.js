@@ -1,11 +1,12 @@
 'use strict';
 module.exports = function(sequelize, DataTypes) {
-    var RIPUsers = sequelize.define('RIPUsers', {
-        emailid: { 
+    var Connections = sequelize.define('Connections', {
+        primaryEmailid: { 
         type : DataTypes.STRING,
-        primaryKey : true
         },
-        status: DataTypes.STRING,
+        connectedToEmailid: { 
+        type : DataTypes.STRING,
+        },
         createdAt: DataTypes.DATE,
         updatedAt: DataTypes.DATE
         
@@ -17,5 +18,5 @@ module.exports = function(sequelize, DataTypes) {
             }
         }
     });
-    return RIPUsers;
+    return Connections;
 };
