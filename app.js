@@ -12,10 +12,12 @@ var addNewUser = require('./routes/addNewUser');
 var checkUserExists = require('./routes/checkUserExists');
 var authenticateUser = require('./routes/authenticateUser');
 var RIPUsers = require('./routes/RIPUsers');
-
-
-
-
+var sendInvitationsExt = require('./routes/sendInvitationsExt');
+var sendInvitationsInt = require('./routes/sendInvitationsInt');
+var getConnections = require('./routes/getConnections');
+var createConnection = require('./routes/createConnection');
+var getReceivedInvitations = require('./routes/getReceivedInvitations');
+var getSentInvitations = require('./routes/getSentInvitations');
 
 var app = express();
 
@@ -44,6 +46,12 @@ app.use('/addNewUser', addNewUser);
 app.use('/checkUserExists', checkUserExists);
 app.use('/authenticateUser', authenticateUser);
 app.use('/RIPUsers', RIPUsers);
+app.use('/sendInvitationsInt', sendInvitationsInt);
+app.use('/sendInvitationsExt', sendInvitationsExt);
+app.use('/getConnections', getConnections);
+app.use('/createConnection', createConnection);
+app.use('/getReceivedInvitations', getReceivedInvitations);
+app.use('/getSentInvitations', getSentInvitations);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
