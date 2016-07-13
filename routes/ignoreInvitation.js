@@ -8,8 +8,8 @@ router.post('/', function(req, res) {
 
 		models.Invitations.destroy({
 		    where: {
-		      senderEmailid : 'gregory.pillai@gmail.com',
-		      receiverEmailid : 'bridget.pillai@gmail.com'
+		      senderEmailid : req.body.senderEmailid,
+		      receiverEmailid : req.body.receiverEmailid
 		    }
 		  }).then(function(Invitations) {
 		    res.json(Invitations);
