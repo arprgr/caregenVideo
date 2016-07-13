@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Invitation</title>
+</head>
+<body>
+<div data-ng-controller="MainController">
+    <label>Invite someone to connect with you</label>
+    <p>
+        Email address <br>
+        <input id ="email" type="email" data-ng-model="formData.receiverEmailid"  placeholder="Enter email id" class="emailField" required>
+        <button type="submit" ng-click="sendInviteClick()" class="getStartedButton">Submit</button>
+    </p>
+</div>
+</body>
+</html>
