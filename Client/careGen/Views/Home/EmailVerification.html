@@ -1,50 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Caring Generations - Registration</title>
     <link rel="stylesheet" href="../../Styles.css">
 </head>
 <body>
-<div class="container" data-ng-controller="HomeController">
+<div  class="container" data-ng-controller="HomeController">
+    <div >
     <header class="header">
         <h4 class="logo">Caring Generations</h4>
     </header>
 
-    <div>
+    <div class = "centerAlign">
         <h3>Registration</h3>
     </div>
+    </div>
 
-    <div class="RegisterFields">
+    <table>
+            <col width="400"><col width="600">
 
- <form name = "registerForm" ng-controller="HomeController">
-        <label for="name">Full Name</label> <br>
+
+     <tr><td valign="top">
+     <div>
+         Complete your registration by giving us your name and choosing a password for your account.
+         You will log in with your email address and the password you choose.
+     </div>
+     </td>
+
+    <td>
+       <form name = "registerForm" ng-controller="HomeController">
+        <label for="name">Full Name</label><br>
         <input id ="name" name = "name" type="name" class="emailField" placeholder="First & Last Name" ng-minlength="3"
                ng-maxlength="24" ng-model="formData.name" required><br>
+     <md-tooltip>
+         This is the name that will be shown to other CareGen users.
+     </md-tooltip>
 
      <div  ng-if="registerForm.name.$touched" ng-messages="registerForm.name.$error" style="color:red" role="alert">
          <div ng-message="required">Please enter the name</div>
          <div ng-message="minlength">Name is too short</div>
          <div ng-message="maxlength">Name is too long</div>
      </div>
-      <br><br>
 
+                 <br><br>
         <label for="email">Email ID</label> <br>
         <input id ="email" type="email" class="emailField"  ng-model="formData.email" readonly><br><br>
 
-        <label for="password">Password</label><br>
-        <input type="password" name="password" id="password" class="emailField" ng-minlength="8"
+        <label for="password">New Password</label><br>
+        <input type="password" name="password" id="password" class="emailField" ng-minlength="6"
                ng-maxlength="14" ng-model="formData.password" required /> <br>
-
+       <md-tooltip>
+           Password must contain 6-14 characters.
+       </md-tooltip><br>
      <div ng-if="registerForm.password.$touched" ng-messages="registerForm.password.$error" style="color:red" role="alert">
          <div ng-message="required">Please enter password</div>
          <div ng-message="minlength">Password is too short</div>
          <div ng-message="maxlength">Password is too long</div>
      </div>
-     <br><br>
-        <button type="submit"  ng-disabled="registerForm.$invalid" ng-click="addUserClick()" class="getStartedButton">Continue</button>
+     <br>
+         <label for="confirmPassword">Re-Type New Password</label><br>
+                 <input type="password" name="confirmPassword" id="confirmPassword" class="emailField" ng-model="formData.confirmPassword" match-password="password" required=""/> <br>
+                 <div ng-if="registerForm.confirmPassword.$touched" ng-messages="registerForm.confirmPassword.$error" style="color:red" role="alert">
+                     <div ng-message="required">Please enter password</div>
+                     <div ng-message="passwordMatch">Your passwords did not match</div>
+                 </div>
+         <button type="submit"  ng-disabled="registerForm.$invalid" ng-click="addUserClick()" class="getStartedButton">Continue</button>
+      </form>
+     </td>
+     </tr>
 
-</form>
-    </div>
+    </table>
+
 </div>
 </body>
+</html>
