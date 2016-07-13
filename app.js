@@ -18,6 +18,7 @@ var getConnections = require('./routes/getConnections');
 var createConnection = require('./routes/createConnection');
 var getReceivedInvitations = require('./routes/getReceivedInvitations');
 var getSentInvitations = require('./routes/getSentInvitations');
+var ignoreInvitation = require('./routes/ignoreInvitation');
 
 var app = express();
 
@@ -52,6 +53,7 @@ app.use('/getConnections', getConnections);
 app.use('/createConnection', createConnection);
 app.use('/getReceivedInvitations', getReceivedInvitations);
 app.use('/getSentInvitations', getSentInvitations);
+app.use('/ignoreInvitation', ignoreInvitation);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
