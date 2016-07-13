@@ -8,8 +8,10 @@ var Sequelize = require('sequelize');
 var basename  = path.basename(module.filename);
 var env       = process.env.NODE_ENV || 'development';
 //var config    = require(__dirname + '\\configSeq.json')[env];
-var db        = {};
 var config    = require(path.join(__dirname, 'configSeq.json')) [env];
+
+var db        = {};
+
 
 /* GET users listing. */
 router.post('/', function(req, res) {
@@ -24,8 +26,8 @@ router.post('/', function(req, res) {
    console.log(config.password);
    console.log(config);
     
-  sequelize.query('SELECT "Invitations"."receiverEmailid" , "Users"."name" FROM "Invitations" inner join "Users" ON "Invitations"."receiverEmailid" = "Users"."emailid" AND "Invitations"."senderEmailid" = ? AND "Invitations"."status" != ?',
-    { replacements: [req.body.senderEmailid , 'accepted'], type: sequelize.QueryTypes.SELECT }
+	sequelize.query('SELECT "Invitations"."senderEmailid" , "Users"."name" FROM "Invitations" inner join "Users" ON "Invitations"."senderEmailid" = "Users"."emailid" AND "Invitations"."receiverEmailid" = ?', 
+    { replacements: [req.body.emails], type: sequelize.QueryTypes.SELECT }
 ).then(function(Users) {
   res.json(Users);
 })
