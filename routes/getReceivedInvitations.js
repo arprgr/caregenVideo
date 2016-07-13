@@ -22,10 +22,10 @@ router.post('/', function(req, res) {
    console.log(config.database);
    console.log(config.username);
    console.log(config.password);
-   console.log(config);
+   console.log(req.body.emailid);
     
-  sequelize.query('SELECT "Invitations"."senderEmailid" , "Users"."name" FROM "Invitations" inner join "Users" ON "Invitations"."senderEmailid" = "Users"."emailid" AND "Invitations"."receiverEmailid" = ?', 
-    { replacements: [req.body.email], type: sequelize.QueryTypes.SELECT }
+  sequelize.query('SELECT "Invitations"."senderEmailid" , "Users"."name" FROM "Invitations" inner join "Users" ON "Invitations"."senderEmailid" = "Users"."emailid" AND "Invitations"."receiverEmailid" = ? AND "Invitations"."status" != ?', 
+    { replacements: [req.body.senderEmailid, 'accepted'], type: sequelize.QueryTypes.SELECT }
 ).then(function(Users) {
   res.json(Users);
 })

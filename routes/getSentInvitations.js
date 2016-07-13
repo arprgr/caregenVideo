@@ -24,8 +24,8 @@ router.post('/', function(req, res) {
    console.log(config.password);
    console.log(config);
     
-  sequelize.query('SELECT "Invitations"."senderEmailid" , "Users"."name" FROM "Invitations" inner join "Users" ON "Invitations"."senderEmailid" = "Users"."emailid" AND "Invitations"."senderEmailid" = ?', 
-    { replacements: [req.body.email], type: sequelize.QueryTypes.SELECT }
+  sequelize.query('SELECT "Invitations"."receiverEmailid" , "Users"."name" FROM "Invitations" inner join "Users" ON "Invitations"."receiverEmailid" = "Users"."emailid" AND "Invitations"."senderEmailid" = ? AND "Invitations"."status" != ?',
+    { replacements: [req.body.senderEmailid , 'accepted'], type: sequelize.QueryTypes.SELECT }
 ).then(function(Users) {
   res.json(Users);
 })
