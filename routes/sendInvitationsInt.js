@@ -24,6 +24,45 @@ console.log(nconf.get('emailPass'));
 
 router.post('/', function(req, res) {
 
+  models.Connections.find({ attributes: ['id'] ,
+        where: {
+            primaryEmailid : req.body.senderEmailid,
+            connectedToEmailid : req.body.receiverEmailid
+        }
+    }).then(function(Connections) {   
+        if (Connections != null ) {
+        console.log('no need to go further connection already exists');
+        
+        res.status(230).end();  return;
+        }
+    });
+  
+
+    models.Invitations.find({ attributes: ['id'] ,
+        where: {
+            senderEmailid : req.body.senderEmailid,
+            receiverEmailid : req.body.receiverEmailid
+        }
+    }).then(function(Invitations) {   
+        if (Invitations != null) {
+        console.log('you have already invited this user');
+        
+        res.status(240).end();  return;
+        }
+    });
+
+  models.Invitations.find({ attributes: ['id'] ,
+        where: {
+            senderEmailid : req.body.receiverEmailid,
+            receiverEmailid : req.body.senderEmailid
+        }
+    }).then(function(Invitations) {   
+        if (Invitations != null) {
+        console.log('Outstanding invitation already exists');
+        
+        res.status(250).end();  return;
+        }
+    }); 
     
   
  var transporter = nodemailer.createTransport({
