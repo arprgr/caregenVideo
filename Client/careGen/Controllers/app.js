@@ -14,7 +14,9 @@ angular.module('careGenApp', [
     'Home',
     'ngRoute',
     'ngCookies',
-    'ngMessages'
+    'ngMessages',
+    'ngPassword'
+
 ])
     .config(['$routeProvider', function ($routeProvider) {
 
@@ -65,6 +67,15 @@ angular.module('careGenApp', [
            $rootScope.globals = $cookieStore.get('globals') || {};
             if ($rootScope.globals.currentUser) {
                 $rootScope.userName = $rootScope.globals.currentUser.authdata;
+                $rootScope.registerEmail = $cookieStore.get('registerEmail');
+                $rootScope.connectionsID = $cookieStore.get('connectionsID') || [];
+
+                $rootScope.receivedInvitationID =  $cookieStore.get('receivedInvitationID');
+                $rootScope.sentInvitationID =  $cookieStore.get('sentInvitationID');
+
+                $rootScope.noConnections = $cookieStore.get('noConnections');
+                $rootScope.noInvitations = $cookieStore.get('noInvitations');
+            
                 $location.path('/main')
                  }
 
@@ -84,4 +95,26 @@ angular.module('careGenApp', [
                    $location.path('/home');
                }
            });
-        }]);
+        }])
+
+.factory('SharedData', function() {
+
+    // private
+    var value = 0;
+
+    // public
+    return {
+
+        getValue: function() {
+
+            return value;
+        },
+
+        setValue: function(val) {
+
+            value = val;
+           
+        }
+
+    };
+});
