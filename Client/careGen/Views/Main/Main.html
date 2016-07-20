@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="angular-material.css">
     <title>Caring Generations</title>
 </head>
 <body>
@@ -9,11 +10,63 @@
     <header>
         <h1 class="logo">Caring Generations</h1>
     </header>
-   <form name="form">
-  <label>Welcome </label> {{userName}}
-     <br><br>
- <button type="submit" ng-click="logoutClick()" class="getStartedButton">Logout</button>
-   </form>
 </div>
+<div layout="row">
+     <div flex>
+         <h3 class="Blue">  Welcome  {{userName}} </h3>
+     </div> <br>
+     <div flex="20">
+         <button type="submit" ng-click="logoutClick()" class="logoutButton">Logout</button>
+     </div>
+</div>
+<br><br>
+<div>
+    <table border="">
+        <col width="500"><col width="500">
+     <tr> <td>
+    <h3 class="Blue"> Connections</h3>
+    <table>
+       <tbody>
+       <tr>
+          <td><button type="submit" ng-click="addConnectionsClick()" class="logoutButton">Add a connection</button></td>
+          <tr><td>{{noConnections}}</td></tr>
+       </tr>
+
+       <tr ng:repeat="x in connectionsID">
+           <td> {{x.name}}.</td>
+        </tr>
+
+       </tbody>
+    </table>
+     </td>
+     <td>
+    <h3 class="Blue"> Invitations</h3>
+    <table>
+      <tbody >
+      <tr>
+          <td>
+              {{noInvitations}}
+          </td>
+      </tr>
+       <tr ng:repeat="i in sentInvitationID">
+           <td>You have invited {{i.receiverEmailid}} to connect with you.</td>
+       </tr>
+
+
+        <tr ng:repeat="i in receivedInvitationID">
+            <td>You have been invited by  {{i.name}}.</td>
+            <td><button type="submit" ng-click="acceptInvitationClick($index)" class="logoutButton">Accept</button></td>
+            <td><button type="submit" ng-click="ignoreInvitationClick($index)" class="logoutButton">Ignore </button></td>
+
+        </tr>
+        </tbody>
+
+     </table>
+     </td> </tr>
+    </table>
+
+</div>
+
+
 </body>
 </html>

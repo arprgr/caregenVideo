@@ -6,12 +6,17 @@
 </head>
 <body>
 <div data-ng-controller="MainController">
+    <form name="form" role="form">
     <label>Invite someone to connect with you</label>
-    <p>
+    <div>
         Email address <br>
         <input id ="email" type="email" data-ng-model="formData.receiverEmailid"  placeholder="Enter email id" class="emailField" required>
-        <button type="submit" ng-click="sendInviteClick()" class="getStartedButton">Submit</button>
-    </p>
+        <div style="color:red" role="alert">{{emailMessageError}} </div>
+        <div style="color:red" role="alert">{{waitmessage}}</div>
+        <button type="submit" ng-disabled="dataLoading" ng-click="sendInviteClick()" class="getStartedButton">Submit</button>
+
+    </div>
+    </form>
 </div>
 </body>
 </html>
