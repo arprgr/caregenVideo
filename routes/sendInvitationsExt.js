@@ -24,8 +24,7 @@ console.log(nconf.get('emailPass'));
 
 router.post('/', function(req, res) {
 
-    
-  
+   
  var transporter = nodemailer.createTransport({
     service: 'hotmail',
         auth: {
