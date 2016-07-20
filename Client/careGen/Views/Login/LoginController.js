@@ -3,8 +3,8 @@
 angular.module('Login', ['ngDialog','Authentication'])
 
     .controller('LoginController',
-        ['$scope', '$location', 'ngDialog', '$rootScope', 'AuthenticationService', 'SharedData',
-            function ($scope, $location, ngDialog, $rootScope, AuthenticationService, SharedData) {
+        ['$scope', '$location', 'ngDialog', '$rootScope', '$cookieStore','AuthenticationService', 'SharedData',
+            function ($scope, $location, ngDialog, $rootScope, $cookieStore, AuthenticationService, SharedData) {
 
                 $scope.login = function(){
 
@@ -19,9 +19,11 @@ angular.module('Login', ['ngDialog','Authentication'])
                         } else {
 
                             $rootScope.userName = response.data.name;
-                            
+                            AuthenticationService.SetCredentials( response.data.email, response.data.password, response.data.name);
+
                             SharedData.setValue(response.data.emailid);
                             $scope.formData.senderEmailid = response.data.emailid;
+
                             AuthenticationService.getSentInvitations($scope.formData, function(response) {
 
                                 if(response.data.length == 0){
@@ -29,8 +31,9 @@ angular.module('Login', ['ngDialog','Authentication'])
                                 }else {
                                     $rootScope.noInvitations = '';
                                 }
-                                console.log( $rootScope.noInvitations );
+
                                 $rootScope.sentInvitationID = response.data;
+                                $cookieStore.put('sentInvitationID', $rootScope.sentInvitationID);
 
                              });
 
@@ -38,26 +41,35 @@ angular.module('Login', ['ngDialog','Authentication'])
 
                                 if(response.data.length == 0){
                                     if($rootScope.noInvitations !== ''){
+
                                     $rootScope.noInvitations = 'No invitations.'; }
                                 }else{
                                     $rootScope.noInvitations = '';
                                 }
-                                console.log( $rootScope.noInvitations );
+
                                 $rootScope.receivedInvitationID = response.data;
+                                $cookieStore.put('receivedInvitationID', $rootScope.receivedInvitationID);
+                                $cookieStore.put('noInvitations', $rootScope.noInvitations);
                             });
 
 
                             AuthenticationService.getConnections($scope.formData, function(response) {
 
                               if(response.data.length == 0){
+
                                   $rootScope.noConnections = 'You have no connections yet.';
                                } else {
                                 $rootScope.noConnections = '';
-                                $rootScope.connectionsID = response.data;
+                                $cookieStore.put('connectionsID', $rootScope.connectionsID);
+
                                }
+                                $rootScope.connectionsID = response.data;
+                                $cookieStore.put('connectionsID', $rootScope.connectionsID );
+                                $cookieStore.put('noConnections', $rootScope.noConnections);
                             });
 
-                            AuthenticationService.SetCredentials(response.data.email, response.data.password, response.data.name);
+
+                            $cookieStore.put('registerEmail', $rootScope.registerEmail);
 
                             ngDialog.close( {
                                 scope: $scope }
