@@ -5,6 +5,7 @@ angular.module('Authentication')
     .factory('AuthenticationService',
         ['Base64', '$http', '$cookieStore', '$rootScope','$timeout',
          function (Base64, $http, $cookieStore, $rootScope, $timeout){
+
           var service = {};
                    
 
@@ -62,6 +63,97 @@ angular.module('Authentication')
 
              };
 
+             service.getReceivedInvitations = function(formdata, callback){
+
+                 $http({
+                     method: 'POST',
+                     url: '/getReceivedInvitations',
+                     data: formdata
+                 })
+                     .then(function successCallback(response) {
+                         callback(response);
+                     });
+
+             };
+
+             service.getSentInvitations = function(formdata, callback){
+
+                 $http({
+                     method: 'POST',
+                     url: '/getSentInvitations',
+                     data: formdata
+                 })
+                     .then(function successCallback(response) {
+                         callback(response);
+                     });
+
+             };
+
+             service.sendInvitationsInt= function(formdata, callback){
+
+                 $http({
+                     method: 'POST',
+                     url: '/sendInvitationsInt',
+                     data: formdata
+                 })
+                     .then(function successCallback(response) {
+                         callback(response);
+                     });
+
+             };
+
+             service.sendInvitationsExt= function(formdata, callback){
+
+                 $http({
+                     method: 'POST',
+                     url: '/sendInvitationsExt',
+                     data: formdata
+                 })
+                     .then(function successCallback(response) {
+                         callback(response);
+                     });
+
+             };
+
+             service.getConnections= function(formdata, callback){
+
+                 $http({
+                     method: 'POST',
+                     url: '/getConnections',
+                     data: formdata
+                 })
+                     .then(function successCallback(response) {
+                         callback(response);
+                     });
+
+             };
+
+             service.createConnection= function(formdata, callback){
+
+                 $http({
+                     method: 'POST',
+                     url: '/createConnection',
+                     data: formdata
+                 })
+                     .then(function successCallback(response) {
+                         callback(response);
+                     });
+
+             };
+
+             service.ignoreInvitation= function(formdata, callback){
+
+                 $http({
+                     method: 'POST',
+                     url: '/ignoreInvitation',
+                     data: formdata
+                 })
+                     .then(function successCallback(response) {
+                         callback(response);
+                     });
+
+             };
+
              service.SetCredentials = function (emailid, password, username) {
 
                    var authdata = username;
@@ -71,16 +163,36 @@ angular.module('Authentication')
                          username: emailid,
                          authdata: authdata
                      }
+
                  };
 
                  $http.defaults.headers.common['Authorization'] = 'Basic ' + authdata;
                  $cookieStore.put('globals', $rootScope.globals);
+//                 $cookieStore.put('registerEmail', $rootScope.registerEmail);
+
+//                 $cookieStore.put('connectionsID', connectionsid);
+ //                $cookieStore.put('receivedInvitationID', $rootScope.receivedInvitationID);
+//                 $cookieStore.put('sentInvitationID', $rootScope.sentInvitationID);
+
              };
 
              service.ClearCredentials = function () {
                  $rootScope.globals = {};
                  $rootScope.registerEmail = '';
+                 $rootScope.connectionsID = '';
+                 $rootScope.receivedInvitationID = '';
+                 $rootScope.sentInvitationID = '';
+                 $rootScope.noConnections = '';
+                 $rootScope.noInvitations = '';
+
                  $cookieStore.remove('globals');
+                 $cookieStore.remove('registerEmail');
+                 $cookieStore.remove('connectionsID');
+                 $cookieStore.remove('receivedInvitationID');
+                 $cookieStore.remove('sentInvitationID');
+                 $cookieStore.remove('noConnections');
+                 $cookieStore.remove('noInvitations');
+                 
                  $http.defaults.headers.common.Authorization = 'Basic ';
              };
 
