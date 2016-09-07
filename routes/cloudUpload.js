@@ -14,7 +14,6 @@ var connectionString = require(path.join(__dirname, 'config'));
 var models = require('../server/models/index');
 
 
-cloudinary.config({ cloud_name: 'simplifyit', api_key: '951594481582174', api_secret: 'Wh-6ElxK0yekJ6RHR_DpNFd1lIY' });
 
 //var models = require('../server/models/index');
 
