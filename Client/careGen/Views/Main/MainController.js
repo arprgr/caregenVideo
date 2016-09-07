@@ -15,6 +15,11 @@ angular.module('Main',['Authentication','Login', 'ngDialog'])
                     AuthenticationService.ClearCredentials();
                     $location.path('/home');
                 }
+                
+                $scope.MessagesClick = function() {
+                    
+                    $location.path('/messages');
+                }
 
                 $scope.addConnectionsClick= function() {
                     $scope.dataLoading = false;

@@ -21,7 +21,7 @@ var Sequelize = require('sequelize');
   var dbConfig = config.get('caregen.dbConfig');
 
 console.log('*************in getrecievedInvitations');
-console.log(config.use_env_variable);
+//console.log(config.use_env_variable);
 console.log(dbConfig);
 
 /* GET users listing. */

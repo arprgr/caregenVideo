@@ -19,7 +19,7 @@ var dbConfig = config.get('caregen.dbConfig');
 //var db        = {};
 
 console.log('**************in getsentinvitations');
-console.log(config.use_env_variable);
+//console.log(config.use_env_variable);
 console.log(dbConfig);
 console.log(dbUser);
 

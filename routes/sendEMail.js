@@ -18,6 +18,7 @@ var config = require('config');
 
 var emailUser = config.get('caregen.emailConfig.emailUser');
 var emailPass = config.get('caregen.emailConfig.emailPass');
+var hostURL =   config.get('caregen.serverURL.hostURL');
 
 
 console.log(emailUser);
@@ -40,7 +41,9 @@ router.post('/', function(req, res) {
         }
        });
 
-    var text = 'Welcome to CareGen, Please click on this link to register \n\n' + "http://localhost:3000/Index.html#/?origin=email&emailid=" + req.body.email;
+    var text = 'Welcome to CareGen, Please click on this link to register \n\n' +  hostURL + "Index.html#/?origin=email&emailid=" + req.body.email;
+
+    console.log(text);
 
     var mailOptions = {
     from: emailUser, // sender address

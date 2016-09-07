@@ -19,6 +19,7 @@ angular.module('Login', ['ngDialog','Authentication'])
                         } else {
 
                             $rootScope.userName = response.data.name;
+                            $rootScope.userEmailId = response.data.emailid;
                             AuthenticationService.SetCredentials( response.data.email, response.data.password, response.data.name);
 
                             SharedData.setValue(response.data.emailid);

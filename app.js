@@ -20,6 +20,14 @@ var getReceivedInvitations = require('./routes/getReceivedInvitations');
 var getSentInvitations = require('./routes/getSentInvitations');
 var ignoreInvitation = require('./routes/ignoreInvitation');
 
+// for the video Messaging functionality
+var upload = require('./routes/fileUpload');
+var getAllVideos = require('./routes/getAllVideos');
+var uploadCloud = require('./routes/cloudUpload');
+
+
+var upperBound = '1gb';
+
 var app = express();
 
 app.use(express.static('./views'));
@@ -36,6 +44,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'Client/careGen')));
+app.use(express.static(path.join(__dirname, 'routes/uploads')));
+app.use(express.static(path.join(__dirname, 'Client/careGen/views/video')))
+
 
 console.log('in CareGen app');
 console.log(__dirname);
@@ -55,6 +66,10 @@ app.use('/getReceivedInvitations', getReceivedInvitations);
 app.use('/getSentInvitations', getSentInvitations);
 app.use('/ignoreInvitation', ignoreInvitation);
 
+
+app.use('/upload', upload);
+app.use('/getAllVideos', getAllVideos);
+app.use('/uploadCloud', uploadCloud);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');

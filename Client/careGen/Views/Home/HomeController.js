@@ -12,10 +12,10 @@ angular.module('Home', ['ngDialog','Authentication'])
 
                 $scope.clickToOpen = function () {
                 
-                    ngDialog.open({
+                        ngDialog.open({
                         template: 'Views/Login/signIn.html',
                         className: 'ngdialog-theme-default',
-                        scope: $scope
+                        scope: $scope,
                     });
                 }
 

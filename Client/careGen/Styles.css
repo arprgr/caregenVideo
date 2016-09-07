@@ -61,7 +61,7 @@ p{
     margin-right: auto;
     background-color: #003d99;
     color: #004f99;
-    text-align:center;
+
     padding-bottom: 2%;
     background-image: url("images/background1.png");
     background-position: 100%;
@@ -99,4 +99,20 @@ p{
     text-align: left;
     width: 60%;
     margin: 2% 40%;
+}
+.logoutButton{
+    background-color:#004f99;
+    border: none;
+    color: white;
+    padding: 8px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    alignment: right;
+}
+.centerAlign{
+    text-align: center;
 }

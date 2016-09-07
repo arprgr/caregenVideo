@@ -1,0 +1,32 @@
+INSERT INTO public."Invitations"(
+             "senderEmailid", "receiverEmailid", message, status)
+    VALUES ('gregory.pillai@gmail.com', 'aarchaura@gmail.com', 'aarchaura@gmail.com', 'accepted');
+
+INSERT INTO public."Invitations"(
+             "senderEmailid", "receiverEmailid", message, status)
+    VALUES ('gregory.pillai@gmail.com', 'james@ech.net', 'james@ech.net', 'accepted');
+
+INSERT INTO public."Invitations"(
+             "senderEmailid", "receiverEmailid", message, status)
+    VALUES ('gregory.pillai@gmail.com', 'rob@ech.net', 'rob@ech.net', 'accepted');
+
+
+
+INSERT INTO public."Connections"(
+             "primaryEmailid", "connectedToEmailid")
+    VALUES ( 'aarchaura@gmail.com', 'gregory.pillai@gmail.com');
+INSERT INTO public."Connections"(
+             "primaryEmailid", "connectedToEmailid")
+    VALUES ( 'gregory.pillai@gmail.com', 'aarchaura@gmail.com');
+INSERT INTO public."Connections"(
+             "primaryEmailid", "connectedToEmailid")
+    VALUES ( 'james@ech.net', 'gregory.pillai@gmail.com');    
+INSERT INTO public."Connections"(
+             "primaryEmailid", "connectedToEmailid")
+    VALUES ( 'gregory.pillai@gmail.com', 'james@ech.net'); 
+INSERT INTO public."Connections"(
+             "primaryEmailid", "connectedToEmailid")
+    VALUES ( 'rob@ech.net', 'gregory.pillai@gmail.com');      
+INSERT INTO public."Connections"(
+             "primaryEmailid", "connectedToEmailid")
+    VALUES ( 'gregory.pillai@gmail.com', 'rob@ech.net'); 

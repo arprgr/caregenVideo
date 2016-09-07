@@ -12,7 +12,7 @@
       "emailPass": "isaiah62"
   },
   "serverURL": {
-     "hostURL" : "http://localhost:3000/"
+     "hostURL" : "https://shielded-refuge-67132.herokuapp.com/"
   }
  }
 }

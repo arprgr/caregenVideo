@@ -4,6 +4,7 @@ angular.module('Login', []);
 angular.module('Main', []);
 angular.module('Registration', []);
 angular.module('Home', []);
+angular.module('Messages', []);
 
 
 angular.module('careGenApp', [
@@ -15,7 +16,8 @@ angular.module('careGenApp', [
     'ngRoute',
     'ngCookies',
     'ngMessages',
-    'ngPassword'
+    'ngPassword',
+    'Messages'
 
 ])
     .config(['$routeProvider', function ($routeProvider) {
@@ -55,6 +57,14 @@ angular.module('careGenApp', [
             .when('/Index.html?origin=email',{
                 controller: 'HomeController',
                 templateUrl: 'Views/Home/EmailVerification.html'
+            })
+            .when('/messages',{
+                controller: 'MessageController',
+                templateUrl: 'Views/messaging/Messages.html'
+            })
+            .when('/video',{
+                controller: 'MessageController',
+                templateUrl: 'video.html'
             })
 
              .otherwise({ redirectTo: '/home' });

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="angular-material.css">
+    <title>Caring Generations</title>
+</head>
+<body>
+<div>
+    <header>
+        <h1 class="logo">Messaging Dashboard</h1>
+    </header>
+</div>
+
+<table>
+    <tr>
+        <td><button type="submit" ng-click="videoClick()" class="logoutButton">Record My Message </button></td>
+        <td><button type="submit" ng-click="recordVideo()" class="logoutButton">Record My Message ngDialog </button></td>
+        
+    </tr>
+</table>
+    
+   
+    
+<div layout="row">
+     <div flex>
+         <h3 class="Blue">  Welcome  {{userName}} : {{userEmailId}} </h3>
+     </div> <br>
+     <div flex="20">
+         <button type="submit" ng-click="logoutClick()" class="logoutButton">Logout</button>
+     </div>
+</div>
+<br><br>
+<div>
+    <table border="">
+        <col width="500"><col width="500">
+     <tr> <td>
+    <h3 class="Blue"> Connections</h3>
+    <table>
+       <tbody>
+       <form>    
+       <tr ng:repeat="x in connectionsID">
+           <td> {{x.name}}.</td>
+           <td> <input type="checkbox" ng-model="recepient.selected[x.connectedToEmailid]" ng-true-value="'{{x.name}}'" ng-false-value="''"> </td>
+        </tr>
+        </form>   
+        
+       </tbody>
+    </table>
+     </td>
+      </table>
+
+</div>
+
+<script src="../../Scripts/ngDialog.js"></script>    
+                        
+</body>
+</html>
