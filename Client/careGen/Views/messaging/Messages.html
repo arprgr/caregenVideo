@@ -4,6 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="angular-material.css">
     <title>Caring Generations</title>
+<link href="../../bootstrap.css" rel="stylesheet">    
 </head>
 <body>
 <div>
@@ -20,12 +21,12 @@
     </tr>
 </table>
     
-   
+
     
 <div layout="row">
      <div flex>
-         <h3 class="Blue">  Welcome  {{userName}} : {{userEmailId}} </h3>
-     </div> <br>
+         <h3 class="Blue">  Welcome  {{userName}} : {{userEmailId}}  </h3>
+     </div> <br>>
      <div flex="20">
          <button type="submit" ng-click="logoutClick()" class="logoutButton">Logout</button>
      </div>
@@ -50,7 +51,20 @@
      </td>
       </table>
 
-</div>
+           
+    <table border='1'>
+     <tr>
+      <td>From</td> 
+      <td>Created At</td>
+      <td>Link to the Message</td>     
+     </tr>    
+     <tr ng:repeat="x in receivedMessages">
+     <td>{{x.senderEmailId}}</td>
+     <td>{{x.createdAt}}</td>     
+     <td><image ng-src="{{x.vMessageThumb}}" style="width:100px;height:100px;border:0;" ng-click="videoView(x.vMessageURL)"></image></td>      
+     </tr>    
+    </table>   
+    </div>
 
 <script src="../../Scripts/ngDialog.js"></script>    
                         
