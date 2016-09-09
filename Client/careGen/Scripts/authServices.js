@@ -88,6 +88,19 @@ angular.module('Authentication')
                      });
 
              };
+            
+             service.getMessageInfo = function(formdata, callback){
+
+                 $http({
+                     method: 'POST',
+                     url: '/getMessageInfo',
+                     data: formdata
+                 })
+                     .then(function successCallback(response) {
+                         callback(response);
+                     });
+
+             };
 
              service.sendInvitationsInt= function(formdata, callback){
 
@@ -184,6 +197,7 @@ angular.module('Authentication')
                  $rootScope.sentInvitationID = '';
                  $rootScope.noConnections = '';
                  $rootScope.noInvitations = '';
+                 rootScope.noMessages = '';
 
                  $cookieStore.remove('globals');
                  $cookieStore.remove('registerEmail');
