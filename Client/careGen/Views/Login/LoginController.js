@@ -69,7 +69,22 @@ angular.module('Login', ['ngDialog','Authentication'])
                                 $cookieStore.put('noConnections', $rootScope.noConnections);
                             });
 
+                            AuthenticationService.getMessageInfo($scope.formData, function(response) {
 
+                                if(response.data.length == 0){
+                                    if($rootScope.noMessages !== ''){
+
+                                    $rootScope.noMessages = 'No Messages'; }
+                                }else{
+                                    $rootScope.noMessages = '';
+                                }
+                                
+                                $rootScope.receivedMessages = response.data;
+                                console.log($rootScope.receivedMessages);
+                                
+                            });
+                            
+                            
                             $cookieStore.put('registerEmail', $rootScope.registerEmail);
 
                             ngDialog.close( {
