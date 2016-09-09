@@ -14,6 +14,7 @@ var connectionString = require(path.join(__dirname, 'config'));
 var models = require('../server/models/index');
 
 
+cloudinary.config({ cloud_name: 'simplifyit', api_key: '951594481582174', api_secret: 'Wh-6ElxK0yekJ6RHR_DpNFd1lIY' });
 
 //var models = require('../server/models/index');
 
@@ -30,7 +31,8 @@ router.post('/', urlencodedParser, function(req, res) {
     console.log(jsonString.fName);
     console.log(jsonString.selectedNames);
     console.log(jsonString.senderEmailid);
-    var fName = filePathBase + jsonString.fName ;
+    var fName = filePathBase + jsonString.fName  + '.webm';
+    var imageUrl = 'https://res.cloudinary.com/simplifyit/video/upload/v1473342038/';
    
        cloudinary.uploader.upload(fName, 
         function(result) {           
@@ -52,6 +54,7 @@ router.post('/', urlencodedParser, function(req, res) {
                 messageType: 'video',
                 vMessageURL: vURL,
                 vMessagePublicId: publicId,
+                vMessageThumb: imageUrl + publicId + '.jpg',
                 status: 'unread',
                 location: 'inbox'
             }).then(function (Message) {

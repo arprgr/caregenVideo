@@ -52,7 +52,7 @@ router.post('/', urlencodedParser, function (req, res) {
     if(err) {
       console.log("err", err);
     } else {
-      return res.json({'fName': fname + '.webm'});
+      return res.json({'fName': fname});
     }
   }) 
     
