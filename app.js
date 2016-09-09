@@ -19,6 +19,7 @@ var createConnection = require('./routes/createConnection');
 var getReceivedInvitations = require('./routes/getReceivedInvitations');
 var getSentInvitations = require('./routes/getSentInvitations');
 var ignoreInvitation = require('./routes/ignoreInvitation');
+var getMessageInfo = require('./routes/getMessageInfo');
 
 // for the video Messaging functionality
 var upload = require('./routes/fileUpload');
@@ -70,6 +71,9 @@ app.use('/ignoreInvitation', ignoreInvitation);
 app.use('/upload', upload);
 app.use('/getAllVideos', getAllVideos);
 app.use('/uploadCloud', uploadCloud);
+app.use('/getMessageInfo', getMessageInfo);
+
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
