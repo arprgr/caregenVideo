@@ -23,7 +23,10 @@ module.exports = function(sequelize, DataTypes) {
         type : DataTypes.STRING,
         },
         createdAt: DataTypes.DATE,
-        updatedAt: DataTypes.DATE
+        updatedAt: DataTypes.DATE,
+        vMessageThumb: { 
+        type : DataTypes.STRING,
+        }
         
     }, {
         timestamps: true,
