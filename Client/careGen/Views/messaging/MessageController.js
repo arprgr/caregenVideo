@@ -32,17 +32,54 @@ angular.module('Messages',['Authentication','Login', 'ngDialog'])
                     }); 
                 }
                
-               $scope.videoView = function (urlToView) {
+               $scope.videoView = function (urlToView, mesgId) {
+                    var mesgIdJson = {'mesgId' : mesgId};
+                   alert(mesgIdJson);
+                     AuthenticationService.updateMessageStatus(mesgIdJson, function(response) {
 
-                        ngDialog.open({
-                        template: 'videoView.html',
-                        className: 'ngdialog-theme-default',
-                        data: {'vMessageURL':urlToView},    
-                        scope: $scope,
-                        showClose : true,
-                        closebyDocument: true,    
-                        closeByNavigation: false
-                    }); 
+                              if(response.status > 200){
+                                 alert("Could not update Message");
+                               }else{
+
+                                     ngDialog.open({
+                                         template: 'videoView.html',
+                                         className: 'ngdialog-theme-default',
+                                         data: {'vMessageURL':urlToView},    
+                                         scope: $scope,
+                                         showClose : true,
+                                         closebyDocument: true,    
+                                         closeByNavigation: false
+                                    });
+                              
+                               
+                               var currUser = {'email': $scope.userEmailId};
+                               console.log($scope);       
+                               console.log(currUser);       
+                            
+                               AuthenticationService.getMessageInfo(currUser, function(response) {
+
+                                if(response.data.length == 0){
+                                    if($rootScope.noMessages !== ''){
+
+                                    $rootScope.noMessages = 'No Messages'; }
+                                }else{
+                                    $rootScope.noMessages = '';
+                                }
+                                
+                                $rootScope.receivedMessages = response.data;
+                                $cookieStore.put('receivedMessages', $rootScope.receivedMessages);
+                                console.log($rootScope.receivedMessages);
+                                
+                            });
+                               
+                               
+                               }
+                                
+                         
+                           });
+                       
+                         
+                        
                 }
                
                
