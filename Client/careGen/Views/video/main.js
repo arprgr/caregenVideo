@@ -257,6 +257,10 @@ xmlhttp.send(null);
 function blobtobase64() {
 var reader = new window.FileReader();
 var blob = new Blob(recordedBlobs, {type: 'video/webm'}); 
+    
+    recordButton.disabled = true;
+    playButton.disabled = true;
+    saveButton.disabled = true;    
 
 reader.readAsDataURL(blob); 
 
@@ -267,9 +271,6 @@ reader.onloadend = function() {
         
         var base64data = dataUrl.split(',')[1]
 
-        //var blob = new FormData();
-        //formData.append("blob", base64data)
-    
         
         var request = new XMLHttpRequest();
         
@@ -335,8 +336,6 @@ reader.onloadend = function() {
 
      var load = {'fName': fName , 'selectedNames': selectedNames, 'senderEmailid' : senderEmailid.value };
      
-      alert(load);
-     
         var requestCloud = new XMLHttpRequest();
         console.log('now writing to cloud');
         var progressBar = document.querySelector('progress');
@@ -356,6 +355,14 @@ reader.onloadend = function() {
         }
         
     
+          requestCloud.onreadystatechange = function() {
+        if (requestCloud.readyState == XMLHttpRequest.DONE) {
+              alert('done saving the video, you can record another if you want');
+            recordButton.disabled = false;
+            
+            }
+
+         }
         
         requestCloud.open('post', '/uploadCloud', true);
             // requestCloud.setRequestHeader('Content-Type', 'text/plain');
