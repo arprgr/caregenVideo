@@ -85,6 +85,7 @@ angular.module('careGenApp', [
 
                 $rootScope.noConnections = $cookieStore.get('noConnections');
                 $rootScope.noInvitations = $cookieStore.get('noInvitations');
+                $rootScope.receivedMessages = $cookieStore.get('receivedMessages');
             
                 $location.path('/main')
                  }
