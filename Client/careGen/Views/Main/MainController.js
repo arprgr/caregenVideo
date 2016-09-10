@@ -73,6 +73,7 @@ angular.module('Main',['Authentication','Login', 'ngDialog'])
                                     $rootScope.noInvitations ='';
                                     $cookieStore.put('sentInvitationID', $rootScope.sentInvitationID);
                                     $cookieStore.put('noInvitations', $rootScope.noInvitations);
+                                    $cookieStore.put('receivedMessages', $rootScope.receivedMessages);
 
                                     ngDialog.close( {
                                         scope: $scope }
@@ -134,6 +135,7 @@ angular.module('Main',['Authentication','Login', 'ngDialog'])
                                    $rootScope.noInvitations ='';
                                    $cookieStore.put('sentInvitationID', $rootScope.sentInvitationID);
                                    $cookieStore.put('noInvitations', $rootScope.noInvitations);
+                                   $cookieStore.put('receivedMessages', $rootScope.receivedMessages);
                                   ngDialog.close( {
                                       scope: $scope }
                                   );
@@ -173,6 +175,7 @@ angular.module('Main',['Authentication','Login', 'ngDialog'])
                             $cookieStore.put('connectionsID', $rootScope.connectionsID);
                             $cookieStore.put('receivedInvitationID', $rootScope.receivedInvitationID);
                             $cookieStore.put('noInvitations', $rootScope.noInvitations);
+                            $cookieStore.put('receivedMessages', $rootScope.receivedMessages);
                         }
 
                          });
@@ -191,6 +194,7 @@ angular.module('Main',['Authentication','Login', 'ngDialog'])
                         }
                         $cookieStore.put('receivedInvitationID', $rootScope.receivedInvitationID);
                         $cookieStore.put('noInvitations', $rootScope.noInvitations);
+                        $cookieStore.put('receivedMessages', $rootScope.receivedMessages);
                         
                     });
  

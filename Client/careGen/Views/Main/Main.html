@@ -2,11 +2,18 @@
 <html lang="en">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="angular-material.css">
-    <link href="../../bootstrap.css" rel="stylesheet">
+<!--    <link rel="stylesheet" href="angular-material.css">
+    <link href="../../bootstrap.css" rel="stylesheet"> -->
+<link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+<link rel="stylesheet" href="http://www.w3schools.com/lib/w3-theme-teal.css">
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> 
+    
     <title>Caring Generations</title>
 </head>
 <body>
+    
+    
 <div>
     <header>
         <h1 class="logo">Caring Generations</h1>
@@ -22,6 +29,8 @@
 </div>
 <br><br>
 <div>
+<button class="w3-btn w3-blue w3-hover-red  w3-ripple" ng-click="MessagesClick()">You have <i>{{ (receivedMessages | filter:'unread').length }} </i> unread messages - Click here to View/Send Messages</button>
+    
     <table border="">
         <col width="500"><col width="500">
      <tr> <td>
@@ -67,12 +76,6 @@
     </table>
 
 </div>
-
-<table>
-    <tr>
-        <td><button type="submit" ng-click="MessagesClick()" class="logoutButton">Send Messages </button></td>
-    </tr>
-</table>
 
 </body>
 </html>
