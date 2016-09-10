@@ -101,6 +101,19 @@ angular.module('Authentication')
                      });
 
              };
+             
+             service.updateMessageStatus = function(mesgId, callback){
+
+                 $http({
+                     method: 'POST',
+                     url: '/updateMessageStatus',
+                     data: mesgId
+                 })
+                     .then(function successCallback(response) {
+                         callback(response);
+                     });
+
+             };
 
              service.sendInvitationsInt= function(formdata, callback){
 
