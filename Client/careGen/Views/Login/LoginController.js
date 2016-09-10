@@ -80,6 +80,7 @@ angular.module('Login', ['ngDialog','Authentication'])
                                 }
                                 
                                 $rootScope.receivedMessages = response.data;
+                                $cookieStore.put('receivedMessages', $rootScope.receivedMessages);
                                 console.log($rootScope.receivedMessages);
                                 
                             });
