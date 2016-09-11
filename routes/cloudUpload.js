@@ -21,7 +21,7 @@ cloudinary.config({ cloud_name: 'simplifyit', api_key: '951594481582174', api_se
 
 router.post('/', urlencodedParser, function(req, res) {
    
-    var filePathBase = __dirname + '\\uploads' + '\\'
+    var filePathBase = __dirname + '/uploads' + '/'
     
     var jsonString = JSON.parse(req.body);
     var nameArr = jsonString.selectedNames.split(',');

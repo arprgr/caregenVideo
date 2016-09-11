@@ -33,7 +33,7 @@ router.post('/', function(req, res) {
         }
        });
 
-    var text = 'You have an invitation to be part of the CareGen Family. Please click on the below link to register and join \n\n' + "https://shielded-refuge-67132.herokuapp.com/Index.html#/?origin=email&emailid=" + req.body.email;
+    var text = 'You have an invitation to be part of the CareGen Family. Please click on the below link to register and join \n\n' + "https://calm-thicket-20746.herokuapp.com/Index.html#/?origin=email&emailid=" + req.body.email;
 
     var mailOptions = {
     from: nconf.get('emailUser'), // sender address
