@@ -86,8 +86,9 @@ angular.module('careGenApp', [
                 $rootScope.noConnections = $cookieStore.get('noConnections');
                 $rootScope.noInvitations = $cookieStore.get('noInvitations');
                 $rootScope.receivedMessages = $cookieStore.get('receivedMessages');
-            
-                $location.path('/main')
+                console.log('refresing page');
+                console.log($location.path());
+                //$location.path('/main')
                  }
 
            $rootScope.$on('$locationChangeStart', function (event, next, current) {
