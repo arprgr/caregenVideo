@@ -30,10 +30,10 @@ angular.module('Messages',['Authentication','Login', 'ngDialog'])
                
                $scope.recordVideo = function (videoURL) {
                    
-                        alert($scope.recepient);
+                        
                         console.log($rootScope);            
                         ngDialog.open({
-                        template: 'video.html',
+                        template: 'Views/video/video.html',
                         className: 'ngdialog-theme-default',
                         scope: $scope,
                         showClose : true,
@@ -44,7 +44,7 @@ angular.module('Messages',['Authentication','Login', 'ngDialog'])
                
                $scope.videoView = function (urlToView, mesgId) {
                     var mesgIdJson = {'mesgId' : mesgId};
-                   alert(mesgIdJson);
+                   
                      AuthenticationService.updateMessageStatus(mesgIdJson, function(response) {
 
                               if(response.status > 200){
@@ -52,7 +52,7 @@ angular.module('Messages',['Authentication','Login', 'ngDialog'])
                                }else{
 
                                      ngDialog.open({
-                                         template: 'videoView.html',
+                                         template: 'Views/video/videoView.html',
                                          className: 'ngdialog-theme-default',
                                          data: {'vMessageURL':urlToView},    
                                          scope: $scope,
