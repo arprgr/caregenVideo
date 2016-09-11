@@ -210,7 +210,7 @@ angular.module('Authentication')
                  $rootScope.sentInvitationID = '';
                  $rootScope.noConnections = '';
                  $rootScope.noInvitations = '';
-                 rootScope.noMessages = '';
+                 $rootScope.noMessages = '';
 
                  $cookieStore.remove('globals');
                  $cookieStore.remove('registerEmail');
