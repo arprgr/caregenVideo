@@ -18,6 +18,16 @@ angular.module('Messages',['Authentication','Login', 'ngDialog'])
                     selected:{}
                 }  
                 
+               $scope.homeClick = function() {
+                    console.log('going home ');
+                    $location.path('/main');
+                }
+               
+                $scope.logoutClick = function() {
+                    AuthenticationService.ClearCredentials();
+                    $location.path('/home');
+                }
+               
                $scope.recordVideo = function (videoURL) {
                    
                         alert($scope.recepient);
