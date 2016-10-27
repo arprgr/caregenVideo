@@ -76,12 +76,12 @@
      </tr>
     </thead>
      <tr ng:repeat="x in receivedMessages" class="w3-hover-grey">    
-     <td>{{x.senderEmailId}}</td>
-     <td>{{x.createdAt | date: 'medium'}}</td>     
+     <td style="vertical-align:middle"> <u> {{x.senderName}} </u> <br> {{x.senderEmailId}} </td>
+     <td  style="vertical-align:middle">{{x.createdAt | date: 'medium'}}</td>     
      <td><image ng-src="{{x.vMessageThumb}}" style="width:100px;height:100px;border:0;" ng-click="videoView(x.vMessageURL, x.id)" class="w3-hover-opacity"></image></td>    
      
-     <td ng-if="x.status=='unread'" class="w3-red">{{x.status}}</td> 
-     <td ng-if="x.status=='read'" class="w3-teal">{{x.status}}</td>      
+     <td ng-if="x.status=='unread'" class="w3-red" style="vertical-align:middle">{{x.status}}</td> 
+     <td ng-if="x.status=='read'" class="w3-teal" style="vertical-align:middle">{{x.status}}</td>      
           
      </tr>    
     </table> 
