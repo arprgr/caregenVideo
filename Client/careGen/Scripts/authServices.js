@@ -102,6 +102,32 @@ angular.module('Authentication')
 
              };
              
+              service.getNotifications = function(formdata, callback){
+
+                 $http({
+                     method: 'POST',
+                     url: '/getNotifications',
+                     data: formdata
+                 })
+                     .then(function successCallback(response) {
+                         callback(response);
+                     });
+
+             };
+             
+             service.getAllNotifications = function(formdata, callback){
+
+                 $http({
+                     method: 'POST',
+                     url: '/getAllNotifications',
+                     data: formdata
+                 })
+                     .then(function successCallback(response) {
+                         callback(response);
+                     });
+
+             };
+             
              service.updateMessageStatus = function(mesgId, callback){
 
                  $http({
@@ -110,6 +136,34 @@ angular.module('Authentication')
                      data: mesgId
                  })
                      .then(function successCallback(response) {
+                         callback(response);
+                     });
+
+             };
+             
+             service.updateNotificationStatus = function(notificationId, callback){
+
+                 $http({
+                     method: 'POST',
+                     url: '/updateNotificationStatus',
+                     data: notificationId
+                 })
+                     .then(function successCallback(response) {
+                         console.log('Done updating Notifications' + response);
+                         callback(response);
+                     });
+
+             };
+             
+             service.deleteNotification = function(notificationId, callback){
+
+                 $http({
+                     method: 'POST',
+                     url: '/deleteNotification',
+                     data: notificationId
+                 })
+                     .then(function successCallback(response) {
+                         console.log('Done updating Notifications' + response);
                          callback(response);
                      });
 
