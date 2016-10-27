@@ -21,6 +21,13 @@ var getSentInvitations = require('./routes/getSentInvitations');
 var ignoreInvitation = require('./routes/ignoreInvitation');
 var getMessageInfo = require('./routes/getMessageInfo');
 var updateMessageStatus = require('./routes/updateMessageStatus');
+var updateNotificationStatus = require('./routes/updateNotificationStatus');
+
+var getNotifications = require('./routes/getNotifications');
+
+var getAllNotifications = require('./routes/getAllNotifications');
+
+var deleteNotification = require('./routes/deleteNotification');
 
 // for the video Messaging functionality
 var upload = require('./routes/fileUpload');
@@ -74,6 +81,12 @@ app.use('/getAllVideos', getAllVideos);
 app.use('/uploadCloud', uploadCloud);
 app.use('/getMessageInfo', getMessageInfo);
 app.use('/updateMessageStatus', updateMessageStatus);
+
+app.use('/getNotifications', getNotifications);
+app.use('/updateNotificationStatus', updateNotificationStatus);
+app.use('/getAllNotifications', getAllNotifications);
+app.use('/deleteNotification', deleteNotification);
+
 
 
 // catch 404 and forward to error handler
