@@ -33,7 +33,7 @@ router.post('/', function(req, res) {
 } else {
   var sequelize = new Sequelize(dbName, dbUser, dbPass, dbConfig);
        
-  sequelize.query('SELECT "Invitations"."senderEmailid" , "Users"."name" FROM "Invitations" left outer join "Users" ON "Invitations"."senderEmailid" = "Users"."emailid" WHERE "Invitations"."receiverEmailid" = ? AND "Invitations"."status" != ?', 
+  sequelize.query('SELECT "Invitations"."id", "Invitations"."senderEmailid" , "Users"."name" FROM "Invitations" left outer join "Users" ON "Invitations"."senderEmailid" = "Users"."emailid" WHERE "Invitations"."receiverEmailid" = ? AND "Invitations"."status" != ?', 
     { replacements: [req.body.senderEmailid, 'accepted'], type: sequelize.QueryTypes.SELECT }
 ).then(function(Users) {
   res.json(Users);

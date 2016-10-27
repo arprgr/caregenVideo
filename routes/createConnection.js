@@ -7,7 +7,8 @@ router.post('/', function(req, res) {
 
 			models.Connections.create({
                 primaryEmailid: req.body.receiverEmailid,
-                connectedToEmailid: req.body.senderEmailid
+                connectedToEmailid: req.body.senderEmailid,
+                 Duplicate: 'Original'
             }).then(function (Users) {
 
             	console.log('first entry created');
@@ -15,7 +16,8 @@ router.post('/', function(req, res) {
 
            models.Connections.create({
                 primaryEmailid: req.body.senderEmailid,
-                connectedToEmailid: req.body.receiverEmailid
+                connectedToEmailid: req.body.receiverEmailid,
+                Duplicate: 'Duplicate'
             }).then(function (Users) {
 
 			   	console.log('in create connection');

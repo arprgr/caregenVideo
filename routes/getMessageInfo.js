@@ -8,7 +8,7 @@ router.post('/', function(req, res) {
     console.log('getting all messages');
     console.log(req.body.email);
 
-    models.Messages.findAll({ attributes: ['id', 'senderEmailId', 'vMessageURL', 'vMessagePublicId', 'status', 'location', 'createdAt', 'vMessageThumb'],
+    models.Messages.findAll({ attributes: ['id', 'senderEmailId', 'receiverEmailId', 'senderName','receiverName' , 'vMessageURL', 'vMessagePublicId', 'status', 'location', 'createdAt', 'vMessageThumb'],
         where: {
           receiverEmailId: req.body.email
         }
