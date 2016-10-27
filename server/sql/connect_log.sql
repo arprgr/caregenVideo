@@ -1,4 +1,4 @@
-﻿CREATE OR REPLACE FUNCTION log_new_connection()
+CREATE OR REPLACE FUNCTION log_new_connection()
 RETURNS trigger AS
 $BODY$
 declare
@@ -17,7 +17,7 @@ loop
 end loop;
 
 INSERT INTO "Notifications" ("senderEmailId", "senderName", "receiverEmailId", "receiverName", "notificationType", "notificationMeta1", "notificationMeta2", "status", "createdAt", "updatedAt")
-VALUES(NEW."primaryEmailid", sender_user_info.name, NEW."connectedToEmailid" , receiver_user_info.name, 'Connection', 'Connect done',  'Connect done', 'Not Acknowledged', now(), now());
+VALUES(NEW."primaryEmailid", sender_user_info.name, NEW."connectedToEmailid" , receiver_user_info.name, 'Connection', New."id",  'Connect done', 'Not Acknowledged', now(), now());
 
 
 RETURN NEW;
@@ -26,7 +26,6 @@ $BODY$
 
 LANGUAGE plpgsql VOLATILE
 COST 100;
-
 
 CREATE TRIGGER log_connection
   AFTER INSERT

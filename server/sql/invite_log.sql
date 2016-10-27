@@ -1,4 +1,4 @@
-﻿CREATE OR REPLACE FUNCTION log_new_invite()
+CREATE OR REPLACE FUNCTION log_new_invite()
 RETURNS trigger AS
 $BODY$
 declare
@@ -17,7 +17,7 @@ loop
 end loop;
 
 INSERT INTO "Notifications" ("senderEmailId", "senderName", "receiverEmailId", "receiverName", "notificationType", "notificationMeta1", "notificationMeta2", "status", "createdAt", "updatedAt")
-VALUES(NEW."senderEmailid", sender_user_info.name, NEW."receiverEmailid" , receiver_user_info.name, 'Invite', 'New Invite',  'New Invite', 'Not Acknowledged', now(), now());
+VALUES(NEW."senderEmailid", sender_user_info.name, NEW."receiverEmailid" , receiver_user_info.name, 'Invite', New."id",  'New Invite', 'Not Acknowledged', now(), now());
 
 
 RETURN NEW;
@@ -40,3 +40,30 @@ INSERT INTO public."Invitations"(
     VALUES ( 'gregory.pillai@gmail.com', 'bridget.pillai@gmail.com');
 
    select * from "Notifications" ;
+   
+   
+   
+   
+   
+CREATE OR REPLACE FUNCTION public.log_update_invite()
+  RETURNS trigger AS
+$BODY$
+BEGIN
+
+Update "Notifications" set "status"='Acknowledged' where "notificationMeta1" = OLD."id" ;
+
+
+RETURN NEW;
+END;
+$BODY$
+  LANGUAGE plpgsql VOLATILE
+  COST 100;
+ALTER FUNCTION public.log_update_invite()
+  OWNER TO postgres;
+
+
+CREATE TRIGGER log_update_invite
+  AFTER UPDATE
+  ON public."Invitations"
+  FOR EACH ROW
+  EXECUTE PROCEDURE public.log_update_invite();   
