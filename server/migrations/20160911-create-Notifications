@@ -1,0 +1,52 @@
+'use strict';
+module.exports = {
+  up: function(queryInterface, Sequelize) {
+    return queryInterface.createTable('Notifications', {
+      id: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: Sequelize.INTEGER
+      },
+      senderEmailId: {
+        type: Sequelize.STRING
+      },
+      senderName: {
+        type: Sequelize.STRING
+      },
+      receiverEmailId: {
+        type: Sequelize.STRING
+      },
+      receiverName: {
+        type: Sequelize.STRING
+      },
+      notificationType: {
+        type: Sequelize.STRING
+      },
+      notificationMeta1: {
+        type: Sequelize.INTEGER
+      },
+      notificationMeta2: {
+        type: Sequelize.STRING
+      },
+      notificationMeta3: {
+        type: Sequelize.STRING
+      },
+      notificationMeta4: {
+        type: Sequelize.STRING
+      },
+       status: {
+        type: Sequelize.STRING
+      },    
+      createdAt: {
+        type: Sequelize.DATE
+      },
+      updatedAt: {
+        type: Sequelize.DATE
+      }   
+    });
+  },
+  down: function(queryInterface, Sequelize) {
+    return queryInterface.dropTable('Notifications');
+  }
+};
