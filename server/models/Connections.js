@@ -7,6 +7,9 @@ module.exports = function(sequelize, DataTypes) {
         connectedToEmailid: { 
         type : DataTypes.STRING,
         },
+        Duplicate: { 
+        type : DataTypes.STRING,
+        },
         createdAt: DataTypes.DATE,
         updatedAt: DataTypes.DATE
         

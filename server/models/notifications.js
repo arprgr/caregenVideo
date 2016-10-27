@@ -1,6 +1,6 @@
 'use strict';
 module.exports = function(sequelize, DataTypes) {
-    var Messages = sequelize.define('Messages', {
+    var Notifications = sequelize.define('Notifications', {
         senderEmailId: { 
         type : DataTypes.STRING,
         },
@@ -13,27 +13,23 @@ module.exports = function(sequelize, DataTypes) {
         receiverName: { 
         type : DataTypes.STRING,
         },
-        messageType: { 
+        notificationType: { 
         type : DataTypes.STRING,
         },
-        vMessageURL: { 
+        notificationMeta1: { 
         type : DataTypes.STRING,
         },
-         vMessagePublicId: { 
+         notificationMeta2: { 
+        type : DataTypes.STRING,
+        },
+        notificationMeta3: { 
         type : DataTypes.STRING,
         },
         status: { 
         type : DataTypes.STRING,
         },
-        location: { 
-        type : DataTypes.STRING,
-        },
         createdAt: DataTypes.DATE,
         updatedAt: DataTypes.DATE,
-        vMessageThumb: { 
-        type : DataTypes.STRING,
-        }
-        
     }, {
         timestamps: true,
         classMethods: {
@@ -42,5 +38,5 @@ module.exports = function(sequelize, DataTypes) {
             }
         }
     });
-    return Messages;
+    return Notifications;
 };
