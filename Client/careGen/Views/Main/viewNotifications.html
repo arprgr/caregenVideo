@@ -1,0 +1,44 @@
+<html>
+<link rel="stylesheet" href="../../w3.css">
+<link rel="stylesheet" href="../../w3-theme-teal.css">
+<link rel="stylesheet" href="../../font-awesome.min.css">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">    
+    
+<body>
+<div>  
+        <header class="w3-container w3-blue">
+            <h5>Notifications </h5>
+         </header> 
+        <table class="w3-table-all">
+        
+           <tr ng:repeat="x in allNotifications" class="w3-hover-grey">
+            <td style="vertical-align:middle">
+              {{x.senderName}}
+            </td>
+               
+            <td style="vertical-align:middle">
+              {{x.senderEmailId}}
+            </td> 
+            
+            <td ng-if="x.notificationType=='Message'" style="vertical-align:middle">Message Received</td> 
+            <td ng-if="x.notificationType=='Invite'" style="vertical-align:middle">Invitation</td>
+            <td ng-if="x.notificationType=='Connection'" style="vertical-align:middle">Connection Established</td>      
+            <td style="vertical-align:middle">
+              {{x.createdAt | date: 'medium' }}
+            </td>
+            <td>
+              <a href="" ng-click="deleteItem($index, x.id)"><i class="material-icons">delete</i></a>
+            </td>   
+               
+                
+          </tr>       
+        </table>
+        
+        </div>
+            
+
+    
+    </body>
+
+    
+</html>

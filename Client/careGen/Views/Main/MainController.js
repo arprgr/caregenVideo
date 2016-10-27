@@ -4,8 +4,8 @@
 angular.module('Main',['Authentication','Login', 'ngDialog'])
 
     .controller('MainController',
-        ['$scope', '$location','ngDialog', '$rootScope', '$cookieStore', 'AuthenticationService', 'SharedData',
-            function ($scope, $location, ngDialog, $rootScope, $cookieStore, AuthenticationService, SharedData) {
+        ['$scope', '$location','ngDialog', '$rootScope', '$cookieStore', 'AuthenticationService', 'SharedData', '$interval',
+            function ($scope, $location, ngDialog, $rootScope, $cookieStore, AuthenticationService, SharedData, $interval) {
 
 
                 $scope.dataForm = {};
@@ -44,6 +44,10 @@ angular.module('Main',['Authentication','Login', 'ngDialog'])
                     var checkEmail = '';
                     var emailFound, emailMessage, n;
                     checkEmail = ''; emailFound = ''; emailMessage = '';
+                    if (senderEmailId == $scope.formData.receiverEmailid ) {
+                         $rootScope.emailMessageError = 'You cannot invite your self..' ;
+                    }
+                    else {
                     AuthenticationService.VerifyId($scope.formData, function(response) {
 
                         if(response.status > 200 ) {
@@ -150,7 +154,7 @@ angular.module('Main',['Authentication','Login', 'ngDialog'])
                             }
                         }
                     });
-
+                }
                 }
 
                 
@@ -179,6 +183,7 @@ angular.module('Main',['Authentication','Login', 'ngDialog'])
                         }
 
                          });
+                  
                 }
 
                 $scope.ignoreInvitationClick = function(index) {
@@ -199,5 +204,230 @@ angular.module('Main',['Authentication','Login', 'ngDialog'])
                     });
  
                 }
+                
+             $scope.callAtInterval = function() {
+                console.log("$scope.callAtInterval - Interval occurred");
+                 var currUser = {'email': $rootScope.userEmailId};      
+                 console.log(currUser);
+                 var refreshUser = {'senderEmailid': $rootScope.userEmailId} ;
+           
+              AuthenticationService.getNotifications (currUser, function(response) {
 
-            }]);
+                                if(response.data.length == 0){
+                                    if($rootScope.notifications !== ''){
+
+                                    $rootScope.noNotifications = 'No Notifications'; }
+                                }else{
+                                    $rootScope.noNotifications = '';
+                                }
+                                
+                                $rootScope.notifications = response.data;
+                                $cookieStore.put('notifications', $rootScope.notifications);
+                                console.log($rootScope.notifications);
+                        
+                                var noOfMessages = $rootScope.notifications.filter($scope.checkMessageNotification);
+                                var noOfConnections = $rootScope.notifications.filter($scope.checkConnectNotification);
+                                var noOfInvites = $rootScope.notifications.filter($scope.checkInviteNotification);
+                                console.log('no of Connections =' + noOfConnections.length);
+                                console.log('no of Invites =' + noOfInvites.length);
+                  
+                                if(noOfMessages.length > 0 ) {
+                                    //
+                                    
+                                    console.log('new message in.. need to refresh receieved messages..');
+                                    AuthenticationService.getMessageInfo(currUser, function(response) {
+
+                                    if(response.data.length == 0){
+                                        if($rootScope.noMessages !== ''){
+
+                                        $rootScope.noMessages = 'No Messages'; }
+                                    }else{
+                                        $rootScope.noMessages = '';
+                                    }
+                                
+                                    $rootScope.receivedMessages = response.data;
+                                    $cookieStore.put('receivedMessages', $rootScope.receivedMessages);
+                                    console.log($rootScope.receivedMessages);
+
+                                    });
+                                    
+                                    //
+                                }
+                  
+                                if(noOfConnections.length > 0 ) {
+                                   // 
+                              AuthenticationService.getConnections(refreshUser, function(response) {
+
+                              if(response.data.length == 0){
+
+                                  $rootScope.noConnections = 'You have no connections yet.';
+                               } else {
+                                $rootScope.noConnections = '';
+                                $cookieStore.put('connectionsID', $rootScope.connectionsID);
+
+                               }
+                                $rootScope.connectionsID = response.data;
+                                $cookieStore.put('connectionsID', $rootScope.connectionsID );
+                                $cookieStore.put('noConnections', $rootScope.noConnections);
+                                //        
+                                });
+                                }
+                  
+                                if(noOfInvites.length > 0) {
+                                    //
+                                    console.log('no of Invites =' + noOfInvites.length);
+                                     console.log('getting invites for: ' + currUser); 
+                                     AuthenticationService.getReceivedInvitations(refreshUser, function(response) {
+
+                                if(response.data.length == 0){
+                                    if($rootScope.noInvitations !== ''){
+
+                                    $rootScope.noInvitations = 'No invitations.'; }
+                                }else{
+                                    $rootScope.noInvitations = '';
+                                }
+
+                                $rootScope.receivedInvitationID = response.data;
+                                $cookieStore.put('receivedInvitationID', $rootScope.receivedInvitationID);
+                                $cookieStore.put('noInvitations', $rootScope.noInvitations);
+                                });
+                                }
+                                else {
+                                    
+                                 AuthenticationService.getSentInvitations(refreshUser, function(response) {
+
+                                if(response.data.length == 0){
+                                    $rootScope.noInvitations = 'No invitations.';
+                                }else {
+                                    $rootScope.noInvitations = '';
+                                }
+
+                                $rootScope.sentInvitationID = response.data;
+                                $cookieStore.put('sentInvitationID', $rootScope.sentInvitationID);
+
+                             });
+                                    
+                            }
+                                
+                            });   
+                 
+                    
+                 
+            }
+
+        $scope.checkMessageNotification = function(notes) {
+            return notes.notificationType === 'Message';
+        }
+        
+        $scope.checkInviteNotification = function(notes) {
+            return notes.notificationType === 'Invite';
+        }
+        
+        $scope.checkConnectNotification = function(notes) {
+            return notes.notificationType === 'Connection';
+        }
+
+        $scope.updateNotificationStatus = function (notificationId) {
+             var notificationIdJson = {'notificationId' : notificationId};
+            console.log('updating notification ' + notificationId);
+             AuthenticationService.updateNotificationStatus(notificationIdJson, function(response) {
+
+                              if(response.status > 200){
+                                 alert("Could not update Notification");
+                        }
+                })
+        }
+        
+    $interval( function(){ $scope.callAtInterval(); }, 5000);  
+                
+                $scope.viewAllNotifications = function() {
+                    
+                        var currUser = {'email': $rootScope.userEmailId};      
+                        console.log(currUser);
+                        var refreshUser = {'senderEmailid': $rootScope.userEmailId} ;
+                 
+                AuthenticationService.getAllNotifications (currUser, function(response) {
+                                
+                                $rootScope.allNotifications = response.data;
+                                $cookieStore.put('allNotifications', $rootScope.allNotifications);
+                                console.log($rootScope.allNotifications);
+                                
+                            }); 
+                    
+                    ngDialog.open({
+                                         template: 'Views/Main/viewNotifications.html',
+                                         className: 'ngdialog-theme-default',
+                                         scope: $scope,
+                                         showClose : true,
+                                         closebyDocument: true,    
+                                         closeByNavigation: false
+                                    });
+                              
+                }
+                
+                   $scope.videoView = function (urlToView, mesgId) {
+                    var mesgIdJson = {'mesgId' : mesgId};
+                   
+                     AuthenticationService.updateMessageStatus(mesgIdJson, function(response) {
+
+                              if(response.status > 200){
+                                 alert("Could not update Message");
+                               }else{
+
+                                     ngDialog.open({
+                                         template: 'Views/video/videoView.html',
+                                         className: 'ngdialog-theme-default',
+                                         data: {'vMessageURL':urlToView},    
+                                         scope: $scope,
+                                         showClose : true,
+                                         closebyDocument: true,    
+                                         closeByNavigation: false
+                                    });
+                              
+                               
+                               var currUser = {'email': $scope.userEmailId};
+                               console.log($scope);       
+                               console.log(currUser);       
+                            
+                               AuthenticationService.getMessageInfo(currUser, function(response) {
+
+                                if(response.data.length == 0){
+                                    if($rootScope.noMessages !== ''){
+
+                                    $rootScope.noMessages = 'No Messages'; }
+                                }else{
+                                    $rootScope.noMessages = '';
+                                }
+                                
+                                $rootScope.receivedMessages = response.data;
+                                $cookieStore.put('receivedMessages', $rootScope.receivedMessages);
+                                console.log($rootScope.receivedMessages);
+                                
+                            });
+                               
+                               
+                               }
+                                
+                         
+                           });
+                       
+                         
+                        
+                }            
+
+       $scope.deleteItem = function (item, notificationId) {
+           var notificationIdJson = {'notificationId' : notificationId};
+                    AuthenticationService.deleteNotification(notificationIdJson, function(response) {
+
+                              if(response.status > 200){
+                                 alert("Could not update notification");
+                               } 
+                        
+                                else {
+                                   
+                                   $scope.allNotifications.splice($scope.allNotifications.indexOf(item),1);
+                               }
+                    });
+       }
+
+    }]);

@@ -4,78 +4,142 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!--    <link rel="stylesheet" href="angular-material.css">
     <link href="../../bootstrap.css" rel="stylesheet"> -->
-<link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
-<link rel="stylesheet" href="http://www.w3schools.com/lib/w3-theme-teal.css">
-<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> 
-    
+
+<link rel="stylesheet" href="../../w3.css">
+<link rel="stylesheet" href="../../w3-theme-teal.css">
+<link rel="stylesheet" href="../../font-awesome.min.css">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">    
+ 
+  
     <title>Caring Generations</title>
+    
+<style>
+growl-notifications {
+    position: fixed;
+    top: 150px;
+    right: 10px;
+    z-index: 1000;
+}
+
+growl-notifications growl-notification {
+    background: rgba(0,0,0,0.6);
+    color: white;
+    padding: 15px 30px;
+    width: 400px;
+    display: block;
+    border-radius: 5px;
+    margin-top: 15px;
+}
+    
+</style>    
 </head>
 <body>
+<growl-notifications></growl-notifications>
     
-    
-<div>
-    <header>
-        <h1 class="logo">Caring Generations</h1>
+<div class="w3-row w3-yellow">
+<header>
+        <h1>Caring Generations</h1>
     </header>
-</div>
-<div layout="row">
+</div>    
+
+<div class="w3-row">
      <div flex>
-         <h3 class="Blue">  Welcome  {{userName}} </h3>
-     </div> <br>
-     <div flex="20">
+         <h3 class="Blue">  Welcome {{userName}} </h3>
          <button type="submit" ng-click="logoutClick()" class="logoutButton">Logout</button>
      </div>
+</div>    
+
+<div lass="w3-row">
+<button class="w3-btn w3-blue w3-hover-red  w3-ripple" ng-click="MessagesClick()">You have <i>{{ (receivedMessages | filter:'unread').length }} </i> unread messages - Click to View/Send Messages</button>
+<button class="w3-btn w3-blue w3-hover-red  w3-ripple" ng-click="viewAllNotifications()">View all notifications</button>    
 </div>
-<br><br>
-<div>
-<button class="w3-btn w3-blue w3-hover-red  w3-ripple" ng-click="MessagesClick()">You have <i>{{ (receivedMessages | filter:'unread').length }} </i> unread messages - Click here to View/Send Messages</button>
     
-    <table border="">
-        <col width="500"><col width="500">
-     <tr> <td>
-    <h3 class="Blue"> Connections</h3>
-    <table>
-       <tbody>
-       <tr>
-          <td><button type="submit" ng-click="addConnectionsClick()" class="logoutButton">Add a connection</button></td>
-          <tr><td>{{noConnections}}</td></tr>
-       </tr>
-
-       <tr ng:repeat="x in connectionsID">
-           <td> {{x.name}}.</td>
-        </tr>
-
-       </tbody>
-    </table>
-     </td>
-     <td>
-    <h3 class="Blue"> Invitations</h3>
-    <table>
-      <tbody >
-      <tr>
-          <td>
-              {{noInvitations}}
+    
+<br>    
+    
+<div class="w3-row">
+        <div class="w3-col w3-container l4 w3-card" style="height:400px">
+         <header class="w3-container w3-blue">
+             <h5>Your Connections</h5>
+         </header>   
+         
+          
+         <table class="w3-table-all" style="height:300px">
+           <tr ng:repeat="x in connectionsID">
+           <td> {{x.name}}</td>
+           </tr>  
+         </table>    
+        
+        <button class="w3-btn w3-blue" ng-click="addConnectionsClick()">Add a new connection</button>
+        </div>
+        
+        <div class="w3-col w3-container l4 w3-card" style="height:400px">
+        <header class="w3-container w3-blue">
+             <h5>Your Invitations</h5>
+         </header>      
+        <table class="w3-table-all" style="height:150px">
+        <thead>
+        <td ng-if="(sentInvitationID).length > 0"> Sent Invitations</td>
+        </thead>    
+        <tr ng:repeat="i in sentInvitationID">
+          <td>{{i.receiverEmailid}}</td>    
+        </tr>    
+        </table>    
+        <table class="w3-table-all" style="height:150px">
+        <thead>
+          <td ng-if="(receivedInvitationsID).length > 0">
+              Received Invitations
           </td>
-      </tr>
-       <tr ng:repeat="i in sentInvitationID">
-           <td>You have invited {{i.receiverEmailid}} to connect with you.</td>
-       </tr>
-
-
-        <tr ng:repeat="i in receivedInvitationID">
+        </thead>    
+             <tr ng:repeat="i in receivedInvitationID">
             <td>You have been invited by  {{i.name}}.</td>
             <td><button type="submit" ng-click="acceptInvitationClick($index)" class="logoutButton">Accept</button></td>
             <td><button type="submit" ng-click="ignoreInvitationClick($index)" class="logoutButton">Ignore </button></td>
 
         </tr>
-        </tbody>
+        </table>     
+        </div>
+        
+        <div class="w3-col w3-container l4 w3-card" style="height:400px">  
+        <header class="w3-container w3-blue">
+            <h5>Messages </h5>
+         </header> 
+        <table class="w3-table w3-striped w3-border w3-small" style="min-width:250px">
+            <thead>  
+             <tr class="w3-blue">
+              <td>From</td>
+              <td>Status</td> 
 
-     </table>
-     </td> </tr>
-    </table>
 
+             </tr>
+            </thead>
+             <tr ng:repeat="x in receivedMessages" class="w3-hover-grey">     
+             <td><image ng-src="{{x.vMessageThumb}}" style="width:100px;height:100px;border:0;" ng-click="videoView(x.vMessageURL, x.id)" class="w3-hover-opacity"></image></td>    
+
+             <td ng-if="x.status=='unread'" class="w3-red">{{x.status}}</td> 
+             <td ng-if="x.status=='read'" class="w3-teal">{{x.status}}</td>      
+
+             </tr>    
+        </table>       
+        </div>
+
+    <div ng-repeat="x in notifications | filter: { notificationType : 'Message'}">
+        <growl-notification ttl="10000">
+        New Video Message from {{x.senderName}} 
+        </growl-notification>
+   </div>
+<div ng-repeat="x in notifications | filter: { notificationType : 'Invite'}">
+        <growl-notification ttl="10000">
+        New Invitation from {{x.senderName}} 
+        </growl-notification>
 </div>
+<div ng-repeat="x in notifications | filter: { notificationType : 'Connection'}">
+        <growl-notification ttl="10000">
+            Your are now connected to {{x.senderName}}   
+        </growl-notification>
+</div>    
+    
+</div>    
 
 </body>
 </html>
