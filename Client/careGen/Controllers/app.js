@@ -17,6 +17,7 @@ angular.module('careGenApp', [
     'ngCookies',
     'ngMessages',
     'ngPassword',
+    'growlNotifications',
     'Messages'
 
 ])
@@ -71,12 +72,13 @@ angular.module('careGenApp', [
     }])
 
     .run(['$rootScope', '$location', '$cookieStore', '$http',
-        function ($rootScope, $location, $cookieStore, $http) {
+        function ($rootScope, $location, $cookieStore, $http, $interval) {
 
             // keep user logged in after page refresh
            $rootScope.globals = $cookieStore.get('globals') || {};
             if ($rootScope.globals.currentUser) {
                 $rootScope.userName = $rootScope.globals.currentUser.authdata;
+                $rootScope.userEmailId = $cookieStore.get('userEmailId');
                 $rootScope.registerEmail = $cookieStore.get('registerEmail');
                 $rootScope.connectionsID = $cookieStore.get('connectionsID') || [];
 
@@ -107,6 +109,8 @@ angular.module('careGenApp', [
                    $location.path('/home');
                }
            });
+            
+        
         }])
 
 .factory('SharedData', function() {
