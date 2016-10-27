@@ -24,7 +24,10 @@ angular.module('Login', ['ngDialog','Authentication'])
 
                             SharedData.setValue(response.data.emailid);
                             $scope.formData.senderEmailid = response.data.emailid;
-
+                            
+                            
+                            $cookieStore.put('userEmailId', $rootScope.userEmailId);
+                            
                             AuthenticationService.getSentInvitations($scope.formData, function(response) {
 
                                 if(response.data.length == 0){
@@ -85,6 +88,22 @@ angular.module('Login', ['ngDialog','Authentication'])
                                 
                             });
                             
+                            
+                             AuthenticationService.getNotifications ($scope.formData, function(response) {
+
+                                if(response.data.length == 0){
+                                    if($rootScope.notifications !== ''){
+
+                                    $rootScope.noNotifications = 'No Messages'; }
+                                }else{
+                                    $rootScope.noNotifications = '';
+                                }
+                                
+                                $rootScope.notifications = response.data;
+                                $cookieStore.put('notifications', $rootScope.notifications);
+                                console.log($rootScope.notifications);
+                                
+                            });
                             
                             $cookieStore.put('registerEmail', $rootScope.registerEmail);
 
