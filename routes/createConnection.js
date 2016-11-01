@@ -32,7 +32,8 @@ router.post('/', function(req, res) {
 					  }).then(function(Invitations) {
 					    if(Invitations){
 					      Invitations.updateAttributes({
-					        status: 'accepted'
+					        status: 'accepted',
+                            invitestatus: 'accepted'   
 					      }).then(function(Invitations) {
 					        console.log('connection added,invite updated to accepted');
 					      });

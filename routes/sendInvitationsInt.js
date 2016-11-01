@@ -51,7 +51,8 @@ router.post('/', function(req, res) {
                 senderEmailid: req.body.senderEmailid,
                 receiverEmailid: req.body.receiverEmailid,
                 message : req.body.receiverEmailid,
-                status : 'Invited : error sending email'
+                status : 'Invited : error sending email',
+                invitestatus : 'open'
             }).then(function (RIPUsers) {
                 console.log("Inivation added but email not sent");
             });
@@ -66,7 +67,8 @@ router.post('/', function(req, res) {
                 senderEmailid: req.body.senderEmailid,
                 receiverEmailid: req.body.receiverEmailid,
                 message : req.body.receiverEmailid,
-                status : 'Invited : email sent'
+                status : 'Invited : email sent',
+                invitestatus : 'open'
             }).then(function (RIPUsers) {
                 console.log("Inivation added email sent");
             });
