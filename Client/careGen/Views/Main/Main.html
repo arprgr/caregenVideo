@@ -80,9 +80,13 @@ growl-notifications growl-notification {
         <table class="w3-table-all" style="height:150px">
         <thead>
         <td ng-if="(sentInvitationID).length > 0"> Sent Invitations</td>
+        <td ng-if="(sentInvitationID).length > 0"> Status </td>  
+        <td ng-if="(sentInvitationID).length > 0"> Invite Status </td>      
         </thead>    
         <tr ng:repeat="i in sentInvitationID">
-          <td>{{i.receiverEmailid}}</td>    
+          <td>{{i.receiverEmailid}}</td>
+          <td>{{i.status}}</td>
+          <td>{{i.invitestatus}}</td>       
         </tr>    
         </table>    
         <table class="w3-table-all" style="height:150px">
@@ -133,6 +137,11 @@ growl-notifications growl-notification {
         New Invitation from {{x.senderName}} 
         </growl-notification>
 </div>
+<div ng-repeat="x in notifications | filter: { notificationType : 'Rejection'}">
+        <growl-notification ttl="10000">
+        Your Invitation has been rejected by {{x.senderName}} 
+        </growl-notification>
+</div>    
 <div ng-repeat="x in notifications | filter: { notificationType : 'Connection'}">
         <growl-notification ttl="10000">
             Your are now connected to {{x.senderName}}   
