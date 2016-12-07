@@ -65,7 +65,7 @@ angular.module('Main',['Authentication','Login', 'ngDialog'])
                             console.log(emailFound);
                             if (emailFound == ''){
                                 $scope.dataLoading = true;
-                                $rootScope.waitmessage = 'Please Wait... Invitation is been sent';
+                                $rootScope.waitmessage = 'Please Wait... Invitation is being sent';
 
                                 AuthenticationService.sendInvitationsExt($scope.formData, function(response) {
 
@@ -73,7 +73,19 @@ angular.module('Main',['Authentication','Login', 'ngDialog'])
                                         receiverEmailid: $scope.formData.receiverEmailid
                                     };
 
-                                    $rootScope.sentInvitationID.push(item_ext);
+                                    var refreshUser = {'senderEmailid': $rootScope.userEmailId}      
+                                   AuthenticationService.getSentInvitations(refreshUser, function(response) {
+
+                                        if(response.data.length == 0){
+                                            $rootScope.noInvitations = 'No invitations.';
+                                        }else {
+                                            $rootScope.noInvitations = '';
+                                        }
+
+                                        $rootScope.sentInvitationID = response.data;
+                                        $cookieStore.put('sentInvitationID', $rootScope.sentInvitationID);
+
+                                    });
                                     $rootScope.noInvitations ='';
                                     $cookieStore.put('sentInvitationID', $rootScope.sentInvitationID);
                                     $cookieStore.put('noInvitations', $rootScope.noInvitations);
@@ -123,7 +135,7 @@ angular.module('Main',['Authentication','Login', 'ngDialog'])
 
                             if (emailFound == ''){
                                 $scope.dataLoading = true;
-                                $rootScope.waitmessage = 'Please Wait... Invitation is been sent';
+                                $rootScope.waitmessage = 'Please Wait... Invitation is being sent';
                            AuthenticationService.sendInvitationsInt($scope.formData, function(response) {
 
                               if(response.status > 200){
@@ -131,12 +143,20 @@ angular.module('Main',['Authentication','Login', 'ngDialog'])
                                  alert("Oops... Error sending mail");
                                }else{
 
-                                   var item = {
-                                       receiverEmailid: $scope.formData.receiverEmailid
-                                       };
+                                   var refreshUser = {'senderEmailid': $rootScope.userEmailId}      
+                                   AuthenticationService.getSentInvitations(refreshUser, function(response) {
 
-                                   $rootScope.sentInvitationID.push(item);
-                                   $rootScope.noInvitations ='';
+                                if(response.data.length == 0){
+                                    $rootScope.noInvitations = 'No invitations.';
+                                }else {
+                                    $rootScope.noInvitations = '';
+                                }
+
+                                $rootScope.sentInvitationID = response.data;
+                                $cookieStore.put('sentInvitationID', $rootScope.sentInvitationID);
+
+                             });
+                                   
                                    $cookieStore.put('sentInvitationID', $rootScope.sentInvitationID);
                                    $cookieStore.put('noInvitations', $rootScope.noInvitations);
                                    $cookieStore.put('receivedMessages', $rootScope.receivedMessages);
@@ -205,6 +225,70 @@ angular.module('Main',['Authentication','Login', 'ngDialog'])
  
                 }
                 
+                 $scope.cancelInvitationClick = function(inviteId) {
+                    console.log('cancelling the invitation' + inviteId); 
+                    var inviteIdJson = {'inviteId' : inviteId}; 
+                    
+                    AuthenticationService.cancelInvitation(inviteIdJson, function(response) {
+                      
+
+                        if($rootScope.receivedInvitationID = []){
+                            $rootScope.noInvitations = 'No invitations';
+                        }
+                        $cookieStore.put('receivedInvitationID', $rootScope.receivedInvitationID);
+                        $cookieStore.put('noInvitations', $rootScope.noInvitations);
+                        $cookieStore.put('receivedMessages', $rootScope.receivedMessages);
+                        
+                    });
+                     
+                     
+                     
+                     var refreshUser = {'senderEmailid': $rootScope.userEmailId} 
+                     
+                       AuthenticationService.getSentInvitations(refreshUser, function(response) {
+
+                                if(response.data.length == 0){
+                                    $rootScope.noInvitations = 'No invitations.';
+                                }else {
+                                    $rootScope.noInvitations = '';
+                                }
+
+                                $rootScope.sentInvitationID = response.data;
+                                $cookieStore.put('sentInvitationID', $rootScope.sentInvitationID);
+
+                             });     
+ 
+                }
+                 
+            $scope.deleteInvitationClick = function(index) {
+                
+                
+                    var item =  $rootScope.sentInvitationID[index];
+                    var inviteId = item.id;
+                
+                    console.log('deleting the invitation' + inviteId); 
+                
+                
+                    var inviteIdJson = {'inviteId' : inviteId}; 
+                    
+                    AuthenticationService.deleteInvitation(inviteIdJson, function(response) {
+                      
+
+                        if($rootScope.sentInvitationID = []){
+                            $rootScope.noInvitations = 'No invitations';
+                        }
+                        $cookieStore.put('sentInvitationID', $rootScope.sentInvitationID);
+                        $cookieStore.put('noInvitations', $rootScope.noInvitations);
+                        $cookieStore.put('receivedMessages', $rootScope.receivedMessages);
+                        
+                    });
+                     
+                     
+                     $rootScope.sentInvitationID.splice(index, 1);
+                         
+ 
+                }     
+                
              $scope.callAtInterval = function() {
                 console.log("$scope.callAtInterval - Interval occurred");
                  var currUser = {'email': $rootScope.userEmailId};      
@@ -228,6 +312,9 @@ angular.module('Main',['Authentication','Login', 'ngDialog'])
                                 var noOfMessages = $rootScope.notifications.filter($scope.checkMessageNotification);
                                 var noOfConnections = $rootScope.notifications.filter($scope.checkConnectNotification);
                                 var noOfInvites = $rootScope.notifications.filter($scope.checkInviteNotification);
+                                var noOfRejects = $rootScope.notifications.filter($scope.checkRejectNotification);
+                                var noOfCancel = $rootScope.notifications.filter($scope.checkCancelNotification);
+                  
                                 console.log('no of Connections =' + noOfConnections.length);
                                 console.log('no of Invites =' + noOfInvites.length);
                   
@@ -273,7 +360,7 @@ angular.module('Main',['Authentication','Login', 'ngDialog'])
                                 });
                                 }
                   
-                                if(noOfInvites.length > 0) {
+                                if(noOfInvites.length > 0 || noOfRejects > 0 || noOfCancel) {
                                     //
                                     console.log('no of Invites =' + noOfInvites.length);
                                      console.log('getting invites for: ' + currUser); 
@@ -325,6 +412,14 @@ angular.module('Main',['Authentication','Login', 'ngDialog'])
         
         $scope.checkConnectNotification = function(notes) {
             return notes.notificationType === 'Connection';
+        }
+        
+        $scope.checkRejectNotification = function(notes) {
+            return notes.notificationType === 'Rejection';
+        }
+        
+        $scope.checkCancelNotification = function(notes) {
+            return notes.notificationType === 'Cancelled';
         }
 
         $scope.updateNotificationStatus = function (notificationId) {
@@ -428,6 +523,48 @@ angular.module('Main',['Authentication','Login', 'ngDialog'])
                                    $scope.allNotifications.splice($scope.allNotifications.indexOf(item),1);
                                }
                     });
+       }
+       
+       
+       $scope.resendInvitationClick = function (emailid) {
+           
+           var emailidJson = {'emailid' : emailid};
+           
+           AuthenticationService.VerifyId(emailidJson, function(response) {
+                        var currUserJson = {'senderEmail': $scope.userEmailId,
+                                            'email' : emailid
+                                           };
+                        if(response.status > 200 ) {
+                            console.log(emailid + ' has registered sending internal reminder')
+                            
+                            AuthenticationService.resendInvitationInt(currUserJson, function(response) {
+
+                              if(response.status > 200){
+                                 alert("Could not send email reminder please try again");
+                               } 
+                        
+                                else {
+                                   
+                                 alert("Email reminder sent");
+                               }
+                            });
+                            
+                        } else {
+                            console.log(emailid + 'has not registered sending external reminder')
+                            
+                            AuthenticationService.resendInvitationExt(currUserJson, function(response) {
+
+                              if(response.status > 200){
+                                 alert("Could not send email reminder please try again");
+                               } 
+                        
+                                else {
+                                   
+                                 alert("Email reminder sent");
+                               }
+                            });
+                        }
+           });
        }
 
     }]);

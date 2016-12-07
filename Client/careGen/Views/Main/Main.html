@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="../../w3.css">
 <link rel="stylesheet" href="../../w3-theme-teal.css">
 <link rel="stylesheet" href="../../font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">    
  
   
@@ -73,7 +74,7 @@ growl-notifications growl-notification {
         <button class="w3-btn w3-blue" ng-click="addConnectionsClick()">Add a new connection</button>
         </div>
         
-        <div class="w3-col w3-container l4 w3-card" style="height:400px">
+        <div class="w3-col w3-container l5 w3-card" style="height:400px">
         <header class="w3-container w3-blue">
              <h5>Your Invitations</h5>
          </header>      
@@ -81,12 +82,13 @@ growl-notifications growl-notification {
         <thead>
         <td ng-if="(sentInvitationID).length > 0"> Sent Invitations</td>
         <td ng-if="(sentInvitationID).length > 0"> Status </td>  
-        <td ng-if="(sentInvitationID).length > 0"> Invite Status </td>      
+        <td ng-if="(sentInvitationID).length > 0"> Actions </td>      
         </thead>    
         <tr ng:repeat="i in sentInvitationID">
           <td>{{i.receiverEmailid}}</td>
-          <td>{{i.status}}</td>
-          <td>{{i.invitestatus}}</td>       
+          <td>{{i.invitestatus}}</td>
+          <td ng-if="i.invitestatus=='open'"><button class="w3-btn w3-medium w3-blue w3-hover-red  w3-ripple" ng-click="cancelInvitationClick(i.id)"><i class="fa fa-close"></i></button><button class="w3-btn w3-medium w3-blue w3-hover-red  w3-ripple" ng-click="resendInvitationClick(i.receiverEmailid)"><i class="fa fa-refresh"></i></button></td>
+          <td ng-if="i.invitestatus=='Cancelled'"><button class="w3-btn w3-medium w3-blue w3-hover-red  w3-ripple" ng-click="deleteInvitationClick($index)"><i class="fa fa-trash"></i></button></td>    
         </tr>    
         </table>    
         <table class="w3-table-all" style="height:150px">
@@ -98,13 +100,13 @@ growl-notifications growl-notification {
              <tr ng:repeat="i in receivedInvitationID">
             <td>You have been invited by  {{i.name}}.</td>
             <td><button type="submit" ng-click="acceptInvitationClick($index)" class="logoutButton">Accept</button></td>
-            <td><button type="submit" ng-click="ignoreInvitationClick($index)" class="logoutButton">Ignore </button></td>
+            <td><button type="submit" ng-click="ignoreInvitationClick($index)" class="logoutButton">Ignore</button></td>
 
         </tr>
         </table>     
         </div>
         
-        <div class="w3-col w3-container l4 w3-card" style="height:400px">  
+        <div class="w3-col w3-container l3 w3-card" style="height:400px">  
         <header class="w3-container w3-blue">
             <h5>Messages </h5>
          </header> 
@@ -140,6 +142,11 @@ growl-notifications growl-notification {
 <div ng-repeat="x in notifications | filter: { notificationType : 'Rejection'}">
         <growl-notification ttl="10000">
         Your Invitation has been rejected by {{x.senderName}} 
+        </growl-notification>
+</div>
+<div ng-repeat="x in notifications | filter: { notificationType : 'cancelled'}">
+        <growl-notification ttl="10000">
+         {{x.senderName}} Has cancelled invitation
         </growl-notification>
 </div>    
 <div ng-repeat="x in notifications | filter: { notificationType : 'Connection'}">
