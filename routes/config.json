@@ -1,10 +1,9 @@
 {
-    "development": {
-    "username": "postgres",
-    "password": "postgres",
-    "database": "caregen",
-    "host": "127.0.0.1",
+  "development": {
+    "username": "cfpntwwdmdowgx",
+    "password": "F5q6jYfkHkyu8ZJ1bbFI-Ji4bj",
+    "database": "d66hqph8sk16rr",
+    "host": "ec2-54-235-207-226.compute-1.amazonaws.com",
     "dialect": "postgres"
   }
-
 }

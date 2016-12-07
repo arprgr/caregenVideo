@@ -23,8 +23,10 @@ console.log(nconf.get('emailPass'));
 
 
 router.post('/', function(req, res) {
-
-   
+    
+// Find out of the external user has already registered.
+    
+  
  var transporter = nodemailer.createTransport({
     service: 'hotmail',
         auth: {
@@ -33,7 +35,7 @@ router.post('/', function(req, res) {
         }
        });
 
-    var text = 'You have an invitation to be part of the CareGen Family. Please click on the below link to register and join \n\n' + "https://calm-thicket-20746.herokuapp.com/Index.html#/?origin=email&emailid=" + req.body.email;
+    var text = 'You have an invitation to be part of the CareGen Family. Please click on the below link to register and join \n\n' + "https://calm-thicket-20746.herokuapp.com/Index.html#/?origin=invite&emailid=" + req.body.receiverEmailid;
 
     var mailOptions = {
     from: nconf.get('emailUser'), // sender address
@@ -70,8 +72,7 @@ router.post('/', function(req, res) {
             models.RIPUsers.create({
                 emailid: req.body.email,
                 origin : 'invited',
-                status : 'Initial : Error sending email',
-                invitestatus : 'open'
+                status : 'Initial : Error sending email'
             }).then(function (RIPUsers) {
                 console.log("user added to RIPUsers");
             });            
@@ -133,7 +134,7 @@ router.post('/', function(req, res) {
                 receiverEmailid: req.body.receiverEmailid,
                 message : req.body.receiverEmailid,
                 status : 'Invited : email sent',
-                invitestatus : 'open'  
+                invitestatus : 'open' 
             }).then(function (RIPUsers) {
                 console.log("Email sent invitations added");
             });

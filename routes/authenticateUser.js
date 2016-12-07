@@ -8,12 +8,16 @@ router.post('/', function(req, res) {
     models.Users.find({ attributes: ['emailid','name' , 'password'] ,
         where: {
             emailid: req.body.email
-
         }
     }).then(function(Users) {
 
-        console.log(Users.password) 
-        console.log(req.body.password)
+        if(!Users) {
+         
+            res.json()
+            
+        }
+        
+        else {
 
         if (Users.password != req.body.password) {
 
@@ -24,6 +28,7 @@ router.post('/', function(req, res) {
         else {
         console.log('valid user!!');    
         return (res.json(Users));
+        }
         }
     });
 });

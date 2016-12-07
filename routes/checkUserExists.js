@@ -5,7 +5,7 @@ var models = require('../server/models/index');
 
 router.post('/', function(req, res) {
 
-
+  console.log(req.body);
     models.Users.find({ attributes: ['emailid'],
         where: {
           emailid: req.body.email
