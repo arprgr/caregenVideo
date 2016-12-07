@@ -22,6 +22,10 @@ var ignoreInvitation = require('./routes/ignoreInvitation');
 var getMessageInfo = require('./routes/getMessageInfo');
 var updateMessageStatus = require('./routes/updateMessageStatus');
 var updateNotificationStatus = require('./routes/updateNotificationStatus');
+var cancelInvitation = require('./routes/cancelInvitation');
+var resendInvitationExt = require('./routes/resendInvitationExt');
+var resendInvitationInt = require('./routes/resendInvitationInt');
+var deleteInvitation = require('./routes/deleteInvitation');
 
 var getNotifications = require('./routes/getNotifications');
 
@@ -76,6 +80,7 @@ app.use('/getSentInvitations', getSentInvitations);
 app.use('/ignoreInvitation', ignoreInvitation);
 
 
+
 app.use('/upload', upload);
 app.use('/getAllVideos', getAllVideos);
 app.use('/uploadCloud', uploadCloud);
@@ -86,7 +91,10 @@ app.use('/getNotifications', getNotifications);
 app.use('/updateNotificationStatus', updateNotificationStatus);
 app.use('/getAllNotifications', getAllNotifications);
 app.use('/deleteNotification', deleteNotification);
-
+app.use('/cancelInvitation', cancelInvitation);
+app.use('/resendInvitationExt', resendInvitationExt);
+app.use('/resendInvitationInt', resendInvitationInt);
+app.use('/deleteInvitation', deleteInvitation);
 
 
 // catch 404 and forward to error handler
