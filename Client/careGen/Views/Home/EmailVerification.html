@@ -24,7 +24,7 @@
      <tr><td valign="top">
      <div>
          Complete your registration by giving us your name and choosing a password for your account.
-         You will log in with your email address and the password you choose.
+         You will log in with your email address and the password you choose!!
      </div>
      </td>
 
@@ -34,7 +34,7 @@
         <input id ="name" name = "name" type="name" class="emailField" placeholder="First & Last Name" ng-minlength="3"
                ng-maxlength="24" ng-model="formData.name" required><br>
      <md-tooltip>
-         This is the name that will be shown to other CareGen users.
+         This is the name that will be shown to other Living Connection users.
      </md-tooltip>
 
      <div  ng-if="registerForm.name.$touched" ng-messages="registerForm.name.$error" style="color:red" role="alert">
@@ -73,5 +73,6 @@
     </table>
 
 </div>
+    
 </body>
 </html>
