@@ -40,6 +40,11 @@ angular.module('careGenApp', [
                 controller: 'HomeController',
                 templateUrl: 'Views/Home/EmailVerify.html'
             })
+             .when('/handleInvite', {
+
+                controller: 'HomeController',
+                templateUrl: 'Views/Home/HandleInvite.html'
+            })
             .when('/forgetPassword',{
                 controller: 'LoginController',
                 templateUrl: 'Views/Login/ForgetPassword.html'
@@ -104,10 +109,14 @@ angular.module('careGenApp', [
   //                $location.search({});
                    $location.$$compose();
                    $location.path('/register');
-               } else
+               } else if ($location.search().origin == 'invite') {
+                   $rootScope.registerEmail= $location.search().emailid;
+                   $location.path('/handleInvite');
+               } else {
                 if ($location.path() !== '/home' && !$rootScope.globals.currentUser) {
                    $location.path('/home');
                }
+            }       
            });
             
         
