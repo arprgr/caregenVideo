@@ -37,9 +37,11 @@ router.post('/', urlencodedParser, function(req, res) {
        cloudinary.uploader.upload(fName, 
         function(result) {           
             
+        
             var senderEmailid =  jsonString.senderEmailid;
             var vURL =  result.secure_url;
             var publicId = result.public_id;
+            var vid;
            
             console.log(result); 
             console.log(result.secure_url);
@@ -47,10 +49,25 @@ router.post('/', urlencodedParser, function(req, res) {
             
             
            nameArr.forEach(function(value){
+               
+            models.Videos.create({
+                vid: publicId,
+                messageType: 'Message',
+                vMessageURL: vURL,
+                vMessagePublicId: publicId,
+                vMessageThumb: imageUrl + publicId + '.jpg'
+            }).then(function (Videos) {
+            	console.log('entry created for ' + Videos.id);
+                vid = publicId ;
+            });       
                 
+         console.log('created videos now creating messages');
+               
            models.Messages.create({
+                vid: publicId,
                 senderEmailId: senderEmailid,
                 receiverEmailId : value,
+                videonum: 'working',
                 messageType: 'video',
                 vMessageURL: vURL,
                 vMessagePublicId: publicId,
@@ -64,7 +81,7 @@ router.post('/', urlencodedParser, function(req, res) {
            });
        
        
-           return res.json({'Result': 'success'});
+           return res.json({'publicId': publicId});
        
        }, 
         { resource_type: "video" });
