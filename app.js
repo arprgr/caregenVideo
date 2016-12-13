@@ -33,6 +33,9 @@ var getAllNotifications = require('./routes/getAllNotifications');
 
 var deleteNotification = require('./routes/deleteNotification');
 
+var writeVideoPackager = require('./routes/writeVideoPackager');
+
+
 // for the video Messaging functionality
 var upload = require('./routes/fileUpload');
 var getAllVideos = require('./routes/getAllVideos');
@@ -96,6 +99,7 @@ app.use('/resendInvitationExt', resendInvitationExt);
 app.use('/resendInvitationInt', resendInvitationInt);
 app.use('/deleteInvitation', deleteInvitation);
 
+app.use('/writeVideoPackager', writeVideoPackager);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
