@@ -35,6 +35,7 @@ angular.module('Messages',['Authentication','Login', 'ngDialog'])
                         ngDialog.open({
                         template: 'Views/video/video.html',
                         className: 'ngdialog-theme-default',
+                        data: {'videoType':'message'},    
                         scope: $scope,
                         showClose : true,
                         closebyDocument: true, 
