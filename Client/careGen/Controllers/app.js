@@ -98,19 +98,30 @@ angular.module('careGenApp', [
                 //$location.path('/main')
                  }
 
-           $rootScope.$on('$locationChangeStart', function (event, next, current) {
+          $rootScope.$on('$locationChangeStart', function (event, next, current) {
               // redirect to login page if not logged in
 
-               if($location.search().origin == 'email') {
+                
+              console.log($rootScope);
+              
+              if($location.search().origin == 'email') {
                   $rootScope.registerEmail= $location.search().emailid;
-
+                  $rootScope.vid = $location.search().vid;
+                  $rootScope.vUrl = "https://res.cloudinary.com/simplifyit/video/upload/v1482338158/" + $rootScope.vid+".webm";
+                  $rootScope.vImageUrl="https://res.cloudinary.com/simplifyit/video/upload/v1482338158/"+$rootScope.vid+".jpg"
                  delete $location.$$search.origin;
                  delete $location.$$search.emailid;
+                 delete $location.$$search.vid;
+                  
   //                $location.search({});
                    $location.$$compose();
+                   
                    $location.path('/register');
                } else if ($location.search().origin == 'invite') {
                    $rootScope.registerEmail= $location.search().emailid;
+                   $rootScope.vid = $location.search().vid;
+                    $rootScope.vUrl = "https://res.cloudinary.com/simplifyit/video/upload/v1482338158/" + $rootScope.vid+".webm";
+                   $rootScope.vImageUrl="https://res.cloudinary.com/simplifyit/video/upload/v1482338158/"+$rootScope.vid+".jpg"
                    $location.path('/handleInvite');
                } else {
                 if ($location.path() !== '/home' && !$rootScope.globals.currentUser) {
