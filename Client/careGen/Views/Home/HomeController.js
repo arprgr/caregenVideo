@@ -132,6 +132,20 @@ angular.module('Home', ['ngDialog','Authentication'])
          
                 } 
                
+        $scope.videoView = function (vid) {
+                        var vUrl = "https://res.cloudinary.com/simplifyit/video/upload/v1482338158/" + vid +".webm";
+                                     ngDialog.open({
+                                         template: 'Views/video_mesg/videoView.html',
+                                         className: 'ngdialog-theme-default',
+                                         data: {'vUrl': vUrl},    
+                                         scope: $scope,
+                                         showClose : true,
+                                         closebyDocument: true,    
+                                         closeByNavigation: false
+                                    });
+        
+            }   
+               
             
             }]);
 

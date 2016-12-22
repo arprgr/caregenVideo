@@ -3,27 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Caring Generations</title>
-<link rel="stylesheet" href="../../w3.css">
-<link rel="stylesheet" href="../../w3-theme-teal.css">
-<link rel="stylesheet" href="../../font-awesome.min.css">
-    
-<style>
-table {
-    font-family: arial, sans-serif;
-    border-collapse: collapse;
-    width: 100%;
-}
-
-td, th {
-    border: 1px solid #dddddd;
-    text-align: center;
-    padding: 8px;
-}
-
-tr:nth-child(even) {
-    background-color: #dddddd;
-}
-</style>    
 
 </head>
 
@@ -153,49 +132,45 @@ FB.getLoginStatus(function(response) {
 }     
   
 </script>    
-
-<div class="w3-row" align="center">
-     <div flex>
-         <h3 class="Blue">Welcome to Living Connections</h3>
-         <a  href="" ng-click="clickToOpen()" class="linkfont">Sign in | </a>
+    
+<div class="container">
+    <header>
+        <h1 class="logo">Caring Generations</h1>
+        <a  href="" ng-click="clickToOpen()" class="linkfont">Sign in | </a>
         <a href="" ng-click="clickToOpenRegister()" class="linkfont">Register</a>
-     </div>
-</div>      
-<div class="w3-row" align="center">
-<div flex>
-<table style="width:100%">
-  <tr>
-    <td><form class="form" name="form">
-        <div>
+      </header>
+    <div class="ContainerFields">
+    <form class="form" name="form">
+        <div class="homefields" >
         <input id ="email" type="email" ng-model="formData.email"  placeholder="Your email address" class="emailField" required>
             
         <button type="submit" ng-disabled="form.$invalid || dataLoading" ng-click="buttonClick()" class="getStartedButton">Get Started</button>
-        </div>    
-</form></td>
-  </tr>
-  <tr>
-    <td>Your Video Invite <br> <video ng-if="vid" width="320" height="240" id="message" controls src="{{vUrl}}"></video> </td>
-  </tr>
-  <tr>
-  <td>      
-      <fb:login-button scope="public_profile,email" data-auto-logout-link="true" data-auto-logout-linl="true" onlogin="checkLoginState();">
-</fb:login-button>    
-    
+        <br> 
+     <h3> Click Here to view your Video Invite</h3>
+    <video ng-if="vid" width="320" height="240" id="message" controls src="{{vUrl}}"></video>         
             
-<button type="submit" id="fbHandler" disabled ng-click="handleFBLogin()" class="getStartedButton">Continue With Face Book Login</button>    
-</td>      
-  </tr>    
-</table>    
+       </div>
+    </form>
+       
+
+    
 </div>
-<br> 
-             
-   
-</div>    
-      
+  
 
 <div id="status">
 </div> 
+<!--    
+<div class="fb-login-button" data-max-rows="1" data-size="large" data-show-faces="true" data-auto-logout-link="true" on-click="checkLoginState();"></div>
+-->
+    
+<fb:login-button scope="public_profile,email" data-auto-logout-link="true" data-auto-logout-linl="true" onlogin="checkLoginState();">
+</fb:login-button>    
+    
+            
+<button type="submit" id="fbHandler" disabled ng-click="handleFBLogin()" class="getStartedButton">Continue With Face Book Login</button>
+            
 
+</div>
 
 </body>
 </html>
