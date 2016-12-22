@@ -34,7 +34,7 @@ router.post('/', function(req, res) {
         }
        });
 
-    var text = req.body.senderEmailid + ' wants to connect with you, please click on the below link to respond \n\n' + "https://calm-thicket-20746.herokuapp.com/Index.html#/?user=existing&emailid=" + req.body.receiverEmailid;
+    var text = req.body.senderEmailid + ' wants to connect with you, please click on the below link to respond \n\n' + "https://calm-thicket-20746.herokuapp.com/Index.html#/?origin=email&emailid=" + req.body.receiverEmailid + "&vid=" + req.body.publicId;
 
     var mailOptions = {
     from: nconf.get('emailUser'), // sender address
@@ -52,6 +52,7 @@ router.post('/', function(req, res) {
                 receiverEmailid: req.body.receiverEmailid,
                 message : req.body.receiverEmailid,
                 status : 'Invited : error sending email',
+                vid : req.body.publicId,
                 invitestatus : 'open'
             }).then(function (RIPUsers) {
                 console.log("Inivation added but email not sent");
@@ -68,6 +69,7 @@ router.post('/', function(req, res) {
                 receiverEmailid: req.body.receiverEmailid,
                 message : req.body.receiverEmailid,
                 status : 'Invited : email sent',
+                vid : req.body.publicId,
                 invitestatus : 'open'
             }).then(function (RIPUsers) {
                 console.log("Inivation added email sent");

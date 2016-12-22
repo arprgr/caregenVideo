@@ -23,22 +23,23 @@ router.post('/', urlencodedParser, function(req, res) {
    
     var filePathBase = __dirname + '\\uploads' + '\\'
     
-    var jsonString = JSON.parse(req.body);
-    var nameArr = jsonString.selectedNames.split(',');
-    
+    var jsonString = JSON.parse(req.body);    
     
     
     console.log(jsonString.fName);
-    console.log(jsonString.selectedNames);
     console.log(jsonString.senderEmailid);
+    
     var fName = filePathBase + jsonString.fName  + '.webm';
     var imageUrl = 'https://res.cloudinary.com/simplifyit/video/upload/v1473342038/';
    
+     console.log('starting upload to cloud'); 
+    
        cloudinary.uploader.upload(fName, 
         function(result) {           
             
         
             var senderEmailid =  jsonString.senderEmailid;
+    
             var vURL =  result.secure_url;
             var publicId = result.public_id;
             var vid;
@@ -48,7 +49,6 @@ router.post('/', urlencodedParser, function(req, res) {
             console.log(result.public_id);
             
             
-           nameArr.forEach(function(value){
                
             models.Videos.create({
                 vid: publicId,
@@ -61,25 +61,6 @@ router.post('/', urlencodedParser, function(req, res) {
                 vid = publicId ;
             });       
                 
-         console.log('created videos now creating messages');
-               
-           models.Messages.create({
-                vid: publicId,
-                senderEmailId: senderEmailid,
-                receiverEmailId : value,
-                videonum: 'working',
-                messageType: 'video',
-                vMessageURL: vURL,
-                vMessagePublicId: publicId,
-                vMessageThumb: imageUrl + publicId + '.jpg',
-                status: 'unread',
-                location: 'inbox'
-            }).then(function (Message) {
-            	console.log('entry created for ' + value);
-            });
-                  
-           });
-       
        
            return res.json({'publicId': publicId});
        

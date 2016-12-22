@@ -28,6 +28,7 @@ router.post('/', urlencodedParser, function(req, res) {
     console.log(jsonVid.publicId);
     console.log(jsonString.videoType);
     
+    if (jsonString.videoType == 'message') {
       models.Messages.create({
                 vid: jsonVid.publicId,
                 senderEmailId: jsonString.senderEmailid,
@@ -38,8 +39,10 @@ router.post('/', urlencodedParser, function(req, res) {
             }).then(function (Message) {
             	console.log('entry created in the new writeVideoPackager for ' + jsonString.vid);
             });
+    }
+    
 
-  });
+});
 
 
 module.exports = router;
