@@ -7,10 +7,14 @@ module.exports = function(sequelize, DataTypes) {
         receiverEmailid: { 
         type : DataTypes.STRING,
         },
+        vid: { 
+        type : DataTypes.STRING,
+        },
         message: DataTypes.STRING,
         status: DataTypes.STRING,
         createdAt: DataTypes.DATE,
-        updatedAt: DataTypes.DATE
+        updatedAt: DataTypes.DATE,
+        invitestatus: DataTypes.STRING
         
     }, {
         timestamps: true,

@@ -1,20 +1,9 @@
 'use strict';
 module.exports = function(sequelize, DataTypes) {
-    var Messages = sequelize.define('Messages', {
-        senderEmailId: { 
-        type : DataTypes.STRING,
-        },
+    var Videos = sequelize.define('Videos', {
         vid: { 
         type : DataTypes.STRING,
-        },
-        senderName: { 
-        type : DataTypes.STRING,
-        },
-        receiverEmailId: { 
-        type : DataTypes.STRING,
-        },
-        receiverName: { 
-        type : DataTypes.STRING,
+        primaryKey : true     
         },
         messageType: { 
         type : DataTypes.STRING,
@@ -23,12 +12,6 @@ module.exports = function(sequelize, DataTypes) {
         type : DataTypes.STRING,
         },
          vMessagePublicId: { 
-        type : DataTypes.STRING,
-        },
-        status: { 
-        type : DataTypes.STRING,
-        },
-        location: { 
         type : DataTypes.STRING,
         },
         createdAt: DataTypes.DATE,
@@ -45,5 +28,5 @@ module.exports = function(sequelize, DataTypes) {
             }
         }
     });
-    return Messages;
+    return Videos;
 };
