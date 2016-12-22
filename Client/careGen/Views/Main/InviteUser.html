@@ -5,15 +5,50 @@
     <title>Invitation</title>
 </head>
 <body>
+<script>
+  function ValidateEmail(currUser)   
+{  
+         
+var senderEmailid = document.querySelector('input#sender').value;
+    
+    
+ alert('current user is:' + senderEmailid); 
+    
+    
+    
+ if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(form.emailInput.value))  
+  {    
+      if (senderEmailid == form.emailInput.value) {
+          alert('you cannot send an invitation to yourself.');
+      }
+      else {
+      document.querySelector('button#sendInvite').click();
+      return (true)
+     }  
+  }  
+    else {
+    alert("You have entered an invalid email address!");
+    form.emailInput.focus();
+    form.emailInput.select();
+    return (false) 
+ }    
+}
+
+</script>    
+    
 <div data-ng-controller="MainController">
+    
+    <input type="text" value="{{userEmailId}}" id="sender" hidden="true"> 
+    
     <form name="form" role="form">
     <label>Invite someone to connect with you</label>
     <div>
         Email address <br>
-        <input id ="email" type="email" data-ng-model="formData.receiverEmailid"  placeholder="Enter email id" class="emailField" required>
-        <div style="color:red" role="alert">{{emailMessageError}} </div>
-        <div style="color:red" role="alert">{{waitmessage}}</div>
-        <button type="submit" ng-disabled="dataLoading" ng-click="sendInviteClick()" class="getStartedButton">Submit</button>
+        <input id ="email" name="emailInput" type="email" data-ng-model="formData.receiverEmailid"  placeholder="Enter email id" class="emailField" required>
+        <button type="Continue" ng-disabled="dataLoading" ng-click="closeThisDialog('Some value')" class="getStartedButton">Close</button>
+        <button type="Continue" ng-disabled="dataLoading" onClick="ValidateEmail()" class="getStartedButton">Continue</button>
+        
+        <button type="Continue" id="sendInvite" hidden="true" ng-disabled="dataLoading" ng-click="promptVideo(form.emailInput.value)" class="getStartedButton">Send Invite</button>
 
     </div>
     </form>

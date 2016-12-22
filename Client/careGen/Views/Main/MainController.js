@@ -16,6 +16,8 @@ angular.module('Main',['Authentication','Login', 'ngDialog'])
                     $location.path('/home');
                 }
                 
+                
+                
                 $scope.MessagesClick = function() {
                     
                     $location.path('/messages');
@@ -32,15 +34,29 @@ angular.module('Main',['Authentication','Login', 'ngDialog'])
                     });
 
                 }
-                $scope.sendInviteClick= function() {
+                $scope.promptVideo= function(recepient) {
+                      ngDialog.open({
+                        template: 'Views/video_mesg/video.html',
+                        className: 'ngdialog-theme-default',
+                        data: {'videoType':'invite'},    
+                        scope: $scope,
+                        showClose : true,
+                        closebyDocument: true, 
+                        closeByNavigation: false
+                    }); 
 
+                }
+                $scope.sendInviteClick= function(vid) {
+                  
                     $rootScope.emailMessageError = '';
                     var senderEmailId = SharedData.getValue();
-
-
                     $scope.formData.senderEmailid = senderEmailId;
-
+                    $scope.formData.publicId = vid;
+                   
+                    
                     $scope.formData.email = $scope.formData.receiverEmailid;
+                    
+                    console.log('now sending invite:' + $scope.formData.receiverEmailid +':' +senderEmailId +':' + $scope.formData.publicId) ;
                     var checkEmail = '';
                     var emailFound, emailMessage, n;
                     checkEmail = ''; emailFound = ''; emailMessage = '';
@@ -91,8 +107,7 @@ angular.module('Main',['Authentication','Login', 'ngDialog'])
                                     $cookieStore.put('noInvitations', $rootScope.noInvitations);
                                     $cookieStore.put('receivedMessages', $rootScope.receivedMessages);
 
-                                    ngDialog.close( {
-                                        scope: $scope }
+                                    ngDialog.close( { scope: $scope }
                                     );
                                 });
                             }else{
@@ -566,5 +581,7 @@ angular.module('Main',['Authentication','Login', 'ngDialog'])
                         }
            });
        }
+       
+    
 
     }]);
