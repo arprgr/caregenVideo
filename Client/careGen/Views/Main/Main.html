@@ -31,8 +31,55 @@ growl-notifications growl-notification {
     border-radius: 5px;
     margin-top: 15px;
 }
+
+   
+</style>
+<script>
+    // Load the SDK asynchronously
+window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '1093072224140701', // Set YOUR APP ID
+      status     : true, // check login status
+      cookie     : true, // enable cookies to allow the server to access the session
+      xfbml      : true,  // parse XFBML
+      version    : 'v2.8' // use graph api version 2.8
+    });
+  }  
+function sendFBPost () {
+
+alert('opening FB UI Dialog');
+
+ FB.ui({
+  method: 'feed',
+  name: 'Living Connections an exciting new app!',
+  link: 'https://developers.facebook.com/docs/',
+  caption: 'Living Connections',
+  mobile_iframe: true,
+  description: 'Giving and receving care will never be the same!'
+}, function(response){
+    console.log('could not launch');
+    console.log(response);
+});
+}
+
+function newWindow () {
+    //var url = 'https://www.facebook.com/dialog/feed?app_id=1093072224140701&name=Living%20Connections%20an%20Exciting%20new%20App&caption=Living%20Connections&link=https%3A%2F%2Fcalm-thicket-20476.herokuapp.com%2F#%2Fhome&picture=https://calm-thicket-20476.herokuapp.com/images/LC.png&redirect_uri=';
+ 
+    var url = 'https://www.facebook.com/dialog/feed?app_id=1093072224140701&link=https://calm-thicket-20746.herokuapp.com/%23/home&picture=https://calm-thicket-20746.herokuapp.com/images/ls.jpg&name=Living%20Connections&caption=Living%20Connections& description=An%20Exciting%20new%20app%20that%20will%20change%20Elder%20Care&display=popup';
     
-</style>    
+
+    window.open(url,'_blank','height=200,width=200,toolbar=no,location=no');
+}
+
+(function(d){
+     var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement('script'); js.id = id; js.async = true;
+     js.src = "//connect.facebook.net/en_US/all.js";
+     ref.parentNode.insertBefore(js, ref);
+   }(document));
+
+</script>    
 </head>
 <body>
 <growl-notifications></growl-notifications>
@@ -45,12 +92,17 @@ growl-notifications growl-notification {
 
 <div class="w3-row">
      <div flex>
-         <h3 class="Blue">  Welcome {{userName}} </h3>
-         <button type="submit" ng-click="logoutClick()" class="logoutButton">Logout</button>
+         <h3 class="Blue">  Welcome {{userName}} </h3> 
+         <image ng-if="userphoto" ng-src="{{userphoto}}" style="width:100px;height:100px;border:0;" class="w3-hover-opacity"></image>
+          <button ng-if="userphoto" class="w3-btn w3-blue w3-hover-red  w3-ripple" onclick="newWindow()">Share on FaceBook</button> 
+         <button type="submit" class="w3-btn w3-blue w3-hover-red  w3-ripple" ng-click="logoutClick()">Logout</button>
      </div>
 </div>    
 
-<div lass="w3-row">
+
+<br>
+
+<div class="w3-row">
 <button class="w3-btn w3-blue w3-hover-red  w3-ripple" ng-click="MessagesClick()">You have <i>{{ (receivedMessages | filter:'unread').length }} </i> unread messages - Click to View/Send Messages</button>
 <button class="w3-btn w3-blue w3-hover-red  w3-ripple" ng-click="viewAllNotifications()">View all notifications</button>    
 </div>
@@ -66,8 +118,9 @@ growl-notifications growl-notification {
          
           
          <table class="w3-table-all" style="height:300px">
-           <tr ng:repeat="x in connectionsID">
+           <tr ng:repeat="x in connectionsID |  filter: { primaryEmailid : userEmailId} ">
            <td> {{x.name}}</td>
+           <td> <image ng-src="{{x.profilepic}}" style="width:100px;height:100px;border:0;" class="w3-hover-opacity"></image></td>
            </tr>  
          </table>    
         
@@ -132,6 +185,7 @@ growl-notifications growl-notification {
     <div ng-repeat="x in notifications | filter: { notificationType : 'Message'}">
         <growl-notification ttl="10000">
         New Video Message from {{x.senderName}} 
+        audio.play();    
         </growl-notification>
    </div>
 <div ng-repeat="x in notifications | filter: { notificationType : 'Invite'}">
@@ -156,6 +210,8 @@ growl-notifications growl-notification {
 </div>    
     
 </div>    
+
+<div id="fb-root"></div>
 
 </body>
 </html>

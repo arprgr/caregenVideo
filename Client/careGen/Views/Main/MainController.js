@@ -49,7 +49,7 @@ angular.module('Main',['Authentication','Login', 'ngDialog'])
                 $scope.sendInviteClick= function(vid) {
                   
                     $rootScope.emailMessageError = '';
-                    var senderEmailId = SharedData.getValue();
+                    var senderEmailId = $rootScope.userEmailId;
                     $scope.formData.senderEmailid = senderEmailId;
                     $scope.formData.publicId = vid;
                    
@@ -192,6 +192,22 @@ angular.module('Main',['Authentication','Login', 'ngDialog'])
                 }
                 }
 
+             $scope.postToFB = function () {
+
+                console.log('posting to FB');
+
+                     ngDialog.open({
+                                         template: 'Views/Main/PostTOFB.html',
+                                         className: 'ngdialog-theme-default',
+                                         scope: $scope,
+                                         showClose : true,
+                                         closebyDocument: true,    
+                                         closeByNavigation: false
+                                    });
+
+               
+               }
+                
                 
                 $scope.acceptInvitationClick = function(index) {
                     var item =  $rootScope.receivedInvitationID[index];

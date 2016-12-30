@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Posting to FB</title>
+</head>
+<body>
+<script>
+window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '1093072224140701', // Set YOUR APP ID
+      status     : true, // check login status
+      cookie     : true, // enable cookies to allow the server to access the session
+      xfbml      : true,  // parse XFBML
+      version    : 'v2.8' // use graph api version 2.8
+    });
+
+ FB.ui({
+  method: 'feed',
+  name: 'Living Connections an exciting new app!',
+  link: 'https://developers.facebook.com/docs/',
+  caption: 'Living Connections',
+  mobile_iframe: true,
+  description: 'Giving and receving care will never be the same!'
+}, function(response){
+    console.log('could not launch');
+    console.log(response);
+});    
+  }  
+
+(function(d){
+     var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement('script'); js.id = id; js.async = true;
+     js.src = "//connect.facebook.net/en_US/all.js";
+     ref.parentNode.insertBefore(js, ref);
+   }(document));
+
+window.location = "https://www.facebook.com/dialog/feed?app_id=1093072224140701&mobile_iframe=true&amp;caption=An%20example%20caption&link=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2F&redirect_uri="
+</script>    
+    
+<div data-ng-controller="MainController">
+
+    
+
+</div>
+</body>
+</html>
