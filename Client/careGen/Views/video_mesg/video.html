@@ -8,6 +8,22 @@
 -->
 <html>
 <head>
+<style>
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+</style>    
 
   <meta charset="utf-8">
   <meta name="description" content="WebRTC code samples">
@@ -27,31 +43,41 @@
   <link rel="stylesheet" href="Views/video_mesg/main.css">
   <link rel="stylesheet" href="Views/video_mesg/main1.css">
 
+    
+    
 </head>
 
 <body>
+    
 
  <input type="text" value="{{recepient}}" id="recepients" hidden="true">
  <input type="text" value="{{userEmailId}}" id="sender" hidden="true"> 
  <input type="text" value="{{ngDialogData.videoType}}" id="videoType" hidden="true">
  <input type="text" value="{{ngDialogData.recepient}}" id="recepient" hidden="true">
  <input type="text" value="" id="vid" hidden="true">    
-    
-    
-  <div id="container">
-    <video id="gum" autoplay muted></video>
-    <video id="recorded" autoplay></video>
- <div>
-    
-      <button id="goBack" ng-click="closeThisDialog('Some value')">Go Back</button> 
-      <button id="record">Start Recording</button>
-      <button id="sendInviteOnly" ng-click="sendInviteClick('No Video')">Send Without Recording a Message</button> <br>
-      <button id="play" disabled>Play</button>
-      <button id="createVMessage" disabled>Send Invitation</button>    
-      <button id="sendInviteVMessage" hidden="true" disabled>Send Invitation</button>
-      
-  
- </div>
+   
+            <div id="container">
+               <table>  
+                <tr>
+                    <td>
+                        <video id="gum" autoplay muted></video>
+                        <video id="recorded" hidden="true" autoplay></video>
+                    </td>
+                    <td>
+                    <table>
+                      <tr><td><button id="goBack" ng-click="closeThisDialog('Some value')">Go Back</button></td></tr>
+                      <tr><td><button id="record">Start Recording</button></td></tr>    
+                      <tr><td><button id="sendInviteOnly" ng-click="sendInviteClick('No Video')">Send Without Recording a Message</button></td></tr>    
+                      <tr><td><button id="play" disabled>Play</button></td></tr>    
+                      <tr><td><button id="createVMessage" disabled>Send Invitation</button></td></tr>    
+                      <tr><td><button id="sendInviteVMessage" hidden="true" disabled>Send Invitation</button></td></tr> 
+                    
+                    </table>
+                    </td>    
+                </tr>    
+                </table>   
+            </div>
+            
     
     <div>
        File Upload to Server             
@@ -61,7 +87,7 @@
   <!-- include adapter for srcObject shim -->
   
     
-</div>
+   
 
   <script src="Views/video_mesg/adapter.js"></script>
   <script src="Views/video_mesg/main.js"></script>

@@ -32,9 +32,9 @@ var playButton = document.querySelector('button#play');
 // var saveButton = document.querySelector('button#save');
 var createVMessage = document.querySelector('button#createVMessage');
 var sendInviteVMessage = document.querySelector('button#sendInviteVMessage');
-
-recordButton.onclick = toggleRecording;
 playButton.onclick = play;
+recordButton.onclick = toggleRecording;
+
 createVMessage.onclick = blobtobase64;
 
 //getVideosButton.onclick = getFiles;
@@ -97,6 +97,8 @@ function handleStop(event) {
 
 function toggleRecording() {
   if (recordButton.textContent === 'Start Recording') {
+  document.getElementById("gum").style.display = "block";  
+  document.getElementById("recorded").style.display = "none";   
     startRecording();
   } else {
     stopRecording();
@@ -144,6 +146,8 @@ function startRecording() {
 function stopRecording() {
   mediaRecorder.stop();
   console.log('Recorded Blobs: ', recordedBlobs);
+  document.getElementById("gum").style.display = "none";  
+  document.getElementById("recorded").style.display = "block";    
   recordedVideo.controls = true;
   
   download();
@@ -151,7 +155,8 @@ function stopRecording() {
 
 function play() {
   var superBuffer = new Blob(recordedBlobs, {type: 'video/webm'});
-  recordedVideo.src = window.URL.createObjectURL(superBuffer);
+  
+  recordedVideo.src = window.URL.createObjectURL(superBuffer);    
 }
 
 
