@@ -32,7 +32,7 @@ router.post('/', function(req, res) {
    console.log(dbPass);
    console.log(dbConfig);
     
-	sequelize.query('SELECT "Connections"."id", "Connections"."connectedToEmailid" , "Users"."name" FROM "Connections" inner join "Users" ON "Connections"."connectedToEmailid" = "Users"."emailid" AND "Connections"."primaryEmailid" = ?', 
+	sequelize.query('select "Connections".id, "Connections"."connectedToEmailid", "Connections"."primaryEmailid", "Users".name , fbusersdata.profilepic from "Users" left outer join fbusersdata on "Users".fbid = fbusersdata.fbid left outer join "Connections" on "Users".emailid = "Connections"."connectedToEmailid" and "Connections"."primaryEmailid" = ?', 
     { replacements: [req.body.senderEmailid], type: sequelize.QueryTypes.SELECT }
 ).then(function(Users) {
   res.json(Users);

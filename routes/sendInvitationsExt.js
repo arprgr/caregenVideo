@@ -35,7 +35,7 @@ router.post('/', function(req, res) {
         }
        });
 
-    var text = 'You have an invitation to be part of the CareGen Family. Please click on the below link to register and join \n\n' + "https://calm-thicket-20746.herokuapp.com/Index.html#/?origin=invite&emailid=" +  "&vid=" + req.body.publicId; req.body.receiverEmailid;
+    var text = 'You have an invitation to be part of the CareGen Family. Please click on the below link to register and join \n\n' + "http://localhost:3000/Index.html#/?origin=invite&emailid=" +  req.body.receiverEmailid + "&vid=" + req.body.publicId;
 
     var mailOptions = {
     from: nconf.get('emailUser'), // sender address
@@ -87,7 +87,7 @@ router.post('/', function(req, res) {
                 receiverEmailid: req.body.receiverEmailid,
                 message : req.body.receiverEmailid,
                 status : 'Invited : Error sending email',
-                vid : req.body.publicId,
+                vid : req.body.publicId, 
                 invitestatus : 'open'
             }).then(function (RIPUsers) {
                 console.log("Invitations added! - but email not sent");
@@ -122,7 +122,7 @@ router.post('/', function(req, res) {
                 receiverEmailid: req.body.receiverEmailid,
                 message : req.body.receiverEmailid,
                 status : 'Invited : email sent',
-                vid : req.body.publicId, 
+                vid : req.body.publicId,
                 invitestatus : 'open' 
             }).then(function (RIPUsers) {
                 console.log("Email sent invitations added");

@@ -7,7 +7,8 @@ var models = require('../server/models/index');
 
 //Load configs
 var nconf = require('nconf');
-
+var bodyParser = require('body-parser');
+var urlencodedParser = bodyParser.text({ limit: '1gb' });
 
 
 var connectionString    = path.join(__dirname, 'configEmail.json');
@@ -24,7 +25,9 @@ console.log(nconf.get('emailPass'));
 
 router.post('/', function(req, res) {
 
-    
+ 
+ 
+ console.log('from Send Invitations Int :' + req.body.publicId);
   
  var transporter = nodemailer.createTransport({
     service: 'hotmail',
@@ -34,7 +37,7 @@ router.post('/', function(req, res) {
         }
        });
 
-    var text = req.body.senderEmailid + ' wants to connect with you, please click on the below link to respond \n\n' + "https://calm-thicket-20746.herokuapp.com/Index.html#/?origin=email&emailid=" + req.body.receiverEmailid + "&vid=" + req.body.publicId;
+    var text = req.body.senderEmailid + ' wants to connect with you, please click on the below link to respond \n\n' + "http://localhost:3000/Index.html#/?origin=email&emailid=" + req.body.receiverEmailid + "&vid=" + req.body.publicId;
 
     var mailOptions = {
     from: nconf.get('emailUser'), // sender address
