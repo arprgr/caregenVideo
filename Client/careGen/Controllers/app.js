@@ -83,6 +83,8 @@ angular.module('careGenApp', [
            $rootScope.globals = $cookieStore.get('globals') || {};
             if ($rootScope.globals.currentUser) {
                 $rootScope.userName = $rootScope.globals.currentUser.authdata;
+                $rootScope.fbid = $rootScope.globals.currentUser.fbid ;
+                $rootScope.userphoto = $rootScope.globals.currentUser.userphoto;
                 $rootScope.userEmailId = $cookieStore.get('userEmailId');
                 $rootScope.registerEmail = $cookieStore.get('registerEmail');
                 $rootScope.connectionsID = $cookieStore.get('connectionsID') || [];
@@ -116,7 +118,7 @@ angular.module('careGenApp', [
   //                $location.search({});
                    $location.$$compose();
                    
-                   $location.path('/register');
+                   $location.path('/home');
                } else if ($location.search().origin == 'invite') {
                    $rootScope.registerEmail= $location.search().emailid;
                    $rootScope.vid = $location.search().vid;
