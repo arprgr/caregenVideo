@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta property="og:url"                content="https://calm-thicket-20746.herokuapp.com/#/home" />
+    <meta property="og:type"               content="article" />
+    <meta property="og:title"              content="Changing the way Care Giving is Managed" />
+    <meta property="og:description"        content="LivingConnections is an App that is changing the way care is given and received. The vision is to build an internet-system for elder care. The app is being built with the firm belief that elder care needs to be managed better!" />
+    <meta property="og:image"              content="https://calm-thicket-20746.herokuapp.com/images/LC.png" />
+    <meta property="fb:app_id"              content="1093072224140701" />
     <meta charset="UTF-8">
     <title>Caring Generations</title>
 <link rel="stylesheet" href="../../w3.css">
@@ -29,130 +35,139 @@ tr:nth-child(even) {
 
 <body>
 <script>
- 
-  // This is called with the results from from FB.getLoginStatus().
-  function statusChangeCallback(response) {
-    console.log('statusChangeCallback');
-    console.log(response);
-    // The response object is returned with a status field that lets the
-    // app know the current login status of the person.
-    // Full docs on the response object can be found in the documentation
-    // for FB.getLoginStatus().
-    if (response.status === 'connected') {
-      // Logged into your app and Facebook.
-      testAPI();
-       
-      FB.api('/me?fields=email,id,name,picture', function(response) {
-      console.log('Successful login for: ' + response.name);
-        
-      document.getElementById('fbHandler').disabled =false;
-          
-      });    
-         
-    } else if (response.status === 'not_authorized') {
-      // The person is logged into Facebook, but not your app.
-      alert ('your are ' + response.status);    
-      document.getElementById('status').innerHTML = 'Please log ' +
-        'into this app.';
-    } else {
-      // The person is not logged into Facebook, so we're not sure if
-      // they are logged into this app or not.
-    alert ('your are ' + response.status);    
-      document.getElementById('status').innerHTML = 'Please log ' +
-        'into Facebook.';
-    }
-  }
-
- 
-    
-  // This function is called when someone finishes with the Login
-  // Button.  See the onlogin handler attached to it in the sample
-  // code below.
-  function checkLoginState() {
-    alert('checking login state');   
-    FB.getLoginStatus(function(response) {
-      statusChangeCallback(response);
-    });
-  }
-
-function logout () {   
-FB.logout(function(response) {
-  console.log(response);
-  alert('you are logged out!')  
-});
-
-FB.getLoginStatus(function(response) {
-      statusChangeCallback(response);
-});    
-}    
-    
   window.fbAsyncInit = function() {
-  FB.init({
-    appId      : '1093072224140701',
-    cookie     : true,  // enable cookies to allow the server to access 
-                        // the session
-    xfbml      : true,  // parse social plugins on this page
-    version    : 'v2.8' // use graph api version 2.8
-  });
+    FB.init({
+      appId      : '1093072224140701', // Set YOUR APP ID
+      status     : true, // check login status
+      cookie     : true, // enable cookies to allow the server to access the session
+      xfbml      : true,  // parse XFBML
+      version    : 'v2.8' // use graph api version 2.8
+    });
+    
+    
+  FB.Event.subscribe('auth.authResponseChange', function(response) 
+  {
+    
+   if (response.status === 'connected') 
+    {
+      document.getElementById("message").innerHTML +=  "<br>Connected to Facebook";
+      //SUCCESS
+  
+      getUserInfo();
+      document.getElementById("fbLoginAs").hidden=false;
+      document.getElementById("fbLoginContinue").hidden=false;
+      
+    }  
+  else if (response.status === 'not_authorized') 
+    {
+      document.getElementById("message").innerHTML +=  "<br>Failed to Connect";
 
-  // Now that we've initialized the JavaScript SDK, we call 
-  // FB.getLoginStatus().  This function gets the state of the
-  // person visiting this page and can return one of three states to
-  // the callback you provide.  They can be:
-  //
-  // 1. Logged into your app ('connected')
-  // 2. Logged into Facebook, but not your app ('not_authorized')
-  // 3. Not logged into Facebook and can't tell if they are logged into
-  //    your app or not.
-  //
-  // These three cases are handled in the callback function.
+    //FAILED
+    } else 
+    {
+      document.getElementById("message").innerHTML +=  "<br>Logged Out";
+      document.getElementById("status").innerHTML="";
+      document.getElementById("fbLoginAs").hidden=true;
+      document.getElementById("fbLoginContinue").hidden=true;
 
-  FB.getLoginStatus(function(response) {
-    statusChangeCallback(response);
-  });
+      //UNKNOWN ERROR
+    }
+  }); 
+  
+    };
+    
+    function Login()
+  {
+  
+    FB.login(function(response) {
+       if (response.authResponse) 
+       {
+          getUserInfo();
+          //angular.element(document.getElementById('login')).scope().handleFBLogin();
+        } else 
+        {
+           console.log('User cancelled login or did not fully authorize.');
+        }
+     },{scope: 'email,user_photos,user_videos,user_likes,user_location,user_birthday,publish_pages'});
+  
+  
+  }
 
-  };
+  function getUserInfo() {
+      FB.api('/me?fields=id,name,email,birthday', function(response) {
+
+    var str="You are logged in to FaceBook as: "+response.name+"<br>";
+        str +="<b>id: </b>"+response.id+"<br>";
+        str +="<b>Email:</b> "+response.email+"<br>";
+        str +="<b>Birthday:</b> "+response.birthday+"<br>";
+        document.getElementById("status").innerHTML=str;
+              
+    });
+
+      FB.api('/me/picture?type=normal', function(response) {
+
+       var str="<br/><b>Pic</b> : <img src='"+response.data.url+"'/>";
+        document.getElementById("status").innerHTML+=str;
+              
+      });
+
+    }
+  
+  function getPhoto()
+  {
+    FB.api('/me/picture?type=normal', function(response) {
+
+      var str="<br/><b>Pic</b> : <img src='"+response.data.url+"'/>";
+        document.getElementById("status").innerHTML+=str;
+              
+    });
+  
+  }
+  function LoginAs()
+  {
+    FB.logout(function(){
+     FB.login(function(response) {
+       if (response.authResponse) 
+       {
+         // angular.element(document.getElementById('login')).scope().handleFBLogin();
+        } else 
+        {
+           console.log('User cancelled login or did not fully authorize.');
+        }
+     },{scope: 'email,user_photos,user_videos,user_likes,user_location,user_birthday,publish_pages'});
+    });
+
+     
+
+  }
+
+ function continueToLC () {
+   
+  angular.element(document.getElementById('login')).scope().handleFBLogin();
+
+ }
+
+function sendFBPost () {
+ FB.ui({
+  method: 'feed',
+  name: 'Living Connections an exciting new app!',
+  link: 'https://calm-thicket-20746.herokuapp.com/#/home',
+  caption: 'Living Connections',
+  description: 'Giving and receving care will never be the same!'
+}, function(response){});
+}
 
   // Load the SDK asynchronously
-  (function(d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) return;
-    js = d.createElement(s); js.id = id;
-    js.src = "//connect.facebook.net/en_US/sdk.js";
-    fjs.parentNode.insertBefore(js, fjs);
-  }(document, 'script', 'facebook-jssdk'));
+  (function(d){
+     var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement('script'); js.id = id; js.async = true;
+     js.src = "//connect.facebook.net/en_US/all.js";
+     ref.parentNode.insertBefore(js, ref);
+   }(document));
 
-  // Here we run a very simple test of the Graph API after login is
-  // successful.  See statusChangeCallback() for when this call is made.
 
-    function testAPI() {
-    console.log('Welcome!  Fetching your information.... ');
-    FB.api('/me?fields=email,id,name,picture', function(response) {
-      console.log('Successful login for: ' + response.name);
-      console.log(response);    
-      document.getElementById('status').innerHTML =
-        'Thanks for your interest in LivingConnections you are curently logged into Facebook as, ' + response.name + '!' + 'You could continue to onto Living Connections by clicking on the Continue button'
-      document.getElementById('status').style.color = 'red';    
-         
-    });
-  }
-    
- function getUserInfo () {
-     
-     FB.api(
-    '/me?fields=email,id,name,picture',
-    function (response) {
-      if (response && !response.error) {
-        /* handle the result */
-        alert('getting information');  
-        console.log(response);  
-      }
-     alert('there was an error :' + response.error);
-     console.log(response.error);    
-    });
-}     
-  
-</script>    
+</script>   
 
 <div class="w3-row" align="center">
      <div flex>
@@ -162,7 +177,7 @@ FB.getLoginStatus(function(response) {
      </div>
 </div>      
 <div class="w3-row" align="center">
-<div flex>
+<div flex id="login">
 <table style="width:100%">
   <tr>
     <td><form class="form" name="form">
@@ -174,17 +189,27 @@ FB.getLoginStatus(function(response) {
 </form></td>
   </tr>
   <tr>
-    <td>Your Video Invite <br> <video ng-if="vid" width="320" height="240" id="message" controls src="{{vUrl}}"></video> </td>
+    <td ng-if="vid">Your Video Invite <br> <video ng-if="vid" width="320" height="240" id="message" controls src="{{vUrl}}"></video> </td>
   </tr>
-  <tr>
-  <td>      
-      <fb:login-button scope="public_profile,email" data-auto-logout-link="true" data-auto-logout-linl="true" onlogin="checkLoginState();">
-</fb:login-button>    
-    
-            
-<button type="submit" id="fbHandler" disabled ng-click="handleFBLogin()" class="getStartedButton">Continue With Face Book Login</button>    
+<tr>
+<td>
+<div id="status">
+</div>
 </td>      
-  </tr>    
+</tr> 
+<tr>
+<td>      
+<button id="fbLoginContinue" hidden=true class="btn btn-primary  btn-large" onclick="continueToLC()">Continue With Current FaceBook Login</button>   
+<button id="fbLoginAs" hidden=true class="btn btn-primary  btn-large" onclick="LoginAs()">Login As Another User</button>
+<button id="sendFBPost" class="btn btn-primary  btn-large" onclick="sendFBPost()">Send FB Post</button>
+</td>
+</tr>  
+<tr><td>
+  
+  <fb:login-button scope="email,user_photos,user_videos,user_likes,user_location,user_birthday,publish_pages" data-auto-logout-link="true" data-auto-logout-link="true">
+</fb:login-button>
+
+</td></tr>   
 </table>    
 </div>
 <br> 
@@ -192,9 +217,11 @@ FB.getLoginStatus(function(response) {
    
 </div>    
       
-
-<div id="status">
-</div> 
+<div id="fb-root"></div>
+ 
+<div id="message">
+Events:<br/>
+</div>
 
 
 </body>

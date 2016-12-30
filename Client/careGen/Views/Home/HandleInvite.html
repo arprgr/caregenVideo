@@ -12,7 +12,10 @@
      <form class="form" name="form">
         
         <input id ="email" type="email" data-ng-model="formData.email"  placeholder="Your email address" class="emailField" readonly>
-        <button type="submit" id="submitButton" ng-click="handleInvite()" class="getStartedButton"> Get Started</button>
+         
+         <br> Your Video Invite <br> <video ng-if="vid" width="320" height="240" id="message" controls src="{{vUrl}}"></video>
+         
+        <br> <button type="submit" id="submitButton" ng-click="handleInvite()" class="getStartedButton"> Get Started</button>
          
        
     </form>     
