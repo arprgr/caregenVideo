@@ -79,6 +79,15 @@ function newWindow () {
      ref.parentNode.insertBefore(js, ref);
    }(document));
 
+function playSound() {
+
+
+    document.getElementById('xyz').play();
+
+
+}
+
+
 </script>    
 </head>
 <body>
@@ -90,12 +99,14 @@ function newWindow () {
     </header>
 </div>    
 
+<audio id="xyz" src="../../sounds/textalert.wav" preload="auto"></audio>
+
 <div class="w3-row">
      <div flex>
          <h3 class="Blue">  Welcome {{userName}} </h3> 
          <image ng-if="userphoto" ng-src="{{userphoto}}" style="width:100px;height:100px;border:0;" class="w3-hover-opacity"></image>
-          <button ng-if="userphoto" class="w3-btn w3-blue w3-hover-red  w3-ripple" onclick="newWindow()">Share on FaceBook</button> 
-         <button type="submit" class="w3-btn w3-blue w3-hover-red  w3-ripple" ng-click="logoutClick()">Logout</button>
+          <button ng-if="userphoto" class="w3-btn w3-blue w3-hover-red  w3-ripple" onclick="newWindow()">Share on FaceBook</button>
+          <button type="submit" class="w3-btn w3-blue w3-hover-red  w3-ripple" ng-click="logoutClick()">Logout</button>
      </div>
 </div>    
 
@@ -120,7 +131,7 @@ function newWindow () {
          <table class="w3-table-all" style="height:300px">
            <tr ng:repeat="x in connectionsID |  filter: { primaryEmailid : userEmailId} ">
            <td> {{x.name}}</td>
-           <td> <image ng-src="{{x.profilepic}}" style="width:100px;height:100px;border:0;" class="w3-hover-opacity"></image></td>
+           <td ng-if="userphoto"> <image ng-if="userphoto" ng-src="{{x.profilepic}}" style="width:100px;height:100px;border:0;" class="w3-hover-opacity"></image></td>
            </tr>  
          </table>    
         
@@ -182,28 +193,28 @@ function newWindow () {
         </table>       
         </div>
 
-    <div ng-repeat="x in notifications | filter: { notificationType : 'Message'}">
+    <div ng-repeat="x in notifications | filter: { notificationType : 'Message'}" ng-init='playAudio()'>
         <growl-notification ttl="10000">
         New Video Message from {{x.senderName}} 
-        audio.play();    
+        
         </growl-notification>
    </div>
-<div ng-repeat="x in notifications | filter: { notificationType : 'Invite'}">
+<div ng-repeat="x in notifications | filter: { notificationType : 'Invite'}" ng-init='playAudio()'>
         <growl-notification ttl="10000">
         New Invitation from {{x.senderName}} 
         </growl-notification>
 </div>
-<div ng-repeat="x in notifications | filter: { notificationType : 'Rejection'}">
+<div ng-repeat="x in notifications | filter: { notificationType : 'Rejection'}" ng-init='playAudio()'>
         <growl-notification ttl="10000">
         Your Invitation has been rejected by {{x.senderName}} 
         </growl-notification>
 </div>
-<div ng-repeat="x in notifications | filter: { notificationType : 'cancelled'}">
+<div ng-repeat="x in notifications | filter: { notificationType : 'cancelled'}" ng-init='playAudio()'>
         <growl-notification ttl="10000">
          {{x.senderName}} Has cancelled invitation
         </growl-notification>
 </div>    
-<div ng-repeat="x in notifications | filter: { notificationType : 'Connection'}">
+<div ng-repeat="x in notifications | filter: { notificationType : 'Connection'}" ng-init='playAudio()'>
         <growl-notification ttl="10000">
             Your are now connected to {{x.senderName}}   
         </growl-notification>

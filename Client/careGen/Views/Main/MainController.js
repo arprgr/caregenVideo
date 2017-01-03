@@ -13,7 +13,8 @@ angular.module('Main',['Authentication','Login', 'ngDialog'])
 
                 $scope.logoutClick = function() {
                     AuthenticationService.ClearCredentials();
-                    $location.path('/home');
+                    
+                    window.location.href= window.location.protocol + "//" + window.location.host + "/Index.html";
                 }
                 
                 
@@ -213,6 +214,7 @@ angular.module('Main',['Authentication','Login', 'ngDialog'])
                     var item =  $rootScope.receivedInvitationID[index];
                     
                      item.receiverEmailid = SharedData.getValue();
+                     item.receiverEmailid = $rootScope.userEmailId ;
 
                     AuthenticationService.createConnection(item, function(response) {
 
@@ -452,6 +454,11 @@ angular.module('Main',['Authentication','Login', 'ngDialog'])
         $scope.checkCancelNotification = function(notes) {
             return notes.notificationType === 'Cancelled';
         }
+
+        $scope.playAudio = function() {
+        var audio = new Audio('../../sounds/textalert.wav');
+        audio.play();
+        };
 
         $scope.updateNotificationStatus = function (notificationId) {
              var notificationIdJson = {'notificationId' : notificationId};
