@@ -28,7 +28,13 @@ module.exports = function(sequelize, DataTypes) {
         status: { 
         type : DataTypes.STRING,
         },
+        timeZone: { 
+        type : DataTypes.STRING,
+        },
         createdAt: DataTypes.DATE,
+        deliverAt: { 
+        type : DataTypes.STRING,
+        },
         updatedAt: DataTypes.DATE,
     }, {
         timestamps: true,

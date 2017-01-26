@@ -31,8 +31,14 @@ module.exports = function(sequelize, DataTypes) {
         location: { 
         type : DataTypes.STRING,
         },
+        timeZone: { 
+        type : DataTypes.STRING,
+        },
         createdAt: DataTypes.DATE,
         updatedAt: DataTypes.DATE,
+        deliverAt: { 
+        type : DataTypes.STRING,
+        },
         vMessageThumb: { 
         type : DataTypes.STRING,
         }
