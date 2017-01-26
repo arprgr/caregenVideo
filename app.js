@@ -26,21 +26,20 @@ var cancelInvitation = require('./routes/cancelInvitation');
 var resendInvitationExt = require('./routes/resendInvitationExt');
 var resendInvitationInt = require('./routes/resendInvitationInt');
 var deleteInvitation = require('./routes/deleteInvitation');
-
 var getNotifications = require('./routes/getNotifications');
-
 var getAllNotifications = require('./routes/getAllNotifications');
-
 var deleteNotification = require('./routes/deleteNotification');
-
 var writeVideoPackager = require('./routes/writeVideoPackager');
 
+var createReminder = require ('./routes/createReminder.js') ;
 
 // for the video Messaging functionality
 var upload = require('./routes/fileUpload');
 var getAllVideos = require('./routes/getAllVideos');
 var uploadCloud = require('./routes/cloudUpload');
 
+// handling fb users
+var handleFBUsers = require('./routes/handleFBUsers');
 
 var upperBound = '1gb';
 
@@ -100,6 +99,12 @@ app.use('/resendInvitationInt', resendInvitationInt);
 app.use('/deleteInvitation', deleteInvitation);
 
 app.use('/writeVideoPackager', writeVideoPackager);
+
+app.use('/handleFBUsers', handleFBUsers);
+
+app.use('/createReminder', createReminder);
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
