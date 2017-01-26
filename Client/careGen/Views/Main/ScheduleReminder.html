@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Invitation</title>
+</head>
+<body>
+<script>
+  
+</script>    
+    
+<div data-ng-controller="MainController">    
+<form class="form" name="form">    
+<table>
+    <tr>
+        <td>
+             Set time for the reminder
+        </td>
+        <td>
+            <div class="input-group" moment-picker="ctrl.timepicker" format="HH:mm">
+                <span class="input-group-addon">
+                    <i class="octicon octicon-clock"></i>
+                </span>
+                
+        <input class="form-control" placeholder="Select a time" ng-model="ctrl.timepicker" ng-model-options="{ updateOn: 'blur' }">
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+        Select Date
+        </td>
+        <td>
+        <input type="date" id="dt" name="bday" ng-model="formData.dt">
+        </td>
+    </tr>
+    <tr>
+        <td>
+        Which Time Zone
+        </td>
+        <td>
+            <input type="radio" name="timeZone" id="timeZone" ng-model="formData.timeZone" value="Eastern" checked> Eastern :
+            <input type="radio" name="timeZone" id="timeZone" ng-model="formData.timeZone" value="Central"> Central :
+            <input type="radio" name="timeZone" id="timeZone" ng-model="formData.timeZone" value="Pacific"> Pacific : 
+            <input type="radio" name="timeZone" id="timeZone" ng-model="formData.timeZone" value="IST"> IST : 
+        </td>
+    <tr>
+        <td>
+            Repeat every day
+        </td>
+        <td>
+          <input type="radio" name="repeat" id="repeat" ng-model="formData.repeat" value="Yes" checked> Yes
+          <input type="radio" name="repeat" id="repeat" ng-model="formData.repeat" value="No"> No  
+        </td>
+    </tr>    
+    
+</table> 
+              <br> <button type="submit" class="w3-btn w3-blue w3-hover-red  w3-ripple" ng-click="callSetReminder()">Schedule Reminder</button> 
+</form>
+</div>    
+</body>
+</html>

@@ -35,6 +35,19 @@ angular.module('Main',['Authentication','Login', 'ngDialog'])
                     });
 
                 }
+                
+                    $scope.showReminderDialog= function() {
+                    $scope.dataLoading = false;
+                    $rootScope.waitmessage = '';
+                    $rootScope.emailMessageError = '';
+                    ngDialog.open({
+                        template: 'Views/Main/ScheduleReminder.html',
+                        className: 'ngdialog-theme-default',
+                        scope: $scope
+                    });
+
+                }
+                    
                 $scope.promptVideo= function(recepient) {
                       ngDialog.open({
                         template: 'Views/video_mesg/video.html',
@@ -47,6 +60,76 @@ angular.module('Main',['Authentication','Login', 'ngDialog'])
                     }); 
 
                 }
+
+                 $scope.callSetReminder = function () {
+
+            console.log('@@@in call set reminder!');               
+               var input = $scope.formData.dt;
+               console.log(input);
+               var d = new Date( input );
+               var timeInput = $scope.ctrl.timepicker ;
+               var timeArr = timeInput.split(":");
+               var hour = timeArr[0];
+               var minute = timeArr[1];    
+               var year, month, day, min, hr;
+            
+               d.setHours(hour);
+               d.setMinutes(minute);
+           
+               console.log('from the set reminder function the offset' + d.getTimezoneOffset());
+               console.log('This is from the timePicker' + d)
+               
+
+              if ( !!d.valueOf() ) { // Valid date
+                year = d.getFullYear();
+                month = d.getMonth();
+                day = d.getDate();
+                min = d.getMinutes();
+                hr = d.getHours();
+              }
+                
+           
+              
+                 var vid = 'r9wichlvlx6wri6t3e8f' ;
+                 var senderEmailId = 'gregory.pillai@gmail.com';
+                 var receiverEmailId = 'gregory.pillai@gmail.com';
+                 var timeZone = $scope.formData.timeZone ;
+                 
+                 var mesgLoad = {'vid': vid, 'senderEmailId': senderEmailId, 'receiverEmailId' : receiverEmailId, 'year' : year, 'month' : month, 'day' : day , 'min': min, 'hr' : hr, 'dateStr' : d, 'timeZone' : timeZone}; 
+           
+                AuthenticationService.setReminder (mesgLoad, function(response) {
+                                
+                                console.log(response.data);
+                                
+                            });     
+
+       } 
+
+                $scope.compareTime = function(deliverAt) {
+                      
+                       
+                        var deliveryTime = new Date(deliverAt); 
+
+                         console.log('from the compare time function' + deliveryTime);
+
+                        var todayDate = new Date();
+                        var dtHours = deliveryTime.getHours();
+                        var dtMin =  deliveryTime.getMinutes();
+                        var dtSeconds = deliveryTime.getSeconds();
+                        
+                    
+                        var tdHours = todayDate.getHours();
+                        var tdMins = todayDate.getMinutes();
+                        var tdSeconds = todayDate.getSeconds();
+                    
+                        
+                        console.log('hours:' + dtHours + 'Minutes:' + dtMin + 'Seconds:' + dtSeconds);        
+                        console.log('hours:' + tdHours + 'Minutes:' + tdMins + 'Seconds:' + tdSeconds);    
+                    
+                        if (dtHours == tdHours && dtMin == tdMins && tdSeconds <= 3) { return 1; }
+                          else {return 0;}
+                }
+
                 $scope.sendInviteClick= function(vid) {
                   
                     $rootScope.emailMessageError = '';
@@ -156,7 +239,7 @@ angular.module('Main',['Authentication','Login', 'ngDialog'])
 
                               if(response.status > 200){
 
-                                 alert("Oops... Error sending mail");
+                                 alert("Error sending mail");
                                }else{
 
                                    var refreshUser = {'senderEmailid': $rootScope.userEmailId}      
@@ -347,14 +430,17 @@ angular.module('Main',['Authentication','Login', 'ngDialog'])
                                 var noOfInvites = $rootScope.notifications.filter($scope.checkInviteNotification);
                                 var noOfRejects = $rootScope.notifications.filter($scope.checkRejectNotification);
                                 var noOfCancel = $rootScope.notifications.filter($scope.checkCancelNotification);
+                                var noOfReminders = $rootScope.notifications.filter($scope.checkReminderNotification);
                   
                                 console.log('no of Connections =' + noOfConnections.length);
                                 console.log('no of Invites =' + noOfInvites.length);
+                                console.log('no of Messages =' + noOfMessages.length);
+                                console.log('no of Reminders =' + noOfReminders.length);
                   
-                                if(noOfMessages.length > 0 ) {
+                                if(noOfMessages.length > 0 || noOfReminders.length > 0) {
                                     //
                                     
-                                    console.log('new message in.. need to refresh receieved messages..');
+                                    console.log('new message or reminder in.. need to refresh receieved messages..');
                                     AuthenticationService.getMessageInfo(currUser, function(response) {
 
                                     if(response.data.length == 0){
@@ -367,6 +453,7 @@ angular.module('Main',['Authentication','Login', 'ngDialog'])
                                 
                                     $rootScope.receivedMessages = response.data;
                                     $cookieStore.put('receivedMessages', $rootScope.receivedMessages);
+                                    console.log('These are the receivedMessages');
                                     console.log($rootScope.receivedMessages);
 
                                     });
@@ -455,6 +542,10 @@ angular.module('Main',['Authentication','Login', 'ngDialog'])
             return notes.notificationType === 'Cancelled';
         }
 
+         $scope.checkReminderNotification = function(notes) {
+            return notes.notificationType === 'Reminder';
+        }
+
         $scope.playAudio = function() {
         var audio = new Audio('../../sounds/textalert.wav');
         audio.play();
@@ -470,8 +561,9 @@ angular.module('Main',['Authentication','Login', 'ngDialog'])
                         }
                 })
         }
-        
-    $interval( function(){ $scope.callAtInterval(); }, 5000);  
+
+              
+   $interval( function(){ $scope.callAtInterval(); }, 5000);  
                 
                 $scope.viewAllNotifications = function() {
                     

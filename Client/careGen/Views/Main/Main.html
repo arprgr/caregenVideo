@@ -10,10 +10,13 @@
 <link rel="stylesheet" href="../../font-awesome.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">    
- 
-  
+
+<link rel="stylesheet" href="../../angular-moment-picker.min.css">
+
     <title>Caring Generations</title>
     
+
+
 <style>
 growl-notifications {
     position: fixed;
@@ -88,7 +91,9 @@ function playSound() {
 }
 
 
+
 </script>    
+
 </head>
 <body>
 <growl-notifications></growl-notifications>
@@ -107,6 +112,9 @@ function playSound() {
          <image ng-if="userphoto" ng-src="{{userphoto}}" style="width:100px;height:100px;border:0;" class="w3-hover-opacity"></image>
           <button ng-if="userphoto" class="w3-btn w3-blue w3-hover-red  w3-ripple" onclick="newWindow()">Share on FaceBook</button>
           <button type="submit" class="w3-btn w3-blue w3-hover-red  w3-ripple" ng-click="logoutClick()">Logout</button>
+        
+         <button type="submit" class="w3-btn w3-blue w3-hover-red  w3-ripple" ng-click="showReminderDialog()">Schedule Reminder</button>
+         
      </div>
 </div>    
 
@@ -184,13 +192,31 @@ function playSound() {
              </tr>
             </thead>
              <tr ng:repeat="x in receivedMessages" class="w3-hover-grey">     
-             <td><image ng-src="{{x.vMessageThumb}}" style="width:100px;height:100px;border:0;" ng-click="videoView(x.vMessageURL, x.id)" class="w3-hover-opacity"></image></td>    
+             <td ng-if="x.messageType == 'message'"><image ng-src="{{x.vMessageThumb}}" style="width:100px;height:100px;border:0;" ng-click="videoView(x.vMessageURL, x.id)" class="w3-hover-opacity"></image></td>    
 
-             <td ng-if="x.status=='unread'" class="w3-red">{{x.status}}</td> 
-             <td ng-if="x.status=='read'" class="w3-teal">{{x.status}}</td>      
+             <td ng-if="x.status=='unread' && x.messageType == 'message'" class="w3-red">{{x.status}}</td> 
+             <td ng-if="x.status=='read' && x.messageType == 'message'" class="w3-teal">{{x.status}}</td>      
 
              </tr>    
-        </table>       
+        </table>      
+          <header class="w3-container w3-blue">
+            <h5>Reminders </h5>
+         </header> 
+        <table class="w3-table w3-striped w3-border w3-small" style="min-width:250px">
+            <thead>  
+             <tr class="w3-blue">
+              <td>From</td>
+              <td>Status</td> 
+
+
+             </tr>
+            </thead>
+             <tr ng:repeat="x in receivedMessages" class="w3-hover-grey">     
+             <td ng-if="x.messageType == 'Reminder' && compareTime(x.deliverAt) == 1" class="w3-red"><image ng-src="{{x.vMessageThumb}}" style="width:100px;height:100px;border:0;" ng-click="videoView(x.vMessageURL, x.id)" class="w3-hover-opacity"></image></td> 
+             <td ng-if="x.status=='unread' && x.messageType == 'Reminder' && compareTime(x.deliverAt) == 1" class="w3-red">{{x.status}}</td> 
+             <td ng-if="x.status=='read' && x.messageType == 'Reminder' && compareTime(x.deliverAt) == 1" class="w3-teal">{{x.status}}</td> 
+             </tr>    
+        </table>   
         </div>
 
     <div ng-repeat="x in notifications | filter: { notificationType : 'Message'}" ng-init='playAudio()'>
@@ -219,7 +245,14 @@ function playSound() {
             Your are now connected to {{x.senderName}}   
         </growl-notification>
 </div>    
-    
+
+<div ng-repeat="x in notifications | filter: { notificationType : 'Reminder'}">
+       <div ng-if="compareTime(x.deliverAt) == 1" ng-init='playAudio()'>
+        <growl-notification ttl="10000">
+            You have a reminder from {{x.senderName}}   
+        </growl-notification>
+        </div>
+</div>    
 </div>    
 
 <div id="fb-root"></div>
