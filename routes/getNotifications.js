@@ -9,7 +9,7 @@ router.post('/', function(req, res) {
     console.log(req.body.email);
 
         
-    models.Notifications.findAll({ attributes: ['id', 'senderEmailId', 'senderName', 'receiverEmailId', 'receiverName', 'notificationType', 'notificationMeta1', 'notificationMeta2', 'notificationMeta3', 'notificationMeta4', 'status', 'createdAt', 'updatedAt'],
+    models.Notifications.findAll({ attributes: ['id', 'senderEmailId', 'senderName', 'receiverEmailId', 'receiverName', 'notificationType', 'notificationMeta1', 'notificationMeta2', 'notificationMeta3', 'notificationMeta4', 'status', 'createdAt', 'updatedAt', 'deliverAt'],
         where: {
           receiverEmailId: req.body.email,
           status : 'Not Acknowledged'    
@@ -23,7 +23,7 @@ router.post('/', function(req, res) {
         
         models.Notifications.update (
             { status: 'Delivered' },
-            { where: {receiverEmailId: req.body.email, status: 'Not Acknowledged'}}         
+            { where: {receiverEmailId: req.body.email, status: 'Not Acknowledged', $not: [ { notificationType : 'Reminder' } ]}}         
         ).then(function(affectedRows){
             
             console.log('Updated ' + affectedRows + ' rows');

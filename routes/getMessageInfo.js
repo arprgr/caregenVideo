@@ -33,7 +33,7 @@ router.post('/', function(req, res) {
 } else {
   var sequelize = new Sequelize(dbName, dbUser, dbPass, dbConfig);
        
-  sequelize.query('SELECT "Messages"."id", "Messages"."senderEmailId" ,"Messages"."senderName" , "Messages"."receiverEmailId", "Messages"."status", "Messages"."location","Messages"."createdAt", "Videos"."vMessageURL", "Videos"."vMessagePublicId", "Videos"."vMessageThumb" FROM "Messages" left outer join "Videos" ON "Messages"."vid" = "Videos"."vid" WHERE "Messages"."receiverEmailId" = ?', 
+  sequelize.query('SELECT "Messages"."id", "Messages"."senderEmailId" ,"Messages"."senderName" , "Messages"."receiverEmailId", "Messages"."status", "Messages"."location","Messages"."createdAt","Messages"."messageType","Messages"."deliverAt" ,"Videos"."vMessageURL", "Videos"."vMessagePublicId", "Videos"."vMessageThumb" FROM "Messages" left outer join "Videos" ON "Messages"."vid" = "Videos"."vid" WHERE "Messages"."receiverEmailId" = ?', 
     { replacements: [req.body.email, 'open'], type: sequelize.QueryTypes.SELECT }
 ).then(function(VMessages) {
   res.json(VMessages);
