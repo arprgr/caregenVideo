@@ -23,7 +23,7 @@ router.post('/', function(req, res) {
         
         models.Notifications.update (
             { status: 'Delivered' },
-            { where: {receiverEmailId: req.body.email, status: 'Not Acknowledged', $not: [ { notificationType : 'Reminder' } ]}}         
+            { where: {receiverEmailId: req.body.email, status: 'Not Acknowledged'}}         
         ).then(function(affectedRows){
             
             console.log('Updated ' + affectedRows + ' rows');
