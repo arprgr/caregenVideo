@@ -18,6 +18,7 @@ angular.module('careGenApp', [
     'ngMessages',
     'ngPassword',
     'growlNotifications',
+    'moment-picker',
     'Messages'
 
 ])
