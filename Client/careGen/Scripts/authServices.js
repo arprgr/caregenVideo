@@ -50,6 +50,19 @@ angular.module('Authentication')
 
              };
 
+            service.addFBUser = function(formdata, callback){
+
+                 $http({
+                     method: 'POST',
+                     url: '/handleFBUsers',
+                     data: formdata
+                 })
+                     .then(function successCallback(response) {
+                         callback(response);
+                     });
+
+             };
+
              service.VerifyId= function(emailid, callback){
 
                   $http({
@@ -102,7 +115,21 @@ angular.module('Authentication')
 
              };
              
-              service.getNotifications = function(formdata, callback){
+              service.getAllReminders = function(formdata, callback){
+
+                 $http({
+                     method: 'POST',
+                     url: '/getAllReminders',
+                     data: formdata
+                 })
+                     .then(function successCallback(response) {
+                         callback(response);
+                     });
+
+             };
+             
+
+             service.getNotifications = function(formdata, callback){
 
                  $http({
                      method: 'POST',
@@ -233,6 +260,58 @@ angular.module('Authentication')
                      });
 
              };
+             
+             service.cancelInvitation= function(inviteIdJson, callback){
+
+                 $http({
+                     method: 'POST',
+                     url: '/cancelInvitation',
+                     data: inviteIdJson
+                 })
+                     .then(function successCallback(response) {
+                         callback(response);
+                     });
+
+             };
+             
+              service.deleteInvitation= function(inviteIdJson, callback){
+
+                 $http({
+                     method: 'POST',
+                     url: '/deleteInvitation',
+                     data: inviteIdJson
+                 })
+                     .then(function successCallback(response) {
+                         callback(response);
+                     });
+
+             };
+             
+             service.resendInvitationInt= function(inviteIdJson, callback){
+
+                 $http({
+                     method: 'POST',
+                     url: '/resendInvitationInt',
+                     data: inviteIdJson
+                 })
+                     .then(function successCallback(response) {
+                         callback(response);
+                     });
+
+             };
+             
+             service.resendInvitationExt= function(inviteIdJson, callback){
+
+                 $http({
+                     method: 'POST',
+                     url: '/resendInvitationExt',
+                     data: inviteIdJson
+                 })
+                     .then(function successCallback(response) {
+                         callback(response);
+                     });
+
+             };
 
              service.SetCredentials = function (emailid, password, username) {
 
@@ -241,6 +320,59 @@ angular.module('Authentication')
                  $rootScope.globals = {
                      currentUser: {
                          username: emailid,
+                         authdata: authdata
+                     }
+
+                 };
+
+                 
+
+               service.setReminder= function(inviteIdJson, callback){
+                
+                console.log('@@@ in set reminder!!');  
+                $http({
+                     method: 'POST',
+                     url: '/createReminder',
+                     data: inviteIdJson
+                 }).then(function successCallback(response) {
+                         console.log('back from the create reminder function! ' + response);
+                         callback(response);
+                     });
+        
+             };
+
+            service.refreshReminder= function(inviteIdJson, callback){
+                
+                console.log('*** in refresh Reminder!!');  
+                $http({
+                     method: 'POST',
+                     url: '/refreshReminders',
+                     data: inviteIdJson
+                 }).then(function successCallback(response) {
+                         console.log('refreshed Reminders! ' + response);
+                         callback(response);
+                     });
+        
+             };
+
+                 $http.defaults.headers.common['Authorization'] = 'Basic ' + authdata;
+                 $cookieStore.put('globals', $rootScope.globals);
+//                 $cookieStore.put('registerEmail', $rootScope.registerEmail);
+
+//                 $cookieStore.put('connectionsID', connectionsid);
+ //                $cookieStore.put('receivedInvitationID', $rootScope.receivedInvitationID);
+//                 $cookieStore.put('sentInvitationID', $rootScope.sentInvitationID);
+
+             };
+
+                 service.SetFBUserCredentials = function (emailid, username, fbid, userphoto) {
+
+                   var authdata = username;
+                 $rootScope.globals = {
+                     currentUser: {
+                         username: emailid,
+                         fbid: fbid,
+                         userphoto: userphoto,
                          authdata: authdata
                      }
 
