@@ -33,6 +33,9 @@ var writeVideoPackager = require('./routes/writeVideoPackager');
 
 var createReminder = require ('./routes/createReminder.js') ;
 
+var refreshReminders = require ('./routes/refreshReminders.js') ;
+var getAllReminders = require ('./routes/getAllReminders.js') ;
+
 // for the video Messaging functionality
 var upload = require('./routes/fileUpload');
 var getAllVideos = require('./routes/getAllVideos');
@@ -104,6 +107,9 @@ app.use('/handleFBUsers', handleFBUsers);
 
 app.use('/createReminder', createReminder);
 
+app.use('/refreshReminders', refreshReminders);
+
+app.use('/getAllReminders', getAllReminders);
 
 
 // catch 404 and forward to error handler
