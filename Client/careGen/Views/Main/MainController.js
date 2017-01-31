@@ -10,7 +10,7 @@ angular.module('Main',['Authentication','Login', 'ngDialog'])
 
                 $scope.dataForm = {};
 
-
+          
                 $scope.logoutClick = function() {
                     AuthenticationService.ClearCredentials();
                     
@@ -38,6 +38,7 @@ angular.module('Main',['Authentication','Login', 'ngDialog'])
                 
                     $scope.showReminderDialog= function() {
                     $scope.dataLoading = false;
+
                     $rootScope.waitmessage = '';
                     $rootScope.emailMessageError = '';
                     ngDialog.open({
@@ -63,16 +64,24 @@ angular.module('Main',['Authentication','Login', 'ngDialog'])
 
                  $scope.callSetReminder = function () {
 
-            console.log('@@@in call set reminder!');               
+            console.log('@@@in call set reminder!');     
+             var currUser = {'email': $rootScope.userEmailId};          
                var input = $scope.formData.dt;
                console.log(input);
                var d = new Date( input );
-               var timeInput = $scope.ctrl.timepicker ;
-               var timeArr = timeInput.split(":");
-               var hour = timeArr[0];
-               var minute = timeArr[1];    
+               console.log(d);
+               //var timeInput = $scope.ctrl.timepicker ;
+               //var timeArr = timeInput.split(":");
+               var hour = parseInt($scope.formData.hourInput);
+               var minute = parseInt($scope.formData.minuteInput);  
+               var ampm = $scope.formData.AMPM;  
                var year, month, day, min, hr;
-            
+               var repeat = $scope.formData.repeat;
+
+               if (ampm == "PM") { if(hour != 12) {hour = hour + 12;}}
+               if (ampm == "AM" && hour == 12) {hour = 0};
+
+               console.log('@@@ampm=' + ampm + ' hour=' + hour + ' minute=' + minute);
                d.setHours(hour);
                d.setMinutes(minute);
            
@@ -91,17 +100,19 @@ angular.module('Main',['Authentication','Login', 'ngDialog'])
            
               
                  var vid = 'r9wichlvlx6wri6t3e8f' ;
-                 var senderEmailId = 'gregory.pillai@gmail.com';
-                 var receiverEmailId = 'gregory.pillai@gmail.com';
+                 var senderEmailId = $rootScope.userEmailId;
+                 var receiverEmailId = $rootScope.userEmailId;
                  var timeZone = $scope.formData.timeZone ;
                  
-                 var mesgLoad = {'vid': vid, 'senderEmailId': senderEmailId, 'receiverEmailId' : receiverEmailId, 'year' : year, 'month' : month, 'day' : day , 'min': min, 'hr' : hr, 'dateStr' : d, 'timeZone' : timeZone}; 
+                 var mesgLoad = {'vid': vid, 'senderEmailId': senderEmailId, 'receiverEmailId' : receiverEmailId, 'year' : year, 'month' : month, 'day' : day , 'min': min, 'hr' : hr, 'dateStr' : d, 'timeZone' : timeZone , 'repeat' : repeat}; 
            
                 AuthenticationService.setReminder (mesgLoad, function(response) {
                                 
                                 console.log(response.data);
                                 
                             });     
+
+           ngDialog.close( { scope: $scope });     
 
        } 
 
@@ -410,6 +421,18 @@ angular.module('Main',['Authentication','Login', 'ngDialog'])
                  var currUser = {'email': $rootScope.userEmailId};      
                  console.log(currUser);
                  var refreshUser = {'senderEmailid': $rootScope.userEmailId} ;
+
+                 var clientDateTime = new Date();
+                 console.log('***Call at interval:' + clientDateTime);
+
+                     var notificationIdJson = {'clientDateTime' : clientDateTime , 'receiverEmailid' : $rootScope.userEmailId};
+
+                  AuthenticationService.refreshReminder(notificationIdJson, function(response) {
+
+                              if(response.status > 200){
+                                 alert("Could not update Notification");
+                        }
+                })
            
               AuthenticationService.getNotifications (currUser, function(response) {
 
@@ -437,7 +460,7 @@ angular.module('Main',['Authentication','Login', 'ngDialog'])
                                 console.log('no of Messages =' + noOfMessages.length);
                                 console.log('no of Reminders =' + noOfReminders.length);
                   
-                                if(noOfMessages.length > 0 || noOfReminders.length > 0) {
+                                if(noOfMessages.length > 0) {
                                     //
                                     
                                     console.log('new message or reminder in.. need to refresh receieved messages..');
@@ -461,6 +484,30 @@ angular.module('Main',['Authentication','Login', 'ngDialog'])
                                     //
                                 }
                   
+                                if(noOfReminders.length > 0) {
+                                    //
+                                    
+                                    console.log('new Reminders in, refreshing objects');
+                                    AuthenticationService.getAllReminders(currUser, function(response) {
+
+                                    if(response.data.length == 0){
+                                        if($rootScope.noOfReminders !== ''){
+
+                                        $rootScope.noReminders = 'No Messages'; }
+                                    }else{
+                                        $rootScope.noReminders = '';
+                                    }
+                                
+                                    $rootScope.receivedReminders = response.data;
+                                    $cookieStore.put('receivedReminders', $rootScope.receivedReminders);
+                                    console.log('These are the receivedReminders');
+                                    console.log($rootScope.receivedReminders);
+
+                                    });
+                                    
+                                    //
+                                }    
+
                                 if(noOfConnections.length > 0 ) {
                                    // 
                               AuthenticationService.getConnections(refreshUser, function(response) {

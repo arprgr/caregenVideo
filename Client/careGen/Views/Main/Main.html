@@ -211,11 +211,13 @@ function playSound() {
 
              </tr>
             </thead>
-             <tr ng:repeat="x in receivedMessages" class="w3-hover-grey">     
-             <td ng-if="x.messageType == 'Reminder' && compareTime(x.deliverAt) == 1" class="w3-red"><image ng-src="{{x.vMessageThumb}}" style="width:100px;height:100px;border:0;" ng-click="videoView(x.vMessageURL, x.id)" class="w3-hover-opacity"></image></td> 
-             <td ng-if="x.status=='unread' && x.messageType == 'Reminder' && compareTime(x.deliverAt) == 1" class="w3-red">{{x.status}}</td> 
-             <td ng-if="x.status=='read' && x.messageType == 'Reminder' && compareTime(x.deliverAt) == 1" class="w3-teal">{{x.status}}</td> 
-             </tr>    
+              <tr ng:repeat="x in receivedReminders" class="w3-hover-grey">     
+             <td ng-if="x.messageType == 'Reminder'"><image ng-src="{{x.vMessageThumb}}" style="width:100px;height:100px;border:0;" ng-click="videoView(x.vMessageURL, x.id)" class="w3-hover-opacity"></image></td>    
+
+             <td ng-if="x.status=='unread' && x.messageType == 'Reminder'" class="w3-red">{{x.status}}</td> 
+             <td ng-if="x.status=='read' && x.messageType == 'Reminder'" class="w3-teal">{{x.status}}</td>      
+
+             </tr>     
         </table>   
         </div>
 
@@ -246,12 +248,11 @@ function playSound() {
         </growl-notification>
 </div>    
 
-<div ng-repeat="x in notifications | filter: { notificationType : 'Reminder'}">
-       <div ng-if="compareTime(x.deliverAt) == 1" ng-init='playAudio()'>
+<div ng-repeat="x in notifications | filter: { notificationType : 'Reminder'}" ng-init='playAudio()'>
         <growl-notification ttl="10000">
             You have a reminder from {{x.senderName}}   
         </growl-notification>
-        </div>
+       
 </div>    
 </div>    
 

@@ -3,28 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <title>Invitation</title>
+
+
+<script>
+   // initializing form inputs
+
+
+   function displayHour(hour) {
+    document.getElementById("hour_label").innerHTML = hour ;
+   } 
+
+    function displayMinute(minute) {
+    document.getElementById("minute_label").innerHTML = minute ;
+   } 
+
+</script>
 </head>
 <body>
-<script>
-  
-</script>    
     
 <div data-ng-controller="MainController">    
 <form class="form" name="form">    
-<table>
+<table class="w3-table w3-blue">
+    <tr>
+    <td>
+     Select Hour 
+    </td>
+    <td>
+
+    <input type="range" min="1" max="12" defaultValue="1" step="1" name="hour" id="hour" ng-model="formData.hourInput" oninput="displayHour(this.value)">
+    </td>
+    <td><button class="w3-btn">Hour<span id="hour_label" class="w3-badge w3-margin-left">1</span></button></td>
+    </tr>
+    <tr>
+    <td>
+     Select Minute
+    </td>
+    <td>
+        <input type="range" min="0" defaultValue="0" max="55" step="5" id="minute" ng-model="formData.minuteInput" oninput="displayMinute(this.value)">
+    </td>
+    <td><button class="w3-btn">Minute<span id="minute_label" class="w3-badge w3-margin-left">1</span></button></td>
+    </tr>
     <tr>
         <td>
-             Set time for the reminder
+             AM/PM
         </td>
         <td>
-            <div class="input-group" moment-picker="ctrl.timepicker" format="HH:mm">
-                <span class="input-group-addon">
-                    <i class="octicon octicon-clock"></i>
-                </span>
-                
-        <input class="form-control" placeholder="Select a time" ng-model="ctrl.timepicker" ng-model-options="{ updateOn: 'blur' }">
-            </div>
+            <input type="radio" name="AMPM" id="AMPM" ng-model="formData.AMPM" value="AM" checked> AM
+            <input type="radio" name="AMPM" id="AMPM" ng-model="formData.AMPM" value="PM"> PM
         </td>
+        <td></td>
     </tr>
     <tr>
         <td>
@@ -33,17 +60,19 @@
         <td>
         <input type="date" id="dt" name="bday" ng-model="formData.dt">
         </td>
+        <td></td>
     </tr>
     <tr>
         <td>
         Which Time Zone
         </td>
         <td>
-            <input type="radio" name="timeZone" id="timeZone" ng-model="formData.timeZone" value="Eastern" checked> Eastern :
-            <input type="radio" name="timeZone" id="timeZone" ng-model="formData.timeZone" value="Central"> Central :
-            <input type="radio" name="timeZone" id="timeZone" ng-model="formData.timeZone" value="Pacific"> Pacific : 
-            <input type="radio" name="timeZone" id="timeZone" ng-model="formData.timeZone" value="IST"> IST : 
+            <input type="radio" name="timeZone" id="timeZone" ng-model="formData.timeZone" value="Eastern" checked="checked"> Eastern
+            <input type="radio" name="timeZone" id="timeZone" ng-model="formData.timeZone" value="Central"> Central
+            <input type="radio" name="timeZone" id="timeZone" ng-model="formData.timeZone" value="Pacific"> Pacific
+            <input type="radio" name="timeZone" id="timeZone" ng-model="formData.timeZone" value="IST"> IST
         </td>
+        <td></td>
     <tr>
         <td>
             Repeat every day
@@ -52,6 +81,7 @@
           <input type="radio" name="repeat" id="repeat" ng-model="formData.repeat" value="Yes" checked> Yes
           <input type="radio" name="repeat" id="repeat" ng-model="formData.repeat" value="No"> No  
         </td>
+        <td></td>
     </tr>    
     
 </table> 
