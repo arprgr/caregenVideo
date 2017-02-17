@@ -1,4 +1,3 @@
-
 'use strict';
 angular.module('Home', ['ngDialog','Authentication'])
     
@@ -216,9 +215,9 @@ angular.module('Home', ['ngDialog','Authentication'])
                         if(response.status > 200 ) {
                                AuthenticationService.SetCredentials($scope.formData.email);
                                console.log('user does not exist, going to registration page');
-                               window.location.href="http://localhost:3000/Index.html#/?origin=email&emailid=" + $rootScope.registerEmail;
+                               window.location.href=window.location.protocol + "//" + window.location.host + "/Index.html#/?origin=email&emailid=" + $rootScope.registerEmail;
                         } else {
-                           window.location.href="http://localhost:3000/Index.html#/?user=existing&emailid=" + $rootScope.registerEmail;
+                            window.location.href=window.location.protocol + "//" + window.location.host + "/Index.html#/?user=existing&emailid=" + $rootScope.registerEmail;
                            };
 
                             $scope.dataLoading = false;
