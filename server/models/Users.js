@@ -6,6 +6,8 @@ module.exports = function(sequelize, DataTypes) {
         primaryKey : true 
         },
         name: DataTypes.STRING,
+        fbid: DataTypes.STRING,
+        usertype: DataTypes.STRING,
         password: DataTypes.STRING
     }, {
         timestamps: false,
