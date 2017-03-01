@@ -48,6 +48,12 @@ module.exports = function(sequelize, DataTypes) {
         lastDeliveredAt: { 
         type : DataTypes.STRING,
         },
+        fromuserid: { 
+        type : DataTypes.INTEGER,
+        },
+        touserid: { 
+        type : DataTypes.INTEGER,
+        },
         vMessageThumb: { 
         type : DataTypes.STRING,
         }
