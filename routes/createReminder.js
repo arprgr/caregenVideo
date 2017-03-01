@@ -17,8 +17,10 @@ console.log('in the lc reminder service, scheduling your reminder' + req.body);
         var month = parseInt(mesgLoad.month);
         var hr = parseInt(mesgLoad.hr);
         var min = parseInt(mesgLoad.min);
-        var senderEmailId = mesgLoad.senderEmailId;
-        var receiverEmailId = mesgLoad.receiverEmailId;
+        //var senderEmailId = mesgLoad.senderEmailId;
+        //var receiverEmailId = mesgLoad.receiverEmailId;
+         var fromuserid = mesgLoad.fromuserid;
+         var touserid = mesgLoad.touserid;
         var repeat = mesgLoad.repeat;
         var timeZone = mesgLoad.timeZone;
         var sec = 0;
@@ -47,8 +49,8 @@ console.log('in the lc reminder service, scheduling your reminder' + req.body);
                 console.log('scheduling the reminder'); 
                models.Reminders.create({
                 vid: vid,
-                senderEmailId: senderEmailId,
-                receiverEmailId : receiverEmailId,
+                fromuserid: fromuserid,
+                touserid : touserid,
                 messageType: 'Reminder',
                 status: 'unread',
                 location: 'inbox',
