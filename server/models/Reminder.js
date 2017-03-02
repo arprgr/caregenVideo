@@ -62,9 +62,11 @@ module.exports = function(sequelize, DataTypes) {
         timestamps: true,
         classMethods: {
             associate: function(models) {
-                // associations can be defined here
+                // associations can be defined here  
             }
         }
     });
+    
+    
     return Reminders;
 };
