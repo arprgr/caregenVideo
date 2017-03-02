@@ -43,7 +43,7 @@ console.log('in the lc reminder service, scheduling your reminder' + req.body);
         if (timeZone == "IST") {deliverAt = india.format()} ;
 
 
-        console.log(vid + ' ' + year + ' ' + ' ' + senderEmailId + deliverAt);
+        console.log(vid + ' ' + year + ' ' + ' ' + fromuserid + deliverAt);
 
        
                 console.log('scheduling the reminder'); 
@@ -62,7 +62,7 @@ console.log('in the lc reminder service, scheduling your reminder' + req.body);
             }).then(function (Reminders) {
                 if(Reminders) {
                 console.log('new reminder created! ');
-                 res.status(200).send('success');
+                 res.status(200).send(Reminders);
                 }
             });
 });
